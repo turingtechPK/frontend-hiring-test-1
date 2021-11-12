@@ -18,7 +18,7 @@ export default function CallsPage() {
     const [calls, setCalls] = React.useState([]);
     const [pageCount, setpageCount] = React.useState(0);
     const [offset, setOffset] = React.useState(0);
-    const limit = 9;
+    const limit: number = 9;
 
     const handlePageChange = () => {
       setOffset(offset+limit);
@@ -63,16 +63,33 @@ export default function CallsPage() {
           })
           .catch((error) => {
             console.log(error);
-            alert("Your session has expired!");
             sessionStorage.removeItem("access_token");
             router.replace('/login');
           });
       }
+      setInterval(() => {
+        fetch("https://frontend-test-api.aircall.io/auth/refresh-token", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${access_token}` },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            sessionStorage.setItem(
+              "access_token",
+              JSON.stringify(data.access_token)
+            );
+            setAccessToken(data.access_token);
+          })
+          .catch((error) => {
+            console.log(error);
+            alert("Looks like you aren't connected to the internet!");
+          });
+      }, 59900);
     },[]);
 
     const handleLogout = () => {
         localStorage.removeItem('access_token');
-        router.replace('/');
+        router.replace('/login');
     }
 
     return (
