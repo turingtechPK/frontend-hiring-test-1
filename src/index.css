@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+/* base styles */
+* {
+  margin: 0;
+  font-family: "Quicksand";
+  color: #333;
+}
+.btn-primary {
+  color: #fff;
+  font-size: medium;
+  font-weight: 500 !important;
+  background-color: #4f46f8 !important;
+  border-color: #4f46f8 !important;
+}
+.btn-primary:hover {
+  color: #fff;
+  font-size: medium;
+  font-weight: 500 !important;
+  background-color: #433cd1 !important;
+  border-color: #433cd1 !important;
+}
+.btn-primary:focus{
+  box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgb(43 114 165 / 29%) !important;
+}
+.swal-button{
+  background-color: #4f46f8 !important;
+}
+.swal-text{
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* LOGIN PAGE STYLING */
+.login-parent{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+.login-parent .login h3{
+  color: #4f46f8;
+}
+.login-parent .login .col-md-4{
+  padding: 0 0;
+  width: 100%;
+}
+.login{
+  max-width: 400px;
+  margin: 0 auto;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 40px 30px;
+}
+.login label{
+  text-align: left;
+  display: block;
+}
+.login .form-group{
+  margin: 30px 0 10px;
+}
+.login .form-group input{
+  min-width: 350px;
+  padding: 6px 10px;
+  margin: 5px 0;
+  border: 1.5px solid #ddd;
+  box-sizing: border-box;
+  border-radius: 5px;
+  display: block;
+}
+
+/* CALLS PAGE STYLING */
+.calls{
+  overflow-x: hidden;
+}
+.calls-data{
+  padding-top: 50px;
+}
+.calls-data .headings{
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 80px;
+}
+.loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
