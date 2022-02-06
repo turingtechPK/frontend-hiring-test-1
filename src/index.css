@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-family: 'Quicksand', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+.btn-primary {
+  color: #fff;
+  font-size: medium;
+  font-weight: 500 !important;
+  background-color: #666575 !important;
+  border-color: #46455f !important;
+}
+
+.swal-button {
+  background-color: #414055 !important;
+}
+.swal-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+.calls {
+  overflow-x: hidden;
+}
+.calls-data {
+  padding-top: 50px;
+}
+.calls-data .headings {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 80px;
+}
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
