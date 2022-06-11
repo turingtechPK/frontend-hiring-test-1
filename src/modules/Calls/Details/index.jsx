@@ -5,7 +5,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { GET_CALL } from '../../../graphql/query/call';
 
 const Details = () => {
-  const { state: { callId = null } = {} } = useLocation();
+  const { state } = useLocation();
+  const { callId = null } = state || {};
   const navigate = useNavigate();
 
   const { loading, data: { call: {
@@ -41,6 +42,7 @@ const Details = () => {
               <span className="visually-hidden">Loading...</span>
             </Spinner>
           </div> :
+          (callId ? 
           <>
             <div style={{ display: 'flex' }}>
               <div>Call Type: <Badge bg={tagColorForCallType}>{call_type?.toUpperCase()}</Badge></div>
@@ -78,7 +80,9 @@ const Details = () => {
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
-          </>
+          </> 
+          : 
+          <h4 style={{ textAlign: 'center' }}>No Call ID present !</h4>)
       }
     </div>
   );

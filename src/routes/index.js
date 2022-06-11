@@ -27,7 +27,7 @@ const AppRoutes = () => {
         <Route path="/auth/login" element={<AuthRoute><Login /></AuthRoute>} />
         <Route path="/calls" element={<ProtectedRoute><CallListings /></ProtectedRoute>} />
         <Route path="/call/details" element={<ProtectedRoute><CallDetails /></ProtectedRoute>} />
-        <Route path="*" element={<p>There's nothing here: 404!</p>} />
+        <Route path="*" element={<AuthRoute><Login /></AuthRoute>} />
       </Routes>
     </BrowserRouter>
   );
