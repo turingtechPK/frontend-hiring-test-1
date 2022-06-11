@@ -1,6 +1,14 @@
-function App() {
+import { ApolloProvider } from "@apollo/client";
+import apolloClient from './graphql';
+import AppRoutes from './routes';
+
+const App = () => {
   return (
-    <div>123</div>
+    <div style={{ height: '100vh' }}>
+      <ApolloProvider client={apolloClient}>
+        <AppRoutes />
+      </ApolloProvider>
+    </div>
   );
 }
 
