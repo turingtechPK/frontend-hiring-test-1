@@ -1,0 +1,49 @@
+thead {
+    background: #FAFAFA;
+    border-radius: 10px !important;
+}
+
+table th:first-child {
+    border-radius: 10px 0 0 10px !important;
+    border: 1px solid #e7e7e7 !important;
+    border-right: 0 !important;
+}
+
+table th:last-child {
+    border-radius: 0 10px 10px 0 !important;
+    border: 1px solid #e7e7e7 !important;
+    border-left: 0 !important;
+}
+
+table th {
+    border: 1px solid #e7e7e7 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+thead tr {
+    border-bottom: 0;
+}
+
+table {
+    border-collapse: separate !important;
+    border-spacing: 0
+}
+
+table tr {
+    font-weight: normal;
+    font-size: 14px;
+    color: #444444;
+}
+table tbody tr td {
+    vertical-align: middle;
+}
+
+.btn {
+    padding: 0 12px;
+    font-size: 14px;
+}
+
