@@ -1,26 +1,30 @@
-import axios from "axios";
-import AppConstants from "../../constants/AppConstants";
+import api from '../../services/dataService';
+import { LOGIN, LOGOUT } from './types';
 
-export const SIGNIN = "SIGNIN";
-export const SIGNOUT = "SIGNOUT";
-
-export const signIn = (email, password) => {
-	console.log("Mein chala")
-  return async (dispatch) => {
-	const response = await axios.post(`${AppConstants.baseURL}`, { email, password })
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      })
-
-    if (!response.ok) {
-      const errorResData = await response.json();
-      throw new Error(errorResData.msg[0].msg);
-    }
-
-  };
+export const login = (email, password) => async dispatch => {
+  try {
+    await api.post(`/auth/login`, { username: email, password }).then(res => {
+      console.log(res);
+      api.defaults.headers.common = {
+        Authorization: `Bearer ${res.data.access_token}`,
+      };
+      localStorage.setItem('AccesToken', res.data.access_token);
+      localStorage.setItem('user', res.data.user.username);
+      dispatch({
+        type: LOGIN,
+        payload: res,
+      });
+    });
+  } catch (err) {
+    throw new Error(err);
+  }
 };
 
-export const signout = () => {
-  return { type: SIGNOUT };
+export const logout = () => {
+  localStorage.setItem('AccesToken', undefined);
+  localStorage.setItem('user', undefined);
+  api.defaults.headers.common = {
+	Authorization: undefined,
+  };
+  return { type: LOGOUT };
 };

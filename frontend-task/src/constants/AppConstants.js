@@ -1,5 +1,3 @@
 export default {
-	baseURL: "https://frontend-test-api.aircall.io/",
-	
-  };
-  
+  baseURL: 'https://frontend-test-api.aircall.io',
+};

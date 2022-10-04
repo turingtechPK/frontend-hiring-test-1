@@ -1,5 +1,6 @@
 import { Navigate, useRoutes } from 'react-router-dom';
-import Login from '../pages/Login';
+import Dashboard from '../pages/dashboard/Dashboard';
+import Login from '../pages/login/Login';
 import NotFound from '../pages/NotFound';
 
 // ----------------------------------------------------------------------
@@ -7,8 +8,16 @@ import NotFound from '../pages/NotFound';
 export default function Router() {
   return useRoutes([
     {
+      path: '/',
+      element: <Navigate to='/login' replace />,
+    },
+    {
       path: 'login',
       element: <Login />,
+    },
+    {
+      path: 'dashboard',
+      element: <Dashboard />,
     },
     {
       path: '/404',

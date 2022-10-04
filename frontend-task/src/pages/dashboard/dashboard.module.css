@@ -1,0 +1,9 @@
+.dashboardContainer{
+	padding-inline: 42px;
+}
+.title{
+	margin-block: 0.5em;
+}
+td > p{
+	margin-bottom: 0px;
+}
