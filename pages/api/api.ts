@@ -16,33 +16,13 @@ export async function fetchMyAPI() {
 
   return data.data.nodes;
 }
-export async function archivechange(id: string) {
-  // const token: any = JSON.parse(localStorage.getItem("token"));
-  // return fetch(`https://frontend-test-api.aircall.io/calls/${id}/archive`, {
-  //   method: "PUT",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Authorization: `Bearer ${token.access_token}`,
-  //   },
-  // }).then((data) => {
-  //   return data.json();
-  // });
+export async function archivechange(id: any) {
   let data = await instance.put(`calls/${id}/archive`);
   return data;
 }
 export async function addnote(id: string, note: string) {
   let data = await instance.post(`calls/${id}/note`, { content: note });
   return data;
-  // return fetch(`https://frontend-test-api.aircall.io/calls/${id}/note`, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/x-www-form-urlencoded',
-  //     "Authorization": `Bearer ${token.access_token}`
-  //   },
-  //   body: {content:JSON.stringify(note)}
-
-  // })
-  //   .then(data => {return data.json()})
 }
 export async function loginUser(credentials: string) {
   return fetch("https://frontend-test-api.aircall.io/auth/login", {
@@ -55,3 +35,25 @@ export async function loginUser(credentials: string) {
     return data.json();
   });
 }
+
+// return fetch(`https://frontend-test-api.aircall.io/calls/${id}/note`, {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/x-www-form-urlencoded',
+//     "Authorization": `Bearer ${token.access_token}`
+//   },
+//   body: {content:JSON.stringify(note)}
+
+// })
+//   .then(data => {return data.json()})
+
+// const token: any = JSON.parse(localStorage.getItem("token"));
+// return fetch(`https://frontend-test-api.aircall.io/calls/${id}/archive`, {
+//   method: "PUT",
+//   headers: {
+//     "Content-Type": "application/json",
+//     Authorization: `Bearer ${token.access_token}`,
+//   },
+// }).then((data) => {
+//   return data.json();
+// });

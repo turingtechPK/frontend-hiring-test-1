@@ -3,7 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import Login from "../collection/Login/login";
-import navimage from "../libs/images/TTLogo.png";
+import navimage from "../libs/shared-assets/TTLogo.png";
 
 const Home: NextPage = () => {
   return (

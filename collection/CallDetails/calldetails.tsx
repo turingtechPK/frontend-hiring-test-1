@@ -1,13 +1,21 @@
-import { Table, Tag, Button, Modal, Input, Switch } from "antd";
+import {
+  Table,
+  Tag,
+  Button,
+  Modal,
+  Input,
+  Switch,
+} from "../../libs/shared-components";
 import { useRouter } from "next/router";
-import React, { useState, useCallback,useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { archivechange, addnote, fetchMyAPI } from "../../pages/api/api";
+import NewModal from "../Modal/modal";
 const { TextArea } = Input;
 const { Column } = Table;
 
-const CallsTable = (params) => {
+const CallsTable = () => {
   const [data, setdata] = useState("true");
-  const [Item, setItem] = useState('')
+  const [Item, setItem] = useState("");
   const [modaldata, setmodaldata] = useState([]);
   const [newNote, setnewNote] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -15,7 +23,7 @@ const CallsTable = (params) => {
 
   useEffect(() => {
     setloading(true);
-    const token = JSON.parse(localStorage.getItem("token"));
+
     const itemvalue = fetchMyAPI().then((d) => {
       setItem(d);
     });
@@ -23,29 +31,26 @@ const CallsTable = (params) => {
   }, [data]);
 
   ////////////////////////for showing modal////////////////////////////////////
-  const showModal = (record) => {
+  const showModal = (record: any) => {
     console.log(record);
     setmodaldata(record);
     setIsModalVisible(true);
   };
-///////////////////////////for adding the note in call/////////////////////////
-  const handleOk = async (e) => {
-    setloading(true);
+  ///////////////////////////for adding the note in call/////////////////////////
+  const handleOk = async (e: React.FormEvent<HTMLInputElement>) => {
     let payload = { id: Math.random(), content: newNote };
     modaldata.notes.push(payload);
     const res = await addnote(e, newNote);
     console.log(newNote);
-    setTimeout(() => {
-      setloading(false);
-    }, 100);
+
     setnewNote("");
   };
-///////////////////////////for changing the archive status////////////////////
-  const handleArchiveChange = async (e) => {
-    setloading(true)
-    const res = await archivechange(e);
-    setdata(JSON.stringify(res.is_archived))
-    setloading(false)
+  ///////////////////////////for changing the archive status////////////////////
+  const handleArchiveChange = async (e: React.FormEvent<HTMLInputElement>) => {
+    setloading(true);
+    const res: any = await archivechange(e);
+    setdata(JSON.stringify(res.is_archived));
+    setloading(false);
     const itemvalue = fetchMyAPI().then((d) => {
       setItem(d);
     });
@@ -56,17 +61,15 @@ const CallsTable = (params) => {
     setIsModalVisible(false);
   };
 
-  return loading ? (
-    <div>LOADING</div>
-  ) : (
+  return (
     <>
-      <Table dataSource={Item} pagination={{ pageSize: 5 }}>
-        <Column title="To" dataIndex="to" key="id" />
+      <Table dataSource={Item} pagination={{ pageSize: 5 }} loading={loading}>
+        <Column title="TO" dataIndex="to" key="id" />
 
-        <Column title="From" dataIndex="from" key="id" />
-        <Column title="Direction" dataIndex="direction" key="id" />
+        <Column title="FROM" dataIndex="from" key="id" />
+        <Column title="DIRECTION" dataIndex="direction" key="id" />
         <Column
-          title="Call Type"
+          title="CALL TYPE"
           dataIndex="call_type"
           render={(call_type) => {
             let color = call_type === "missed" ? "red" : "green";
@@ -97,18 +100,29 @@ const CallsTable = (params) => {
           onFilter={(value, record) => record.call_type.startsWith(value)}
         />
         <Column
-          title="created_at"
+          title="CREATED AT"
           dataIndex="created_at"
           key="id"
           sorter={(a, b) => a.created_at < b.created_at}
         />
         <Column
-          title="is_archived"
+          title="STATUS"
           dataIndex="is_archived"
           render={(index, record) => (
-            <Button type="primary" onClick={() => handleArchiveChange(record.id)}>
-          {String(record.is_archived)===data? data:String(record.is_archived)}
-        </Button>
+            <h1
+              type="button"
+              onClick={() => handleArchiveChange(record.id)}
+            >
+              {/* {String(record.is_archived) === data
+                ? data
+                : String(record.is_archived)} */}
+
+              {record.is_archived ? (
+                <Tag color="red">{"Archived"}</Tag>
+              ) : (
+                <Tag color="green">{"Unarchive"}</Tag>
+              )}
+            </h1>
           )}
           key="id"
         />
@@ -124,28 +138,15 @@ const CallsTable = (params) => {
         />
       </Table>
       ,
-      <Modal
-        title="Details"
+      <NewModal
         visible={isModalVisible}
-        onOk={() => handleOk(modaldata.id)}
         onCancel={handleCancel}
-      >
-        <p>Id: {modaldata.id}</p>
-        <p>Created at: {modaldata.created_at}</p>
-        <p>call_types: {modaldata.call_type}</p>
-        <p>Notes:</p>
-        {modaldata.notes && modaldata.notes.length !== 0 ? (
-          modaldata.notes.map((e) => <p> {e.content}</p>)
-        ) : (
-          <p>no data</p>
-        )}
-        <TextArea
-          rows={4}
-          placeholder="Add Notes"
-          value={newNote}
-          onChange={(e) => setnewNote(e.target.value)}
-        />
-      </Modal>
+        newNote={newNote}
+        onOk={handleOk}
+        setnewNote={setnewNote}
+        modaldata={modaldata}
+        loading={loading}
+      />
     </>
   );
 };
