@@ -1,0 +1,24 @@
+@font-face {
+  font-family: "AvenirLTStd";
+  font-style: normal;
+  font-weight: 600;
+  src: local("AvenirLTStd Black"), url("./AvenirLTStd-Black.otf");
+}
+
+@font-face {
+  font-family: "AvenirLTStd";
+  font-style: normal;
+  font-weight: 300;
+  src: local("AvenirLTStd Book"), url("./AvenirLTStd-Book.otf");
+}
+
+@font-face {
+  font-family: "AvenirLTStd";
+  font-style: normal;
+  font-weight: 400;
+  src: local("AvenirLTStd Regular"), url("./AvenirLTStd-Roman.otf");
+}
+
+.AvenirLTStd {
+  font-family: "AvenirLTStd" !important;
+}

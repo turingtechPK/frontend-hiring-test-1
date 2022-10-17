@@ -1,0 +1,17 @@
+/*
+  NOTE: The order of imports is important.
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+
+@import 'tailwindcss/base';
+
+// Custom Compoent
+@import 'tailwindcss/components';
+@import "./scrollbar";
+
+// overrides and globals should be after themes.
+@import "./overrides";
+
+// utils and helpers should be after everything
+@import 'tailwindcss/utilities';
