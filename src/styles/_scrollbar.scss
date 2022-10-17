@@ -1,0 +1,52 @@
+//
+// Scollbar
+//
+
+//
+// Inherit
+//
+$scrollbar-thumb-radius: 50em !default;
+
+//
+// Setting
+//
+$scrollbar-width: 16px !default;
+$scrollbar-height: 16px !default;
+$scrollbar-background: white !default;
+$scrollbar-padding: 4px !default;
+$scrollbar-hover-background: #ced4da !default;
+
+$scrollbar-thumb-background: rgba(#e9ecef, 1) !default;
+$scrollbar-thumb-focus-background: #e9ecef !default;
+
+//
+// Note : Experimental Feature
+// Issue : Doesn't work on Internet Explorer, Firefox, Edge 44
+// Doc : add doc
+//
+.scrollbar {
+  &::-webkit-scrollbar {
+    width: $scrollbar-width;
+    height: $scrollbar-height;
+    background-color: $scrollbar-background;
+    box-shadow: -2px 0 6px rgba(0, 0, 0, 0.05);
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border: $scrollbar-padding solid $scrollbar-background;
+    border-radius: $scrollbar-thumb-radius;
+    background-color: $scrollbar-thumb-background;
+  }
+
+  // stylelint-disable-next-line selector-pseudo-class-disallowed-list
+  &::-webkit-scrollbar-thumb:focus {
+    background-color: $scrollbar-thumb-focus-background;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: $scrollbar-hover-background;
+  }
+}
