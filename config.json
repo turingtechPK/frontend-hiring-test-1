@@ -1,0 +1,6 @@
+{
+  "baseURL": "https://frontend-test-api.aircall.io",
+  "loginURL": "/auth/login",
+  "getCallsURL": "/calls",
+  "postNoteURL": "/note"
+}
