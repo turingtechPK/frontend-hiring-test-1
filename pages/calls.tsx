@@ -1,28 +1,23 @@
 import Banner from "../Modules/Banner";
 import TableComponent from "../Modules/TableComponent";
-import { withStyles } from "@mui/styles";
-import styles from "../styles/Main.module";
+
+import styles from "../styles/Main.module.css";
 import { useState, useEffect } from "react";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Modal,
-  Snackbar,
-} from "@mui/material";
-import Select from "@mui/material/Select";
+
 import { formatDuration } from "../services/date-formatter";
 import { call } from "../Interfaces/calls";
-import { baseURL, getCallsURL, postNoteURL } from "../config.json";
+import {
+  baseURL,
+  getCallsURL,
+  postNoteURL,
+  refreshTokenURL,
+} from "../config.json";
 import axios from "axios";
 import { note } from "../Interfaces/note";
+import { Dropdown, Menu, Space, Typography, Modal, message } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 
-const Calls = (props: any) => {
-  const { classes } = props;
+const Calls = () => {
   const [filterBy, setFilterBy] = useState("");
   const [note, setNote] = useState("");
   const [calls, setCalls] = useState([]);
@@ -106,14 +101,15 @@ const Calls = (props: any) => {
       )
       .then((res) => {
         setIsSuccessAddingNote(true);
+        message.success("Posting Notes Success");
         const indexCalls = calls.findIndex(
           (call: call) => call.id === res.data.id
         );
         const indexCallsFiltered = filteredCalls.findIndex(
           (call: call) => call.id === res.data.id
         );
-        let newCalls: [call] = calls;
-        let newFilteredCalls = filteredCalls;
+        let newCalls: call[] = calls;
+        let newFilteredCalls: call[] = filteredCalls;
         newCalls[indexCalls] = res.data;
         newFilteredCalls[indexCallsFiltered] = res.data;
         setCalls(newCalls);
@@ -122,35 +118,48 @@ const Calls = (props: any) => {
       });
   };
 
+  const menu = (
+    <Menu
+      selectable
+      items={[
+        {
+          key: "",
+          label: "All",
+        },
+        {
+          key: "archived",
+          label: "Archived",
+        },
+        {
+          key: "unArchived",
+          label: "Un Archived",
+        },
+      ]}
+      onSelect={(data) => {
+        setFilterBy(data.key);
+      }}
+    />
+  );
+
   return (
     <>
       <Banner />
-      <div className={classes.container}>
-        <div className={classes.row}>
-          <div className={classes.header}>
-            Turing Technologies Frontend Test
-          </div>
+      <div className={styles.container}>
+        <div className={styles.row}>
+          <div className={styles.header}>Turing Technologies Frontend Test</div>
         </div>
-        <div className={classes.rowFlex}>
-          <div className={classes.filterByText}>Filter By</div>
-
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 200 }}>
-            <Select
-              sx={{ color: "#2d5ce7" }}
-              disableUnderline
-              value={filterBy}
-              onChange={(e) => {
-                setFilterBy(e.target.value);
-              }}
-            >
-              <MenuItem value={""}>All</MenuItem>
-              <MenuItem value={"archived"}>Archived</MenuItem>
-              <MenuItem value={"unArchived"}>Un Archived</MenuItem>
-            </Select>
-          </FormControl>
+        <div className={styles.rowFlex}>
+          <Dropdown overlay={menu}>
+            <Typography.Link>
+              <Space>
+                Filter By
+                <DownOutlined />
+              </Space>
+            </Typography.Link>
+          </Dropdown>
         </div>
 
-        <div className={classes.row}>
+        <div className={styles.row}>
           <TableComponent
             calls={filteredCalls}
             totalCalls={totalCalls}
@@ -159,99 +168,66 @@ const Calls = (props: any) => {
             handleAddNote={handleAddNote}
           />
         </div>
-        <Dialog open={isOpenAddNotesModal}>
-          <DialogTitle>
-            <>
-              <div>Add Notes</div>
-              <div className={classes.blueText}>Call ID {selectedCall.id}</div>
-            </>
-          </DialogTitle>
-          <DialogContent>
-            <>
-              <div className={classes.dialogRow}>
-                <div>Call Type</div>
-                <div>{selectedCall.call_type}</div>
-              </div>
-              <div className={classes.dialogRow}>
-                <div>Duration</div>
-                <div>{formatDuration(selectedCall.duration)}</div>
-              </div>
-              <div className={classes.dialogRow}>
-                {" "}
-                <div>From</div>
-                <div>{selectedCall.from}</div>
-              </div>
-              <div className={classes.dialogRow}>
-                <div> To </div>
-                <div>{selectedCall.to}</div>
-              </div>
-              <div className={classes.dialogRow}>
-                {" "}
-                <div> Via </div>
-                <div>{selectedCall.via}</div>
-              </div>
 
-              <div className={classes.dialogRow}>Notes</div>
+        <Modal
+          title="Add Notes"
+          open={isOpenAddNotesModal}
+          onOk={() => {
+            setIsOpenAddNotesModal(false);
+            handlePostNote();
+          }}
+          onCancel={() => {
+            setIsOpenAddNotesModal(false);
+          }}
+        >
+          <div className={styles.blueText}>Call ID {selectedCall.id}</div>
+          <>
+            <div className={styles.dialogRow}>
+              <div>Call Type</div>
+              <div>{selectedCall.call_type}</div>
+            </div>
+            <div className={styles.dialogRow}>
+              <div>Duration</div>
+              <div>{formatDuration(selectedCall.duration)}</div>
+            </div>
+            <div className={styles.dialogRow}>
+              {" "}
+              <div>From</div>
+              <div>{selectedCall.from}</div>
+            </div>
+            <div className={styles.dialogRow}>
+              <div> To </div>
+              <div>{selectedCall.to}</div>
+            </div>
+            <div className={styles.dialogRow}>
+              {" "}
+              <div> Via </div>
+              <div>{selectedCall.via}</div>
+            </div>
 
-              {selectedCall.notes?.map((note: note) => {
-                return (
-                  <div className={classes.dialogRow} key={note.id}>
-                    {note.content}
-                  </div>
-                );
-              })}
-              {/* {selectedCall.notes?.length === 0 ? (
-                <div className={classes.dialogRow}>
-                  <div className={classes.orangeText}>No Notes</div>
+            <div className={styles.dialogRow}>Notes</div>
+
+            {selectedCall.notes?.map((note: note) => {
+              return (
+                <div className={styles.dialogRow} key={note.id}>
+                  {note.content}
                 </div>
-              ) : (
-                <></>
-              )} */}
-              <div className={classes.dialogRow}>
-                <textarea
-                  type={"area"}
-                  value={note}
-                  onChange={(e) => {
-                    setNote(e.target.value);
-                  }}
-                />
-              </div>
-            </>
-          </DialogContent>
-          <DialogActions>
-            <div
-              className={classes.extendedBtn}
-              onClick={() => {
-                setIsOpenAddNotesModal(false);
-                handlePostNote();
-              }}
-            >
-              Save
+              );
+            })}
+
+            <div className={styles.dialogRow}>
+              <textarea
+                value={note}
+                onChange={(e) => {
+                  setNote(e.target.value);
+                }}
+              />
             </div>
-            <div
-              className={classes.extendedBtn}
-              onClick={() => {
-                setIsOpenAddNotesModal(false);
-              }}
-            >
-              Close
-            </div>
-          </DialogActions>
-        </Dialog>
-        <Snackbar
-          open={isSuccessAddingNote}
-          autoHideDuration={6000}
-          onClose={() => {
-            setIsSuccessAddingNote(false);
-          }}
-          message="Posting Notes Success"
-          action={() => {
-            setIsSuccessAddingNote(false);
-          }}
-        />
+          </>
+        </Modal>
       </div>
     </>
   );
 };
 
-export default withStyles(styles)(Calls);
+export default Calls;

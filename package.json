@@ -9,8 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@mui/material": "^5.10.9",
-    "@mui/styles": "^5.10.9",
+    "antd": "^4.23.6",
     "axios": "^1.1.2",
     "moment": "^2.29.4",
     "next": "12.3.1",

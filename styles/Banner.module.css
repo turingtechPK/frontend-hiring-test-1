@@ -1,0 +1,26 @@
+.container {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #ddd;
+}
+.logo {
+  margin-left: 100px;
+}
+.SignoutContainer {
+  margin-right: 100px;
+}
+.btn {
+  background-color: #4f46f8;
+  border-radius: 2px;
+  cursor: pointer;
+  width: 100px;
+  padding: 5px 10px 5px 10px;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

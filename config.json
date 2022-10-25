@@ -2,5 +2,6 @@
   "baseURL": "https://frontend-test-api.aircall.io",
   "loginURL": "/auth/login",
   "getCallsURL": "/calls",
-  "postNoteURL": "/note"
+  "postNoteURL": "/note",
+  "refreshTokenURL": "/auth/refresh-token"
 }

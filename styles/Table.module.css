@@ -1,0 +1,77 @@
+.container {
+  display: block;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+.table {
+  border: 1px solid #d1dae5;
+}
+.darkRow {
+  background-color: #f4f4f9;
+
+  border-top-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+
+  font-weight: 800 !important;
+}
+.paginationContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+.paginationToast {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+}
+.archived {
+  background-color: #edfbfa;
+  color: #2dd2c3;
+  padding: 2px 5px 2px 5px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.unArchive {
+  background-color: #eeeeee;
+  color: #959595;
+  padding: 2px 5px 2px 5px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.blueText {
+  color: #2d5ce7;
+  text-transform: capitalize;
+}
+.redText {
+  color: #d13b4c;
+  text-transform: capitalize;
+}
+.greenText {
+  color: #4dafa4;
+  text-transform: capitalize;
+}
+.durationContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.btn {
+  background-color: #4f46f8;
+  border-radius: 2px;
+  cursor: pointer;
+  width: 110px;
+  padding: 5px 10px 5px 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
