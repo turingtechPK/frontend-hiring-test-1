@@ -24,7 +24,7 @@ function TableComponent({
 
   const columns = [
     {
-      title: "CALL Type",
+      title: "CALL TYPE",
       dataIndex: "call_type",
       key: "call_type",
       render: (_, call: call) => {
@@ -118,6 +118,7 @@ function TableComponent({
 
   return (
     <div className={styles.container}>
+    
       <Table
         dataSource={calls}
         columns={columns}
@@ -128,12 +129,15 @@ function TableComponent({
       <div className={styles.paginationContainer}>
         {" "}
         <Pagination
+          size="small"
           total={totalCalls}
+          pageSize={10}
           onChange={(pageNumber) => {
             setSkip((pageNumber - 1) * 10);
           }}
           showSizeChanger={false}
           defaultCurrent={1}
+          
         />
       </div>
       <div className={styles.paginationToast}>

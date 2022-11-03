@@ -1,10 +1,12 @@
 // import "../styles/Login.module.css"
-
+import { getCookie, hasCookie, setCookie } from "cookies-next";
 import { useEffect, useState } from "react";
+import {Input} from 'antd'
+import { UserOutlined } from '@ant-design/icons';
 import loader from "../../resources/design-images/loader.gif";
 
 import styles from "../styles/login.module.css";
-import { baseURL, loginURL } from "../config.json";
+import URLs from "../config.json";
 
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -14,27 +16,11 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
 
   const handleLogin = async (username: string, password: string) => {
-    axios
-      .post(baseURL + loginURL, { username, password })
-      .then((res) => {
-        sessionStorage.setItem("access_token", res.data.access_token);
-        sessionStorage.setItem("refresh_token", res.data.refresh_token);
-        sessionStorage.setItem("token_time", new Date().getTime().toString());
-        sessionStorage.setItem("isLoggedIn", "true");
-        router.push("calls");
-      })
-      .catch((e) => {
-        sessionStorage.setItem("access_token", "");
-        sessionStorage.setItem("refresh_token", "");
-        sessionStorage.setItem("isLoggedIn", "false");
-      });
+    await axios.post(URLs.nextLogin,{username,password}).then((res)=>{
+      router.push("calls/");
+      setCookie('access_token',res.data.access_token)
+    })
   };
-
-  useEffect(() => {
-    if (sessionStorage.getItem("isLoggedIn") === "true") {
-      router.push("/calls");
-    }
-  }, []);
 
   return (
     <div className={styles.body}>
@@ -42,25 +28,19 @@ const SignIn = () => {
         <div className={styles.row}>
           <div className={styles.labelRow}> User Name</div>
           <div className={styles.inputRow}>
-            <input
-              className={styles.input}
-              onChange={(e) => {
+          <Input placeholder="Username" prefix={<UserOutlined />} onChange={(e) => {
                 setUsername(e.target.value);
-              }}
-              type="text"
-            />
+              }}/>
+      
           </div>
         </div>
         <div className={styles.row}>
           <div className={styles.labelRow}>Password</div>
           <div className={styles.inputRow}>
-            <input
-              className={styles.input}
-              type="password"
-              onChange={(e) => {
+          <Input placeholder="Password" onChange={(e) => {
                 setPassword(e.target.value);
-              }}
-            />
+              }}/>
+           
           </div>
         </div>
         <div className={styles.row}>

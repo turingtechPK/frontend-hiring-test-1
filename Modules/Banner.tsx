@@ -9,7 +9,7 @@ function Banner() {
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
-        <Image src={logo} alt="Turing Technologies" width={300} height={40} />
+        <Image src={logo} alt="Turing Technologies" width={311} height={36.76} />
       </div>
 
       <div

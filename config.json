@@ -3,5 +3,6 @@
   "loginURL": "/auth/login",
   "getCallsURL": "/calls",
   "postNoteURL": "/note",
-  "refreshTokenURL": "/auth/refresh-token"
+  "refreshTokenURL": "/auth/refresh-token",
+  "nextLogin": "api/auth"
 }

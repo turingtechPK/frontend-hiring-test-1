@@ -1,50 +1,30 @@
-import Banner from "../Modules/Banner";
-import TableComponent from "../Modules/TableComponent";
 
-import styles from "../styles/Main.module.css";
+import Banner from "../../Modules/Banner";
+import TableComponent from "../../Modules/TableComponent";
+
+import styles from "../../styles/Main.module.css";
 import { useState, useEffect } from "react";
-
-import { formatDuration } from "../services/date-formatter";
-import { call } from "../Interfaces/calls";
-import {
-  baseURL,
-  getCallsURL,
-  postNoteURL,
-  refreshTokenURL,
-} from "../config.json";
+import { Input } from 'antd';
+import { formatDuration } from "../../services/date-formatter";
+import { call } from "../../Interfaces/calls";
+import URLS from "../../config.json";
 import axios from "axios";
-import { note } from "../Interfaces/note";
+import { getCookie,setCookie } from "cookies-next";
+import { note } from "../../Interfaces/note";
 import { Dropdown, Menu, Space, Typography, Modal, message } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-
-const Calls = () => {
+import { getCookies } from "cookies-next";
+import cookies from "next-cookies"
+const Calls = (props) => {
   const [filterBy, setFilterBy] = useState("");
   const [note, setNote] = useState("");
-  const [calls, setCalls] = useState([]);
+  const [calls, setCalls] = useState(props.data.calls);
   const [filteredCalls, setFilteredCalls] = useState([]);
   const [selectedCall, setSelectedCall] = useState<call>({});
-  const [totalCalls, setTotalCalls] = useState(0);
+  const [totalCalls, setTotalCalls] = useState(props.data.totalCalls);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [isOpenAddNotesModal, setIsOpenAddNotesModal] = useState(false);
   const [isSuccessAddingNote, setIsSuccessAddingNote] = useState(false);
-
-  const getCalls = () => {
-    axios
-      .get(baseURL + getCallsURL, {
-        headers: {
-          Authorization: `bearer ${sessionStorage.getItem("access_token")}`,
-        },
-      })
-      .then((res) => {
-        setCalls(res.data.nodes);
-        setTotalCalls(res.data.totalCount);
-        setHasNextPage(res.data.hasNextPage);
-      });
-  };
-
-  useEffect(() => {
-    getCalls();
-  }, []);
 
   useEffect(() => {
     if (filterBy !== "" && filterBy === "archived") {
@@ -59,10 +39,11 @@ const Calls = () => {
   }, [filterBy]);
 
   const handlePaginationChange = (page: number) => {
+    const access_token = getCookie('access_token')
     axios
-      .get(baseURL + getCallsURL + `?offset=${page}&limit=${10}`, {
+      .get(URLS.baseURL + URLS.getCallsURL + `?offset=${page}&limit=${10}`, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+          Authorization: `Bearer ${access_token}`,
         },
       })
       .then((res) => {
@@ -81,6 +62,7 @@ const Calls = () => {
         setHasNextPage(res.data.hasNextPage);
       });
   };
+
   const handleAddNote = (selectedID: string) => {
     setSelectedCall(
       filteredCalls.filter((call: call) => call.id === selectedID)[0]
@@ -88,20 +70,22 @@ const Calls = () => {
 
     setIsOpenAddNotesModal(true);
   };
+
   const handlePostNote = () => {
+    const access_token = getCookie('access_token')
     axios
       .post(
-        baseURL + getCallsURL + `/${selectedCall.id}` + postNoteURL,
+        URLS.baseURL + URLS.getCallsURL + `/${selectedCall.id}` + URLS.postNoteURL,
         { content: note },
         {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+            Authorization: `Bearer ${access_token}`,
           },
         }
       )
       .then((res) => {
         setIsSuccessAddingNote(true);
-        message.success("Posting Notes Success");
+        message.success("Notes are successfully added");
         const indexCalls = calls.findIndex(
           (call: call) => call.id === res.data.id
         );
@@ -149,10 +133,12 @@ const Calls = () => {
           <div className={styles.header}>Turing Technologies Frontend Test</div>
         </div>
         <div className={styles.rowFlex}>
+          <div className={styles.filterByText}>Filter By: </div>
+        
           <Dropdown overlay={menu}>
             <Typography.Link>
-              <Space>
-                Filter By
+              <Space className={styles.filterByDropDown}>
+                Status
                 <DownOutlined />
               </Space>
             </Typography.Link>
@@ -170,21 +156,20 @@ const Calls = () => {
         </div>
 
         <Modal
-          title="Add Notes"
+          title={<><div className={styles.addNotesText}>Add Notes</div><div className={styles.selectedCallID}>Call ID {selectedCall.id}</div></>}
           open={isOpenAddNotesModal}
-          onOk={() => {
+         
+          onCancel={()=>{setIsOpenAddNotesModal(false)}}
+          footer={<div onClick={() => {
             setIsOpenAddNotesModal(false);
             handlePostNote();
-          }}
-          onCancel={() => {
-            setIsOpenAddNotesModal(false);
-          }}
+          }} className={styles.extendedBtn}>Save</div>}
         >
-          <div className={styles.blueText}>Call ID {selectedCall.id}</div>
+          
           <>
             <div className={styles.dialogRow}>
-              <div>Call Type</div>
-              <div>{selectedCall.call_type}</div>
+              <div >Call Type</div>
+              <div style={{textTransform:"capitalize"}}>{selectedCall.call_type}</div>
             </div>
             <div className={styles.dialogRow}>
               <div>Duration</div>
@@ -205,23 +190,26 @@ const Calls = () => {
               <div>{selectedCall.via}</div>
             </div>
 
-            <div className={styles.dialogRow}>Notes</div>
+            <div className={styles.dialogRowNotes}>Notes</div>
 
             {selectedCall.notes?.map((note: note) => {
               return (
-                <div className={styles.dialogRow} key={note.id}>
+                <div className={styles.dialogRowNotes} key={note.id}>
                   {note.content}
                 </div>
               );
             })}
 
-            <div className={styles.dialogRow}>
-              <textarea
-                value={note}
-                onChange={(e) => {
-                  setNote(e.target.value);
-                }}
-              />
+            <div className={styles.dialogRowNotes}>
+            <Input.TextArea   
+              placeholder="Please enter any notes"
+              autoSize={{ minRows: 5, maxRows: 6 }}
+              value={note}
+              onChange={(e) => {
+                setNote(e.target.value);
+              }}
+            />
+           
             </div>
           </>
         </Modal>
@@ -229,5 +217,32 @@ const Calls = () => {
     </>
   );
 };
+
+export async function getServerSideProps(context) {
+  
+  const {access_token}=cookies(context)
+  
+  let data={}
+  await axios
+  .get(URLS.baseURL + URLS.getCallsURL, {
+    headers: {
+      Authorization: `bearer ${access_token}`,
+    },
+  }).then((res)=>{
+    data={
+      calls:res.data.nodes,
+      totalCount:res.data.totalCount,
+      hasNextPage:res.data.hasNextPage
+    }
+  })
+  .catch((e)=>{
+    console.log("return",e.response)
+  })
+ if(data)
+ console.log('data successfully returned at build time')
+  return {
+    props: {data}, // will be passed to the page component as props
+  }
+}
 
 export default Calls;
