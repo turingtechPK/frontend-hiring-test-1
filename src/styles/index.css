@@ -1,0 +1,46 @@
+@import "./Navbar.css";
+@import "./signin.css";
+@import "./call.details.css";
+@import "./pagination.css";
+@import "./notes.css";
+
+:root {
+  --bg-primary-color: #ffffff;
+  --text-color: #232323;
+  --bg-button: #078080;
+  --secondary-color: #f45d48;
+  --primary-button-color: #4f46f8;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  color: var(--text-color);
+}
+
+* {
+  box-sizing: content-box;
+}
+
+section {
+  padding: 50px 50px;
+}
+
+.btn-primary {
+  background-color: var(--bg-button);
+  padding: 20px 30px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+}
+
+.secondary-button {
+  background-color: #4f46f8;
+  padding: 5px 20px;
+  color: white;
+}
+a {
+  text-decoration: none;
+}

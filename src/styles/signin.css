@@ -1,0 +1,43 @@
+.signin-background {
+  background-color: pink;
+}
+
+.sigin-form {
+  width: 600px;
+  height: 300px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  padding: 10px;
+  box-shadow: 5px 5px 8px #888888;
+}
+
+.sigin-form label {
+  display: block;
+  width: 100px;
+  margin-bottom: 15px;
+}
+
+.sigin-form input {
+  display: block;
+  max-width: 100%;
+  margin-bottom: 30px;
+  font-size: 18px;
+  height: 30px;
+  width: 500px;
+}
+
+.login-button {
+  background-color: var(--primary-button-color);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+}
+
+.red-star {
+  color: red !important;
+}

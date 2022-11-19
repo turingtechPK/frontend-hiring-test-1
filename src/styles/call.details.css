@@ -1,0 +1,28 @@
+.call-details-page {
+  margin: 10px 30px;
+}
+
+.missed-call {
+  color: #c91d3e;
+}
+
+.voicemail-call {
+  color: #325ae7;
+}
+
+.answered-call {
+  color: #1dc9b7;
+}
+
+.archive-class {
+  text-align: center;
+  color: #1dc9b7;
+  background-color: rgba(29, 201, 183, 0.08);
+}
+
+.unarchive-class {
+  text-align: center;
+
+  color: #727272;
+  background-color: rgba(114, 114, 114, 0.12);
+}

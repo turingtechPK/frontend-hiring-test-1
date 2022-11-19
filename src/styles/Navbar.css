@@ -1,0 +1,27 @@
+.navbar {
+  display: flex;
+  position: fixed;
+  justify-content: space-between;
+  padding: 20px 80px !important;
+  background-color: var(--bg-primary-color);
+}
+
+.navbar-logo {
+  height: auto;
+  width: auto;
+  max-height: 72px;
+  max-width: 250px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: black;
+}
+
+.pending {
+  background-color: black;
+}
