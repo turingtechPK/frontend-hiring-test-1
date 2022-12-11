@@ -1,9 +1,9 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
-import { TableCell, TableRow, Button } from "@mui/material";
-
+import { TableCell, TableRow, Button, Box } from "@mui/material";
 import { TypographyCapitalizeStyles } from "../../styles/commonStyles";
+import { DATE_FORMAT } from "../../constants/appUtilsConstants";
 
 const TableListRow = ({
   row: {
@@ -17,8 +17,8 @@ const TableListRow = ({
     via,
     created_at: createdAt,
   },
+  toggleCallDetail,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <TableRow key={`main-${id}`}>
@@ -41,16 +41,19 @@ const TableListRow = ({
           {via}
         </TableCell>
         <TableCell align="center" width={300}>
-          {/* {format(new Date(created_at), DATE_FORMAT)} */}
-          {createdAt}
+          {format(new Date(createdAt), DATE_FORMAT)}
         </TableCell>
         <TableCell align="center" width={300}>
-          <TypographyCapitalizeStyles>
-            {isArchived.toString()}
-          </TypographyCapitalizeStyles>
+          <Box>
+            <TypographyCapitalizeStyles>
+              {isArchived ? "Archived" : "Unarchived"}
+            </TypographyCapitalizeStyles>
+          </Box>
         </TableCell>
         <TableCell align="center" width={300}>
-          <Button variant="filled">Add Notes</Button>
+          <Button variant="filled" onClick={() => toggleCallDetail(id)}>
+            Add Notes
+          </Button>
         </TableCell>
       </TableRow>
     </>
@@ -59,7 +62,7 @@ const TableListRow = ({
 
 TableListRow.propTypes = {
   row: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     direction: PropTypes.string.isRequired,
     from: PropTypes.string.isRequired,
     to: PropTypes.string.isRequired,

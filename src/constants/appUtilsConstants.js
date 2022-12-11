@@ -14,3 +14,29 @@ export const CALL_LIST_TABLE_HEADERS = {
   status: { id: "status", label: "status" },
   actions: { id: "actions", label: "actions" },
 };
+
+export const REQUEST_METHODS = {
+  POST: "POST",
+  GET: "GET",
+  PUT: "PUT",
+  PATCH: "PATCH",
+  DELETE: "DELETE",
+};
+
+export const REQ_STATUSES = {
+  idle: "idle",
+  loading: "loading",
+  succeeded: "succeeded",
+  failed: "failed",
+};
+
+export const FILTER_INITIAL_STATE = {
+  status: "",
+};
+
+export const PAGE_SETTINGS = {
+  page: 1,
+  perPage: 5,
+};
+
+export const DATE_FORMAT = "dd-MM-yyyy";
