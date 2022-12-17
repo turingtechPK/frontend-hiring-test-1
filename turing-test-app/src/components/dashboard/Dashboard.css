@@ -1,0 +1,31 @@
+.Dashboard-container {
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+  }
+
+.Dashboard-container-main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.Dashboard-container-internal{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.table-content{
+    flex-grow: 1;
+}
+.pagination-content{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

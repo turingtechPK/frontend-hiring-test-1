@@ -1,0 +1,23 @@
+.Auth-container {
+    height: 100vh;
+    background-color: #efefef;
+    display: flex;
+    flex-direction: column;
+  }
+
+.internal-Auth-Container{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Auth-dialog{
+    background-color: white;
+    width: 40%;
+    border-radius: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}

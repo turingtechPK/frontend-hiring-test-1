@@ -1,0 +1,22 @@
+@font-face {
+  font-family: "AvenirLTStd-Black";
+  src: local("AvenirLTStd-Black"),
+    url("./assets/font/AvenirLTStd-Black.otf") format("opentype");
+}
+@font-face {
+  font-family: "AvenirLTStd-Book";
+  src: local("AvenirLTStd-Book"),
+    url("./assets/font/AvenirLTStd-Book.otf") format("opentype");
+}
+@font-face {
+  font-family: "AvenirLTStd-Roman";
+  src: local("AvenirLTStd-Roman"),
+    url("./assets/font/AvenirLTStd-Roman.otf") format("opentype");
+}
+
+body {
+  font-family: "AvenirLTStd-Book","AvenirLTStd-Black","AvenirLTStd-Roman";
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
