@@ -61,29 +61,6 @@ const Calls = (props) => {
     setHasNextPage(hasNext);
   };
 
-  const menu = (
-    <Menu
-      selectable
-      items={[
-        {
-          key: "",
-          label: "All",
-        },
-        {
-          key: "archived",
-          label: "Archived",
-        },
-        {
-          key: "unArchived",
-          label: "Un Archived",
-        },
-      ]}
-      onSelect={(data) => {
-        setFilterBy(data.key);
-      }}
-    />
-  );
-
   const [filterBy, setFilterBy] = useState("");
   const [note, setNote] = useState("");
   const [callsData, setCallsData] = useState(calls);
