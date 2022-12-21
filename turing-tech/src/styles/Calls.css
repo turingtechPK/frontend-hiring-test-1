@@ -1,0 +1,36 @@
+.calls-body {
+    background-color: #FFFFFF;
+}
+
+h1 {
+    margin-top: 10px;
+}
+
+.dropdown, p {
+    display: inline-block;
+}
+
+.dropdown {
+    margin-left: 10px;
+    border: none;
+    padding-bottom: 12px;
+    color: #4E45F6;
+}
+
+thead {
+    background-color: #F4F4F9;
+}
+thead > tr{
+    background-color: #F4F4F9;
+    display: flex;
+    gap: 60px;
+    justify-content: space-between;
+    margin: 10px 6px;
+}
+
+td > button {
+    background-color: #4F46F8;
+    color: #FFFFFF;
+    border: none;
+    height: 35px;
+}

@@ -1,0 +1,28 @@
+* {
+  font-family: 'Avenir LT Std', sans-serif;
+  color: #232323;
+}
+
+body {
+  background-color: #F4EEEE;
+}
+
+.navbar {
+  background-color: #FFFFFF;
+  height: 10vh;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+}
+
+.navbar > button {
+  background-color: #4F46F8;
+  color: #FFFFFF;
+  border: none;
+  width: 80px;
+  height: 40px;
+}
+
+img {
+  height: 7vh;
+}

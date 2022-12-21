@@ -1,0 +1,35 @@
+.login-div-holder {
+    height: 80vh;
+}
+.important {
+    color: red;
+}
+.login-div {
+    height: 250px;
+    width: 550px;
+    background-color: #FFFFFF;
+    
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+}
+.login-div > label {
+    align-self: flex-start;
+    margin-left: 26px;
+}
+.form-control {
+    width: 500px;
+}
+.submit {
+    background-color: #1990FF;
+    color: #FFFFFF;
+    margin-top: 6px;
+    border: none;
+    padding: 6px;
+    width: 70px;
+    border-radius: 5%;
+    align-self: flex-start;
+    margin-left: 26px;
+}
