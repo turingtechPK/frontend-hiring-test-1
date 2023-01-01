@@ -1,0 +1,48 @@
+@font-face {
+  font-family: "Black";
+  src: local("Fonts"),
+    url("../../Fonts/AvenirLTStd-Black.otf") format("opentype");
+}
+@font-face {
+  font-family: "Book";
+  src: local("Fonts"),
+    url("../../Fonts/AvenirLTStd-Book.otf") format("opentype");
+}
+@font-face {
+  font-family: "Roman";
+  src: local("Fonts"),
+    url("../../Fonts/AvenirLTStd-Roman.otf") format("opentype");
+}
+
+.header {
+  background-color: #ffffff;
+  border-bottom: 2px solid rgb(190, 190, 190);
+  padding: 1em 0em 1em 4em;
+}
+.logo {
+  width: 20%;
+}
+.form_wrapper {
+  background-color: #f4eeef;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  font-family: "Roman";
+  background-color: #ffffff;
+  width: 50%;
+  padding: 1em 2em 3em 2em;
+}
+
+.form > h4 {
+  margin-top: 2em;
+}
+.form > Button {
+  margin-top: 2em;
+}
+.form > h4 > span {
+  color: red;
+}

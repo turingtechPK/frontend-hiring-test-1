@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "Black";
+  src: local("Fonts"), url("./Fonts/AvenirLTStd-Black.otf") format("opentype");
+}
+@font-face {
+  font-family: "Book";
+  src: local("Fonts"), url("./Fonts/AvenirLTStd-Book.otf") format("opentype");
+}
+@font-face {
+  font-family: "Roman";
+  src: local("Fonts"), url("./Fonts/AvenirLTStd-Roman.otf") format("opentype");
+}
+
+.App {
+  /* text-align: center; */
+  /* font-family: "Book"; */
+}
