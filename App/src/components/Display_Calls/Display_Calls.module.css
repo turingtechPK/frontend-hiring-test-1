@@ -1,0 +1,72 @@
+.wrap {
+    width: 100vw;
+    height: 100vh;
+    background-color: whitesmoke;
+    padding: 0 10%;
+
+}
+
+.body {
+
+    padding: 2% 5%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.action_btn {
+    background-color: #4F46FC !important;
+    color: white !important;
+    border-radius: 0% !important;
+    padding: 0 15px !important;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px !important;
+    transition-duration: 0.3s;
+}
+
+.action_btn:hover {
+   transform: translateY(-3px);
+}
+
+
+.header {
+    width: 100vw;
+    background-color: rgb(255, 255, 255);
+    padding: 0 5%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.btn_style {
+    width: 100px !important;
+    border-radius: 0% !important;
+    background-color: #4F46FC;
+
+
+}
+
+.table_wrap {
+    border: 1px solid rgb(224, 221, 221);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    animation:slide-top 1s cubic-bezier(.25,.46,.45,.94) both;
+    padding: 15px;
+}
+
+@keyframes slide-top{0%{transform:translateY(100px)}100%{transform:translateY(0px)}}
+
+.modal_text {
+    width: 80px;
+    font-weight: 600;
+
+}
+
+.modal_row {
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+
+    height: 30px;
+}

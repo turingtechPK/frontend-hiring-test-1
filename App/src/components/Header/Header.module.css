@@ -1,0 +1,18 @@
+.header {
+    width: 100vw;
+    background-color: rgb(255, 255, 255);
+    padding: 0 5%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.btn_style {
+    width: 100px !important;
+    border-radius: 0% !important;
+    background-color: #4F46FC;
+
+
+}
