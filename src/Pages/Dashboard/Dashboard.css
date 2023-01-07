@@ -1,0 +1,15 @@
+.dashboard_container{
+    flex: 90%;
+    /* display: flex; */
+    /* justify-content: center;/ */
+    /* align-items: center; */
+}
+.filter{
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.heading{
+    padding-left: 5%;
+}

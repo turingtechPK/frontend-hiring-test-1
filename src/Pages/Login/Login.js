@@ -1,15 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-
+import axios from "axios";
+import { API_URL } from "../../api_url";
 const Login = () => {
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [empty, setEmpty] = useState(false);
   const navigate = useNavigate();
+  const loginAuth = (data) => {
+    axios
+      .post(`${API_URL}/auth/login`, data)
+      .then((result) => {
+        localStorage.setItem("token", "Bearer " + result.data.access_token);
+        navigate("/Dashboard");
+      })
+      .catch((err) => {
+        console.log("in error");
+        console.log(err);
+      });
+  };
 
   const handleLogin = () => {
-    console.log("here");
-    navigate("/Dashboard");
+    if (username === "" || password === "") {
+      setEmpty(true);
+    } else {
+      loginAuth({ username: username, password: password });
+    }
   };
 
   return (
@@ -28,6 +47,9 @@ const Login = () => {
           placeholder="Email"
           prefix={<UserOutlined />}
           style={{ borderRadius: 0 }}
+          status={empty ? "error" : null}
+          onFocus={() => setEmpty(false)}
+          onChange={(e) => setUserName(e.target.value)}
         />
         <p>
           <span style={{ color: "red" }}>*</span>Password
@@ -36,6 +58,8 @@ const Login = () => {
           placeholder="Password"
           prefix={<LockOutlined />}
           style={{ borderRadius: 0 }}
+          status={empty ? "error" : null}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         <Button
