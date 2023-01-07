@@ -135,6 +135,13 @@ const CustomTable = ({ callsData, setModalOpen, setSelectedCall }) => {
   };
   return (
     <Table
+      onRow={() => {
+        return {
+          onClick: (event) => {
+            setModalOpen(true);
+          },
+        };
+      }}
       columns={columns}
       dataSource={callsData}
       size="small"
