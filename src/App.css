@@ -1,0 +1,137 @@
+@font-face {
+  font-family: 'Avenir-Roman';
+  src: url('./assets/font/AvenirLTStd-Roman.otf');
+}
+
+:root {
+  --tt-primary: #4f46f8;
+  --tt-secondary: #4bd4c5;
+  --tt-info: #757575;
+  --tt-danger: #cb2444;
+
+  --tt-secondary-light: #4bd4c51a;
+  --tt-info-light: #7575751a;
+}
+
+body {
+  font-family: 'Avenir-Roman' !important;
+}
+tr > td {
+  border: none !important;
+}
+tr > th {
+  border: none !important;
+}
+tr > td:first-child {
+  border-left: solid 1px #ccc !important;
+}
+tr > td:last-child {
+  border-right: solid 1px #ccc !important;
+}
+tr > th:first-child {
+  border-left: solid 1px #ccc !important;
+  border-top-left-radius: 4px !important;
+}
+tr > th:last-child {
+  border-right: solid 1px #ccc !important;
+}
+.text-tt-primary {
+  color: var(--tt-primary);
+}
+.text-tt-secondary {
+  color: var(--tt-secondary);
+}
+.text-tt-info {
+  color: var(--tt-info);
+}
+.text-tt-danger {
+  color: var(--tt-danger);
+}
+td {
+  font-size: small;
+}
+th {
+  font-size: small;
+  background-color: #f4f4f9 !important;
+}
+.btn-tt {
+  font-size: small;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 2px;
+  width: 80px;
+}
+
+.btn-tt-lg {
+  font-size: medium;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 2px;
+  width: 100px;
+}
+
+.btn-tt-primary {
+  background-color: var(--tt-primary);
+  color: rgb(245, 245, 245);
+}
+
+.btn-tt-secondary {
+  background-color: var(--tt-secondary-light);
+  color: var(--tt-secondary);
+}
+
+.btn-tt-info {
+  background-color: var(--tt-info-light);
+  color: var(--tt-info);
+}
+.tt-navbar {
+  display: flex;
+  padding: 15px;
+  justify-content: space-between;
+  border-bottom: solid 1px #ccc;
+  position: fixed;
+  width: 100vw;
+  background-color: #fff;
+}
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding-block: 30px;
+  align-items: center;
+}
+.spinner-container > span {
+  margin-right: 1rem;
+}
+.login-container {
+  background: #f3eeee;
+  height: 100vh;
+  padding: 3rem;
+}
+.call-container {
+  height: 100vh;
+  padding: 3rem;
+  padding: 1rem 3rem;
+}
+.login-container > div,
+.call-container > div {
+  margin-top: 5rem !important;
+}
+
+.btn-tt-login {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  color: #f3eeee;
+  width: 65px;
+
+  font-size: medium;
+}
+.btn-tt:disabled {
+  pointer-events: none;
+  opacity: 0.7;
+}
+.btn-tt:hover {
+  opacity: 0.9;
+}
+.mr-2 {
+  margin-right: 0.5rem;
+}
