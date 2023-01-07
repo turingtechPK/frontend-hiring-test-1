@@ -11,7 +11,8 @@ const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState();
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedCall, setSelectedCall] = useState({});
+  const [selectedCall, setSelectedCall] = useState();
+
   useEffect(() => {
     getCalls();
   }, [currentPage]);
@@ -40,7 +41,7 @@ const Dashboard = () => {
       <p className="heading">Turing Technologies Frontend Test</p>
       <div className="filter">
         <p style={{ color: "grey", marginRight: "5px" }}>Filter by: </p>
-        <DropSelect />
+        <DropSelect calls={calls} setCalls={setCalls} />
       </div>
       <div className="table_container">
         <CustomTable

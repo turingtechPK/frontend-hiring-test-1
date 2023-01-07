@@ -1,6 +1,7 @@
 import React from "react";
 import { Table } from "antd";
 import { formatDate, formatTime } from "./HelperFuncs";
+import "./CustomTable.css";
 const CustomTable = ({ callsData, setModalOpen, setSelectedCall }) => {
   const columns = [
     {
@@ -108,7 +109,6 @@ const CustomTable = ({ callsData, setModalOpen, setSelectedCall }) => {
     },
     {
       title: "ACTIONS",
-      // dataIndex: "action",
       key: "details",
       render: (details) => (
         <div
