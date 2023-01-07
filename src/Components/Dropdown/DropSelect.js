@@ -20,10 +20,10 @@ const DropSelect = () => (
     menu={{
       items,
       selectable: true,
-      defaultSelectedKeys: ["3"],
+      defaultSelectedKeys: ["1"],
     }}
   >
-    <Typography.Link>
+    <Typography.Link style={{ color: "#4f46f8" }}>
       <Space>
         Call Type
         <DownOutlined />
