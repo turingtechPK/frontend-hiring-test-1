@@ -36,3 +36,27 @@ export const getPaginationData = async (offset: number) => {
     },
   });
 };
+
+export const addNote = async (id: string, note: string) => {
+  return await axios.post(
+    `${baseUrl}/calls/${id}/note`,
+    { content: note },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    }
+  );
+};
+
+export const archiveCall = async (id: string) => {
+  return await axios.put(
+    `${baseUrl}/calls/${id}/archive`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    }
+  );
+};

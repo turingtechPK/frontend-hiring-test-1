@@ -13,19 +13,17 @@ function SignIn() {
   const ref = useRef();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(4);
   const [auth, setauth] = useState(false);
   useEffect(() => {
     const delay = time * 60000;
     if (localStorage.getItem("access_token")) {
-      console.log(localStorage.getItem("access_token"));
       setauth(true);
     }
     if (time > 0) {
       var intervalId = setInterval(async () => {
         const res = await refreshCall();
         localStorage.setItem("access_token", res.data.access_token);
-        console.log(res);
         setTime(1);
       }, delay);
     }
@@ -42,10 +40,9 @@ function SignIn() {
               onSubmit={async (e) => {
                 e.preventDefault();
                 const res = await siginCall(userName, password);
-                setTime(1);
+                setTime(7);
                 localStorage.setItem("access_token", res.data.access_token);
                 localStorage.setItem("refresh_token", res.data.refresh_token);
-                console.log(res);
               }}
             >
               <div className="mb-4">
