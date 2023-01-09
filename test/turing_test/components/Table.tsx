@@ -102,7 +102,7 @@ function Table() {
     {
       dataField: "",
       text: "ACTIONS",
-      formatter: (cell, row) => {
+      formatter: (cell: any, row: any) => {
         return (
           <>
             <button
@@ -188,7 +188,7 @@ function Table() {
         <>
           <div className="backdrop"></div>
           <DetailModal
-            row={curRow}
+            rowData={curRow}
             setReloadRes={setReloadRes}
             closeModal={() => {
               setModalStatus(false);

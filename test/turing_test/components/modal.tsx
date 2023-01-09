@@ -2,20 +2,12 @@ import { useState } from "react";
 import { addNote } from "../utilities/api";
 
 interface props {
-  row: {
-    id: string;
-    call_type: string;
-    duration: number;
-    from: string;
-    to: string;
-    via: string;
-    notes: any;
-  };
+  rowData: any;
   closeModal: Function;
   setReloadRes: Function;
 }
 
-function DetailModal({ row, closeModal, setReloadRes }: props) {
+function DetailModal({ rowData, closeModal, setReloadRes }: props) {
   const [note, setNote] = useState("");
   return (
     <div className="modal">
@@ -23,7 +15,7 @@ function DetailModal({ row, closeModal, setReloadRes }: props) {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">
-              Add Notes <br /> <span className="id">{row.id}</span>
+              Add Notes <br /> <span className="id">{rowData.id}</span>
             </h5>
             <button
               type="button"
@@ -41,31 +33,31 @@ function DetailModal({ row, closeModal, setReloadRes }: props) {
                 <td>
                   <b>Call Type</b>
                 </td>
-                <td>{row.call_type}</td>
+                <td>{rowData.call_type}</td>
               </tr>
               <tr>
                 <td>
                   <b>Duration</b>
                 </td>
-                <td>{row.duration}</td>
+                <td>{rowData.duration}</td>
               </tr>
               <tr>
                 <td>
                   <b>From</b>
                 </td>
-                <td>{row.from}</td>
+                <td>{rowData.from}</td>
               </tr>
               <tr>
                 <td>
                   <b>To</b>
                 </td>
-                <td>{row.to}</td>
+                <td>{rowData.to}</td>
               </tr>
               <tr>
                 <td>
                   <b>Via</b>
                 </td>
-                <td>{row.via}</td>
+                <td>{rowData.via}</td>
               </tr>
               <tr>
                 <td>
@@ -73,7 +65,7 @@ function DetailModal({ row, closeModal, setReloadRes }: props) {
                 </td>
                 <td>
                   <ul>
-                    {row.notes.map((item: any) => {
+                    {rowData.notes.map((item: any) => {
                       return <li key={item.id}>{item.content}</li>;
                     })}
                   </ul>
@@ -95,7 +87,7 @@ function DetailModal({ row, closeModal, setReloadRes }: props) {
               className="btn btn-note btn-save"
               onClick={async (e) => {
                 e.preventDefault();
-                const res = await addNote(row.id, note);
+                const res = await addNote(rowData.id, note);
                 setReloadRes(res.data);
                 closeModal();
               }}
