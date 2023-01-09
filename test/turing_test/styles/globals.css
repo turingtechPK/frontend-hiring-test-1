@@ -1,0 +1,108 @@
+.navbar {
+  background-color: #fff;
+  padding: 20px;
+  border-bottom: 1px solid #d3d5d8;
+}
+.navbar-brand {
+  margin-left: 30px;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+.signIn-container {
+  width: 100%;
+  background-color: #f4eeee;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card-custom {
+  width: 40%;
+  padding: 40px 30px;
+  border: none;
+}
+.required {
+  color: red;
+}
+.form-control {
+  border-radius: 0;
+}
+.btn {
+  border-radius: 0;
+}
+.btn-login {
+  background-color: #1990ff;
+  color: white;
+}
+.react-bootstrap-table {
+  width: 95%;
+  margin: auto;
+  border: 2px solid #e0e3e7;
+  border-bottom: none;
+  border-top: none;
+}
+table,
+th,
+td {
+  border-left: none;
+  border-right: none;
+}
+.react-bootstrap-table thead {
+  background-color: #f4f4f9;
+}
+.voicemail {
+  color: #365de7;
+}
+.answered {
+  color: #9fe8e0;
+}
+.missed {
+  color: #cb2847;
+}
+.status {
+  display: inline-block;
+  padding: 5px;
+}
+.Archived {
+  background-color: #edfbfa;
+  color: #6adcd0;
+  border-radius: 3px;
+}
+.Unarchive {
+  background-color: #eeeeee;
+  color: #727272;
+  border-radius: 3px;
+}
+.btn-note,
+.btn-note:hover {
+  background-color: #4f46f8;
+  color: white;
+}
+.pagination {
+  width: 95%;
+  margin: auto;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 990;
+}
+.modal {
+  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.id {
+  color: #4f46f8;
+  font-size: 14px;
+}
