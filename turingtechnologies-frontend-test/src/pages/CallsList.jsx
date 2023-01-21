@@ -9,7 +9,6 @@ function CallsList() {
     const {calls,fetchCalls} = useContext(CallsContext)
     useEffect(()=>{
         fetchCalls()
-        console.log(calls)
     },[calls])
   return (
     <div>
@@ -31,7 +30,7 @@ function CallsList() {
             </tr>
         </thead>
         <tbody>
-             {calls ? calls.nodes.map((item)=>(
+             {calls ? calls.map((item)=>(
               // <div key={item.id}>{item.direction}</div>
                <tr key={item.id}>
                <td className={item.call_type==='answered'?'text-primary': item.call_type==='voicemail'?'text-success':'text-danger'}>{item.call_type.charAt(0).toUpperCase() + item.call_type.slice(1)}</td>

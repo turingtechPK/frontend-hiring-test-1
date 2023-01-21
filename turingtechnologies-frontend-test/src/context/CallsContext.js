@@ -6,7 +6,7 @@ export const CallsProvider = ({children}) => {
     let api_token = ""
     const [accessToken,setAccessToken] = useState('')
     const [refreshToken,setRefreshToken] = useState('')
-    const [calls,setcalls] = useState({})
+    const [calls,setcalls] = useState([])
    const addUserAuthentication = async (userlogin) => {
     const response = await fetch('https://frontend-test-api.aircall.io/auth/login',{
         method: 'POST',
@@ -34,8 +34,8 @@ export const CallsProvider = ({children}) => {
         },
     })
     const data = await response.json()
-    console.log(data)
-    setcalls(data)
+    console.log(data.nodes)
+    setcalls(data.nodes)
    }
    return <CallsContext.Provider value={{
     calls,
