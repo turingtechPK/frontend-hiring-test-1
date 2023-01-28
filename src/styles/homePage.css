@@ -1,0 +1,120 @@
+.home-page-wrapper {
+    padding: 20px;
+}
+.top-heading {
+    font-family: "avenir";
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 28px;
+    font-style: normal;
+    text-align: left;
+    color: #232323;
+}
+.filtering-div label {
+    /*font-family: "avenir";*/
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    font-style: normal;
+    text-align: left;
+    color: #232323;
+}
+.calls-table {
+    margin-top: 32px;
+    width: 100%;
+    border-spacing: 0;
+    border-collapse:collapse
+}
+.calls-table .add-note-btn {
+    /*font-family: "avenir";*/
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    font-style: normal;
+    text-align: left;
+    color: #ffffff;
+}
+.calls-table tr {
+    border: 1px solid #CBD6E2;
+}
+.calls-table thead th {
+    /*font-family: "avenir";*/
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 17px;
+    font-style: normal;
+    text-align: left;
+    color: #232323;
+}
+.calls-table thead {
+    background: #f4f4f9
+}
+.calls-table tr td, .calls-table tr th {
+    padding: 31px 27px;
+}
+.calls-table .archived, .calls-table .unarchived {
+    /*font-family: "avenir";*/
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    font-style: normal;
+    text-align: left;
+    border-radius: 2px;
+    padding: 7px 9px;
+}
+.calls-table .archived {
+    color: #1dc9b7;
+    background: rgba(29,201,183,0.08 )
+}
+.calls-table .unarchived {
+     color: #727272;
+     background: rgba(114,114,114,0.12 )
+}
+.calls-table .missed, .calls-table .answered, .calls-table .voicemail {
+    /*font-family: "avenir";*/
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 24px;
+    font-style: normal;
+    text-align: left;
+    text-transform: capitalize;
+}
+.calls-table .missed {
+    color: #c91d3e;
+}
+.calls-table .answered {
+    color: #1dc9b7;
+}
+.calls-table .voicemail {
+     color: #325ae7;
+}
+.calls-table .direction {
+    /*font-family: "avenir";*/
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 24px;
+    font-style: normal;
+    text-align: left;
+    color: #325ae7;
+    text-transform: capitalize;
+}
+.calls-table .duration {
+    display: flex;
+    flex-direction: column;
+    /*font-family: "avenir";*/
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 24px;
+    font-style: normal;
+    text-align: left;
+}
+.calls-table .duration span.bl {
+    color: #325ae7;
+}
+.calls-pagination {
+    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

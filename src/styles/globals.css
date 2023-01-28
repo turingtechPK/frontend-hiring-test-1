@@ -1,0 +1,28 @@
+@import "login.css";
+@import "homePage.css";
+@import "addNoteModal.css";
+
+@font-face {
+    font-family: "avenir";
+    src: url("../../design-files/font/AvenirLTStd-Black.otf") format("otf");
+    src: url("../../design-files/font/AvenirLTStd-Book.otf") format("otf");
+    src: url("../../design-files/font/AvenirLTStd-Roman.otf") format("otf");
+    /* Add other formats as you see fit */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+button {
+    cursor: pointer;
+}
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    padding: 20px 14px;
+    margin: 0;
+    border-bottom: 1px solid #D3D5D8;
+}

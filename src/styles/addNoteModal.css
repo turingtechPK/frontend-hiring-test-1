@@ -1,0 +1,62 @@
+.add-note-modal .add-note-title {
+    /*font-family: "avenir";*/
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 18px;
+    font-style: normal;
+    text-align: left;
+    color: #232323;
+}
+.add-note-modal .title-id {
+    /*font-family: "avenir";*/
+    margin-top: 15px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 12px;
+    font-style: normal;
+    text-align: left;
+    color: #4f46f8;
+}
+.add-note-modal .data-label {
+    /*font-family: "avenir";*/
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 17px;
+    font-style: normal;
+    text-align: left;
+    color: #232323;
+    width: 70px;
+}
+.add-note-modal .data-value {
+    /*font-family: "avenir";*/
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 24px;
+    font-style: normal;
+    text-align: left;
+    color: #232323;
+    text-transform: capitalize;
+}
+.add-note-modal .bl-value {
+    color: #4f46f8;
+}
+.add-note-modal .note-area-title {
+    /*font-family: "avenir";*/
+    margin-top: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    font-style: normal;
+    text-align: left;
+    color: #232323;
+}
+.add-note-modal .note-area {
+    margin-top: 8px;
+    width: 100%;
+    border-color: #d3d5d8;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    background: #ffffff;
+    padding: 20px;
+}
