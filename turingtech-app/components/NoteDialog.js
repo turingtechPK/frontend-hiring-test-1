@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
   textStyle: {
     fontSize: "12px",
     width: "60px",
-    fontWeight: "400",
+    fontWeight: "700",
   },
 
   saveButton: {
