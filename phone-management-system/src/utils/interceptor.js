@@ -21,6 +21,7 @@ baseInstance.interceptors.request.use(async (config) => {
 
   if (access_token) {
     config.headers.authorization = "Bearer " + access_token;
+    // for refresh token
     // const user = jwtDecode(access_token);
     // const expTime = user?.exp * 1000;
     // if (expTime - Date.now() <= 600000) {
