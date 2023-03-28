@@ -122,7 +122,6 @@ function CallList() {
           color="#4f46f8"
           cursor="pointer"
           width="80px"
-          padding="2px"
           onClick={() => {
             onOpen();
             setRecord(record);

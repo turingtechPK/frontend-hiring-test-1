@@ -5,7 +5,7 @@ const CustomBtn = ({ text, color, ...props }) => {
   return (
     <Box
       bg={color}
-      padding={props.padding ? props.padding : "10px"}
+      padding={props.padding}
       borderRadius="2px"
       cursor="pointer"
       {...props}
