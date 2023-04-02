@@ -1,0 +1,1 @@
+export const BASE_URL='https://frontend-test-api.aircall.io' //ideally this should be in a .env file
