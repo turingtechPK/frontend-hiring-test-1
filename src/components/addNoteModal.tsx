@@ -10,24 +10,24 @@ import {
   Button,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { CallStateRaw, NoteStateRaw } from "../state/types";
+import { CallStateRaw } from "../state/types";
 import { toSentenceCase } from "../utils/helpers";
-import { createNote } from "../state/ducks/calls/callActions";
 
 interface AddNoteModalProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
   onClose: () => void;
   data: CallStateRaw;
-  createNote: (text:String, id:String) => void;
+  createNote: (text:string, id:string) => void;
 }
 
 const AddNoteModal: React.FC<AddNoteModalProps> = ({
   visible,
   onClose,
   data,
+  createNote
 }) => {
-    const [text, setText] = useState<String>('')
+    const [text, setText] = useState<string>('')
   return (
     <Dialog
       open={visible}
@@ -110,8 +110,8 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
           variant="contained"
           sx={{ backgroundColor: "#4F46F8" }}
           onClick={()=>{
-            console.log('save')
             createNote(text, data.id)
+            onClose();
         }}
         >
           Save

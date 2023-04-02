@@ -1,4 +1,4 @@
-import { login } from "./authApi";
+import { login, startRefreshTimer } from "./authApi";
 import { loginRequest, loginSuccess, loginFailure, logout } from './authSlice';
 
 type LoginPayload = {
@@ -12,7 +12,7 @@ export const userLogin = (payload: LoginPayload) => async (dispatch: any) => {
     const response = await login(payload);
     sessionStorage.setItem("access_token", response.data.access_token);
     sessionStorage.setItem("refresh_token", response.data.refresh_token);
-    console.log("login success", response)
+    startRefreshTimer()
     dispatch(loginSuccess()); 
   } catch (error: any) {
     dispatch(loginFailure(error.message));
@@ -23,3 +23,4 @@ export const userLogout =()=>async(dispatch:any)=>{
   sessionStorage.clear();
   dispatch(logout());
 }
+

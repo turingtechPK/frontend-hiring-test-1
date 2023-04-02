@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import { Box, Typography, MenuItem, Menu, Button } from "@mui/material";
 
 interface IProps {
-  status: String | boolean;
-  setStatus: React.Dispatch<React.SetStateAction<String | boolean>>;
+  status: string | boolean;
+  setStatus: React.Dispatch<React.SetStateAction<string | boolean>>;
 }
 
 const Dropdown: React.FC<IProps> = ({ status, setStatus }) => {

@@ -1,7 +1,7 @@
 import { IApplicationState } from "../state/store";
-import { archiveCall } from "../state/ducks/calls/callActions";
+import { archiveCall, fetchCalls, updateData } from "../state/ducks/calls/callActions";
 import { connect } from "react-redux";
-import TableViewPage from "../pages/TableViewPage";
+import TableViewPage from "../pages/tableViewPage";
 
 
 const mapStateToProps = (state: IApplicationState) => ({
@@ -9,7 +9,7 @@ const mapStateToProps = (state: IApplicationState) => ({
 });
 
 const mapDispatchToProps = {
-  archiveCall
+  archiveCall, fetchCalls, updateData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableViewPage);

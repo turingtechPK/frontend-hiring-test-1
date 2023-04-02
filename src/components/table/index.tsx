@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Box,
   Table,
@@ -12,16 +12,24 @@ import {
   Button,
 } from "@mui/material";
 import { CallStateRaw } from "../../state/types";
-import formatDuration, { extractDateFromString, toSentenceCase } from "../../utils/helpers";
+import formatDuration, {
+  extractDateFromString,
+  toSentenceCase,
+} from "../../utils/helpers";
 
 interface IProps {
   tableData: CallStateRaw[];
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setItem: React.Dispatch<React.SetStateAction<CallStateRaw|undefined>>;
+  setItem: React.Dispatch<React.SetStateAction<CallStateRaw | undefined>>;
+  archiveCall: (id: string) => Promise<void>;
 }
 
-const CallTable: React.FC<IProps> = ({ tableData, setItem, setVisible }) => {
-  console.log("tableData: ", tableData);
+const CallTable: React.FC<IProps> = ({
+  tableData,
+  setItem,
+  setVisible,
+  archiveCall,
+}) => {
 
   return (
     <>
@@ -65,9 +73,13 @@ const CallTable: React.FC<IProps> = ({ tableData, setItem, setVisible }) => {
                     {toSentenceCase(row.call_type)}
                   </Typography>
                 </TableCell>
-                <TableCell sx={{ color: "#355CE7" }}>{toSentenceCase(row.direction)}</TableCell>
+                <TableCell sx={{ color: "#355CE7" }}>
+                  {toSentenceCase(row.direction)}
+                </TableCell>
                 <TableCell>
-                  <Typography>{formatDuration(Number(row.duration))}</Typography>
+                  <Typography>
+                    {formatDuration(Number(row.duration))}
+                  </Typography>
                   <Typography sx={{ color: "#355CE7" }}>
                     {row.duration.toString()} seconds
                   </Typography>
@@ -75,20 +87,24 @@ const CallTable: React.FC<IProps> = ({ tableData, setItem, setVisible }) => {
                 <TableCell>{row.from}</TableCell>
                 <TableCell>{row.to}</TableCell>
                 <TableCell>{row.via}</TableCell>
-                <TableCell>{extractDateFromString(row.created_at.toString()).toString()}</TableCell>
+                <TableCell>
+                  {extractDateFromString(row.created_at.toString()).toString()}
+                </TableCell>
                 <TableCell>
                   <Box
                     sx={{
-                      backgroundColor:
-                        row.is_archived ? "#EDFBF9" : "#EEEEEE",
+                      backgroundColor: row.is_archived ? "#EDFBF9" : "#EEEEEE",
                       color: row.is_archived ? "#24CAB9" : "#797979",
                       borderRadius: "0px",
                       paddingY: "4px",
                       paddingX: "8px",
                       textAlign: "center",
                     }}
+                    onClick={() => {
+                      archiveCall(row.id);
+                    }}
                   >
-                    {row.is_archived?"Archived":"Unarchived"}
+                    {row.is_archived ? "Archived" : "Unarchived"}
                   </Box>
                 </TableCell>
                 <TableCell>
@@ -106,7 +122,6 @@ const CallTable: React.FC<IProps> = ({ tableData, setItem, setVisible }) => {
                       },
                     }}
                     onClick={() => {
-                      console.log("Add Note");
                       setItem(row);
                       setVisible(true);
                     }}

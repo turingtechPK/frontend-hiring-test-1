@@ -1,37 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { fetchCalls } from "../state/ducks/calls/callActions";
-import { CallResponse, CallState } from "../state/types";
-import { ActionType } from "typesafe-actions";
+import React, { useEffect } from "react";
 import SignInPage from "../pages/signin";
-import CallTable from "./table";
-import Navbar from "./Navbar";
-import TableViewPage from "../pages/TableViewPage";
 import TableViewContainer from "../container/tableViewContainer";
+import Navbar from "./Navbar";
 
 interface IProps {
-  fetchCalls: (offset: Number, limit: Number) => Promise<void>;
-  // tableData: CallResponse;
+  fetchCalls: (currentPage: number) => Promise<void>;
+  userLogout: () => Promise<void>;
   isAuth: boolean;
 }
 
-const MainView: React.FC<IProps> = ({ fetchCalls, isAuth }) => {
+const MainView: React.FC<IProps> = ({ fetchCalls, isAuth, userLogout }) => {
   useEffect(() => {
-    isAuth && fetchCalls(0, 10);
+    isAuth && fetchCalls(0);
   }, [isAuth]);
 
-  const handleLoginClick = () => {
-    console.log("Login button clicked");
+  const handleLogout = () => {
+    userLogout();
   };
   return (
     <>
-      <Navbar onLoginClick={handleLoginClick}/>
-
-      {!isAuth && <SignInPage />}
-      
-      <TableViewContainer/>
-      {/* <TableViewPage tableData={tableData}/> */}
-
-      {/* <CallTable data={tableData}/> */}
+      <Navbar onLoginClick={handleLogout} isAuth={isAuth}/>
+      {isAuth ? <TableViewContainer /> : <SignInPage />}
     </>
   );
 };

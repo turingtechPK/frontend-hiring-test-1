@@ -1,28 +1,29 @@
-import { setLoading, setCalls, setErrors, addNote } from "./callSlice";
-import { getCalls, addNewNote } from "./callApi";
+import { setLoading, setCalls, setErrors, addNote, updateCalls } from "./callSlice";
+import { getCalls, addNewNote, setArchiveCall } from "./callApi";
+import { RECORDS_PER_PAGE } from "../../../utils/constants";
+import { CallStateRaw } from "../../types";
 
-export const fetchCalls =
-  (offset: Number, limit: Number) => async (dispatch: any) => {
-    try {
-      dispatch(setLoading(true));
-      const response = await getCalls(offset, limit);
-      dispatch(setCalls(response.data));
-    } catch (err: any) {
-      dispatch(setErrors([err.message]));
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
+export const fetchCalls = (page: number) => async (dispatch: any) => {
+  try {
+    dispatch(setLoading(true));
+    const offset = page * RECORDS_PER_PAGE;
+    const response = await getCalls(offset, RECORDS_PER_PAGE);
+    dispatch(setCalls(response.data));
+  } catch (err: any) {
+    dispatch(setErrors([err.message]));
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
 
 export const createNote =
-  (content: String, id: String) => async (dispatch: any) => {
+  (content: string, id: string) => async (dispatch: any) => {
     try {
       dispatch(setLoading(true));
       const response = await addNewNote(content, id);
       if (response.data.id) {
         //confirm this
         dispatch(addNote());
-        console.log("Note added!");
       }
       throw new Error("Note not added!");
     } catch (err: any) {
@@ -32,10 +33,10 @@ export const createNote =
     }
   };
 
-export const archiveCall = (id: String) => async (dispatch: any) => {
+export const archiveCall = (id: string) => async (dispatch: any) => {
   try {
     dispatch(setLoading(true));
-    archiveCall(id);
+    await setArchiveCall(id);
     console.log("Call archived!");
   } catch (err: any) {
     dispatch(setErrors([err.message]));
@@ -43,3 +44,14 @@ export const archiveCall = (id: String) => async (dispatch: any) => {
     dispatch(setLoading(false));
   }
 };
+
+export const updateData=(data:CallStateRaw[])=>async (dispatch:any)=>{
+  try{
+    dispatch(setLoading(true));
+    dispatch(updateCalls(data));
+  }catch(err:any){
+    dispatch(setErrors([err.message]));
+  }finally{
+    dispatch(setLoading(false));
+  }
+}

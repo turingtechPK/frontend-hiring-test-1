@@ -1,16 +1,25 @@
 import React, { useState } from "react";
 import { Box, Typography, Pagination } from "@mui/material";
+import { RECORDS_PER_PAGE } from "../../utils/constants";
+interface AddNoteModalProps {
+  totalCount: number;
+  hasNextPage: boolean;
+  fetchMoreData: (page: number) => void;
+}
 
-const TablePagination = () => {
-  const [totalResults, setTotalResults] = React.useState(25);
-  const rowsPerPage = 10;
-  const [currentPage, setCurrentPage] = React.useState(0);
+const TablePagination: React.FC<AddNoteModalProps> = ({
+  totalCount,
+  hasNextPage,
+  fetchMoreData,
+}) => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
     newPage: number
   ) => {
-    setCurrentPage(newPage - 1);
+      fetchMoreData(newPage);
+      setCurrentPage(newPage);
   };
   return (
     <>
@@ -19,24 +28,19 @@ const TablePagination = () => {
       >
         <Pagination
           shape="rounded"
-          count={10} // Set the count of pages to 10
-          page={currentPage + 1}
+          count={Math.floor(totalCount / RECORDS_PER_PAGE)}
+          page={currentPage}
           onChange={handlePageChange}
-          sx={{
-            "& .Mui-selected": {
-              backgroundColor: "blue",
-              color: "white",
-            },
-          }}
+          color="primary"
         />
       </Box>
       <Box
         sx={{ display: "flex", justifyContent: "center", marginTop: "0.5rem" }}
       >
         <Typography variant="body1">
-          {`${currentPage * rowsPerPage + 1}-${
-            (currentPage + 1) * rowsPerPage
-          } out of ${totalResults} results`}
+          {`${(currentPage-1) * RECORDS_PER_PAGE + 1}-${
+            (currentPage) * RECORDS_PER_PAGE
+          } out of ${totalCount} results`}
         </Typography>
       </Box>
     </>

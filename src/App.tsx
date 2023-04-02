@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import TableViewPage from './pages/TableViewPage';
+import TableViewPage from './pages/tableViewPage';
 import SignInPage from './pages/signin';
 // import {Router, Switch, Route, Redirect} from 'react-router-dom'
 import Navbar from './components/Navbar';
