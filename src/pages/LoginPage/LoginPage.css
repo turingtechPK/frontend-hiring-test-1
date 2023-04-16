@@ -1,0 +1,15 @@
+.LoginPage {
+    background-color: #f3edee;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    text-align: left;
+}
+
+.button-container {
+    margin: 5%;
+}

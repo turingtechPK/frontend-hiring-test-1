@@ -1,0 +1,16 @@
+.Main {
+
+    padding: 2% 6%;
+    text-align: left;
+}
+
+.dropdown-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.dropdown {
+    margin-left: 3%;
+}

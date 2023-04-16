@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'Avenir-Black';
+  src: local("AvenirLTStd-Black.otf"),
+    url("./font/AvenirLTStd-Black.otf") format("opentype")
+}
+
+.App {
+  text-align: center;
+  font-family: 'Avenir-Black';
+}
