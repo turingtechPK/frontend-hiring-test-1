@@ -1,8 +1,15 @@
 import Link from 'next/link'
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useAuth } from '@/context/AuthContext';
 
 const Header = () => {
+    const { logout, isLoggedIn } = useAuth();
+
+    const handleLogout = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        logout();
+    }
 
 
     return (
@@ -15,6 +22,9 @@ const Header = () => {
                         height={20}
                     />
                 </Link>
+                <form onSubmit={handleLogout} >
+                    {isLoggedIn && <button className='sm:px-6 sm:py-2 sm:text-sm text-xs py-2 px-3 bg-primary rounded-sm text-white hover:bg-primary/70 ease-in 300'>Logout</button>}
+                </form>
             </div>
         </div >
     )
