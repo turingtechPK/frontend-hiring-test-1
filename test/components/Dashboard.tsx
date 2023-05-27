@@ -1,10 +1,29 @@
 import { useState } from 'react';
 import { AiOutlineDown } from 'react-icons/ai'
-
+import useFetch, { Call } from '@/utils/useFetch';
+import AccessibleTable from './Table';
+import { useAuth } from '@/context/AuthContext';
+interface IProps {
+    isLoading: boolean
+    error: string
+    callData: Call[]
+    filteredData: Call[]
+    totalCount: number
+    hasNextPage: boolean
+    setFilteredData: React.Dispatch<React.SetStateAction<Call[]>>
+    setCallData: React.Dispatch<React.SetStateAction<Call[]>>
+}
 
 const Dashboard = () => {
     const [filterType, setFilterType] = useState('Status');
+    const [offset, setOffset] = useState(0);
+    const [open, setOpen] = useState(false);
     const [openDropdown, setOpenDropDown] = useState(false);
+
+    const handleModalClose = () => { setOpen(!open) };
+
+    const { isLoading, error, callData, filteredData, totalCount, hasNextPage, setFilteredData, setCallData }: IProps = useFetch(offset);
+    const { logout } = useAuth();
 
 
     return (
@@ -29,6 +48,9 @@ const Dashboard = () => {
                             Unarchived
                         </li>
                     </ul>
+                </div>
+                <div>
+                    <AccessibleTable data={callData} />
                 </div>
             </div>
         </div>
