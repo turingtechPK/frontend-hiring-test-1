@@ -12,9 +12,11 @@ import { Call } from '@/utils/useFetch';
 
 interface IProps {
     data: Call[]
+    handleModalClose: any
+    setCallDetails: any
 }
 
-const AccessibleTable = ({ data }: IProps) => {
+const AccessibleTable = ({ data, handleModalClose, setCallDetails }: IProps) => {
 
     const formatTime = (seconds: number) => {
         var minutes = Math.floor(seconds / 60);
@@ -28,13 +30,8 @@ const AccessibleTable = ({ data }: IProps) => {
 
     const ArchiveCall = (id: string) => {
         axios.put(`/calls/${id}/archive`, {}, { headers: { 'Authorization': `Bearer ${Cookies.get('accessToken')}` } })
-            .then((res) => {
-                console.log("success");
-            })
-            .catch((err) => {
-                console.log(err.code);
-                console.log(Object.keys(err));
-            })
+            .then((res) => { })
+            .catch((err) => { })
     }
 
     return (
@@ -68,8 +65,8 @@ const AccessibleTable = ({ data }: IProps) => {
                             <TableCell align="left">{row.to}</TableCell>
                             <TableCell align="left">{row.via}</TableCell>
                             <TableCell align="left">{row.created_at.split('T')[0]}</TableCell>
-                            <TableCell align="left"><div className={` py-1 text-center cursor-pointer ${row.is_archived ? ' bg-emerald-100 text-emerald-500   ' : 'text-slate-500 bg-slate-200'}`}>{row.is_archived ? 'Archived' : 'Unarchive'}</div></TableCell>
-                            <TableCell align="left"><div className={'py-1 text-center text-white bg-primary hover:cursor-pointer'}>Add Note</div></TableCell>
+                            <TableCell align="left"><div className={` py-1 text-center cursor-pointer ${row.is_archived ? ' bg-emerald-100 text-emerald-500   ' : 'text-slate-500 bg-slate-200'}`} onClick={() => { ArchiveCall(row.id) }}>{row.is_archived ? 'Archived' : 'Unarchive'}</div></TableCell>
+                            <TableCell align="left"><div className={'py-1 text-center text-white bg-primary hover:cursor-pointer'} onClick={() => { handleModalClose(); setCallDetails(row) }}>Add Note</div></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react';
-import { AiOutlineDown } from 'react-icons/ai'
-import useFetch, { Call } from '@/utils/useFetch';
-import AccessibleTable from './Table';
-import { useAuth } from '@/context/AuthContext';
-import Cookies from 'js-cookie';
 import axios from '../utils/api';
+import { AiOutlineDown } from 'react-icons/ai'
+import AccessibleTable from './Table';
+import Cookies from 'js-cookie';
+import { Pagination, Stack } from '@mui/material';
+import NoteModal from './Modal';
+import Spinner from './Spinner';
+import useFetch from '@/utils/useFetch';
+import Pusher from 'pusher-js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Call } from '@/utils/useFetch';
+import { useAuth } from '@/context/AuthContext';
 
 interface IProps {
     isLoading: boolean
@@ -18,17 +25,22 @@ interface IProps {
 }
 
 const Dashboard = () => {
+    const [pusherChannel, setPusherChannel] = useState<any>(null);
     const [filterType, setFilterType] = useState('Status');
+    const [page, setPage] = useState(1);
     const [offset, setOffset] = useState(0);
-    const [open, setOpen] = useState(false);
-    const [openDropdown, setOpenDropDown] = useState(false);
     const [timerFlag, setTimerFlag] = useState(false)
+    const [open, setOpen] = useState(false);
+    const [callDetails, setCallDetails] = useState<Call>();
+    const [openDropdown, setOpenDropDown] = useState(false);
+
 
     const { isLoading, error, callData, filteredData, totalCount, hasNextPage, setFilteredData, setCallData }: IProps = useFetch(offset);
     const { logout } = useAuth();
 
     useEffect(() => {
         const timer = setTimeout(() => {
+            console.log("hello")
             tokenRefresh().then((res) => {
                 Cookies.set('accessToken', res.data.access_token);
                 Cookies.set('refreshToken', res.data.refresh_token);
@@ -38,16 +50,41 @@ const Dashboard = () => {
                     logout();
                 }
             })
-        }, 9 * 60 * 1000);
+        }, 5 * 60 * 1000);
 
         return () => clearTimeout(timer);
 
-    }, [timerFlag]);
+    }, []);
 
+    useEffect(() => {
+        const pusher = new Pusher('d44e3d910d38a928e0be', {
+            cluster: 'eu',
+            authEndpoint: 'https://frontend-test-api.aircall.io/pusher/auth',
+            auth: {
+                headers: {
+                    'Authorization': `Bearer ${Cookies.get("accessToken")}`
+                }
+            }
+        });
+        const channel = pusher.subscribe('private-aircall');
+        setPusherChannel(channel);
+        channel.bind('update-call', (pusherData: any) => {
+        });
+    }, []);
 
-    const tokenRefresh = async () => {
-        return await axios.post('/auth/refresh-token', {}, { headers: { 'Authorization': `Bearer ${Cookies.get('accessToken')}` } })
-    };
+    useEffect(() => {
+        if (pusherChannel && pusherChannel.bind) {
+            pusherChannel.unbind('update-call');
+            pusherChannel.bind('update-call', (pusherData: Call) => {
+                setCallData(callData.map((item) => {
+                    return item.id === pusherData.id ? pusherData : item;
+                }));
+                setFilteredData(filteredData.map((item) => {
+                    return item.id === pusherData.id ? pusherData : item;
+                }));
+            })
+        }
+    }, [pusherChannel, callData]);
 
     const applyFilter = (filter_type: string) => {
         setFilterType(filter_type);
@@ -60,8 +97,45 @@ const Dashboard = () => {
         }
     }
 
+    useEffect(() => {
+        applyFilter(filterType);
+    }, [callData])
+
+
+    const tokenRefresh = async () => {
+        return await axios.post('/auth/refresh-token', {}, { headers: { 'Authorization': `Bearer ${Cookies.get('accessToken')}` } })
+    };
+
+
+    const handleModalClose = () => { setOpen(!open) };
+
+    const pageChange = (event: React.ChangeEvent<any>, value: number) => {
+        setOffset((10 * value) - 10)
+        setPage(value);
+    }
+
+
+    if (isLoading) {
+        return <Spinner />
+    }
+
+    if (error) {
+        toast.error('📛 An Error Occurred!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
+    }
+
     return (
         <div className='w-full h-screen px-10 flex flex-col flex-1 gap-3 sm:gap-5 pt-20 pb-10'>
+            <ToastContainer />
+            {callDetails && <NoteModal open={open} handleModalClose={handleModalClose} data={callDetails} />}
             <h1 className='text-black mt-5 text-3xl font-semibold'>Turing Technologies Frontend Test</h1>
             <div>
                 <div className='text-sm flex items-center '>
@@ -83,10 +157,17 @@ const Dashboard = () => {
                         </li>
                     </ul>
                 </div>
-                <div>
-                    <AccessibleTable data={filteredData} />
-                </div>
             </div>
+            <div>
+                <AccessibleTable data={filteredData} handleModalClose={handleModalClose} setCallDetails={setCallDetails} />
+            </div>
+            {callData &&
+                <div className="self-center flex flex-col items-center justify-center">
+                    <Stack spacing={2}>
+                        <Pagination count={Math.ceil(totalCount / 10)} color='primary' page={page} shape="rounded" onChange={pageChange} />
+                    </Stack>
+                    <p className='text-sm mb-6'>{`${offset + 1} - ${hasNextPage ? offset + 10 : totalCount} of ${totalCount} results`}</p>
+                </div>}
         </div>
     )
 }
