@@ -1,0 +1,24 @@
+ @import "../../../assets/sass/variables";
+
+header.site-header,
+aside {
+    // padding: 0;
+    // background-color: $color-theme-border;
+}
+
+header {
+    border-bottom: 1px solid #E9EBF8;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    min-height: rem(64);
+}
+
+header,
+aside {
+    background-color: $white !important;
+}
+
+img{
+    width:230px
+}

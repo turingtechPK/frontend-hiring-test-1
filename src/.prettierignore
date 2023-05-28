@@ -1,0 +1,6 @@
+node_modules
+build
+npm-debug.log
+
+# Only run prettier on JS files (ignore non *.js files)
+!*.js

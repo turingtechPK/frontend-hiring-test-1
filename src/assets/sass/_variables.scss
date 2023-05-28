@@ -1,0 +1,110 @@
+// Here you can add other styles
+@use "sass:math";
+
+$html-font-size: 16px;
+
+@function stripUnit($value) {
+    @return math.div($value, $value * 0 + 1);
+}
+
+@function rem($pxValue) {
+    @return #{math.div(stripUnit($pxValue), stripUnit($html-font-size))}rem;
+}
+
+// Variable overrides
+// _typography_variable
+$font-family: 'Rubik',
+'Helvetica Neue',
+sans-serif;
+
+// _typography_weight_variables
+$font-weight-normal:400;
+$font-weight-bold:500;
+
+// _typography_sizing_variables
+$base-font-size: 0.875rem; //equivalent 14px
+$h1-font-size: 1.125; //equivalent 18px
+
+// _color_variables
+$primary-blue-900: #232E8C;
+$primary-blue-700: #3A4BAD;
+$primary-blue-500: #495EC3;
+$primary-blue-400: #6476CD;
+$primary-blue-300: #8090D6;
+$primary-blue-100: #C9CFED;
+$primary-blue-50: #E9EBF8;
+$primary-blue-0: #F6F8FF;
+
+$text-heading: #0A285C;
+$black-900: #171C26;
+$black-800: #373C48;
+$black-700: #555A67;
+$black-600: #696E7B;
+$black-500: #9196A4;
+$black-400: #B1B6C4;
+$black-300: #D4DAE9;
+$black-200: #E4EAF8;
+$black-100: #EDF2FF;
+$black-50: #F3F9FF;
+
+$red: #F84343;
+$error-900: #AE2A26;
+$error-700: #CB3937;
+$error-400: #E75956;
+$error-200: #EA9C9C;
+$error-50: #FEEBEE;
+
+$alert-deep: #DB4E1A;
+$alert-700: #E87920;
+$alert-200: #F7C976;
+$alert-100: #FFEFD8;
+
+$purple-400: #7451C0;
+
+$success-900: #145446;
+$success-700: #208071;
+$success-400: #3BADA0;
+$success-100: #B7E2DD;
+$success-50: #E2F3F2;
+
+$color-theme-background: $primary-blue-0;
+$color-theme-border: $black-300;
+
+$white: #FFFFFF;
+$black: #000000;
+
+$color-primary: $primary-blue-500;
+$color-primary-hover: $primary-blue-700;
+$color-primary-active: $primary-blue-900;
+$color-primary-disabled: #A5AFE1;
+
+$color-secondary: $black-400;
+$color-secondary-hover: $black-700;
+$color-secondary-active: $black-800;
+$color-secondary-disabled: $black-400;
+
+$color-tertiary: $color-primary;
+$color-tertiary-hover: $color-primary-active;
+$color-tertiary-active: $color-primary-active;
+$color-tertiary-disabled: $black-400;
+$color-danger: #c33c48;
+$color-content: #7E838C;
+$color-gray: #323C47;
+$color-dark-gray: #5F6368;
+
+
+// _spacing_variables
+$base-padding: 5px;
+$base-margin: 5px;
+
+$small-padding: $base-padding * 2;
+$small-margin: $base-margin * 2;
+
+$medium-padding: $base-padding * 3;
+$medium-margin: $base-margin * 3;
+
+$large-padding: $base-margin * 4;
+$large-margin: $base-margin * 4;
+
+$xlarge-padding: $base-margin * 5;
+$xlarge-margin: $base-margin * 5;

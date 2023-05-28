@@ -1,0 +1,25 @@
+{
+  "extends": ["react-app", "prettier"],
+  "rules": {
+    "prettier/prettier": "off",
+    "no-var": "warn",
+    "no-console": "warn",
+    "react/prop-types": "off",
+    "react/jsx-props-no-spreading": "warn",
+    "react/prefer-stateless-function": "warn",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "warn",
+    "react/destructuring-assignment": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "react/jsx-fragments": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "indent": ["warn", 2],
+    "quotes": [2, "single", "avoid-escape"],
+    "no-obj-calls": "warn",
+    "no-undef": "warn",
+    "max-len": ["warn", 150],
+    "max-statements": ["warn", 50] ,
+    "react-hooks/exhaustive-deps":"off"
+  },
+  "plugins": ["prettier"]
+}

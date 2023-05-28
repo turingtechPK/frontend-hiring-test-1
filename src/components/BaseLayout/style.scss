@@ -1,0 +1,207 @@
+@import "../../assets/sass/variables";
+
+.ant-menu-inline {
+    border-right: 0;
+}
+
+.ant-menu-root .ant-menu-item {
+    // padding-top: rem(8) !important;
+    // padding-bottom: rem(8) !important;
+    min-height: rem(54);
+    margin: 0 !important;
+}
+
+.ant-menu.ant-menu-inline-collapsed>.ant-menu-item .ant-menu-item-icon+span {
+    vertical-align: top;
+    line-height: rem(55);
+}
+
+.ant-menu-item .ant-menu-item-icon,
+.ant-menu.ant-menu-inline-collapsed>.ant-menu-item .ant-menu-item-icon {
+    font-size: rem(22);
+    line-height: rem(55);
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: white;
+}
+
+.ant-menu-item {
+    color: white;
+
+    a {
+        color: white;
+    }
+
+    &:hover,
+    &:active,
+    a:hover {
+        background-color: white;
+        color: white !important;
+    }
+}
+
+.ant-menu-item a:hover,
+.ant-menu-item-selected,
+.ant-menu-item-active {
+    color: white;
+}
+
+.ant-menu-item-selected {
+
+    a,
+    a:hover {
+        color: white;
+        font-weight: $font-weight-bold;
+    }
+
+}
+
+.ant-menu-inline .ant-menu-item::after {
+    content: none;
+}
+
+.ant-layout-sider-trigger {
+    background-color: $white;
+    text-align: left;
+    padding-right: rem(16);
+    padding-left: rem(24);
+    transition: all 0s;
+
+    @media screen and (min-width: 768px) {
+        border-top: 1px solid $black-300;
+
+        &:after {
+            font-size: rem(12);
+            content: "Collapse";
+            margin-left: $small-margin;
+            color: $black-600;
+        }
+    }
+
+    @media screen and (max-width: 767.98px) {
+        width: rem(65) !important;
+        background-color: transparent;
+        top: rem(0);
+        height: rem(47);
+        border-top: none;
+        bottom: auto;
+    }
+}
+
+.icon-trigger:before {
+    font-family: 'icomoon';
+    content: "\e929";
+    color: $black-600;
+    line-height: rem(48);
+
+    @media screen and (min-width: 768px) {
+        font-size: rem(12);
+    }
+
+    @media screen and (max-width: 767.98px) {
+        font-size: rem(16);
+    }
+}
+
+.ant-layout-sider-collapsed .icon-trigger:before {
+    content: "\e92a";
+}
+
+.ant-layout-sider-collapsed .ant-layout-sider-trigger {
+    text-align: center;
+    padding: 0;
+
+    &:after {
+        // content: 'expand';
+        content: '';
+        margin-left: 0;
+    }
+}
+
+.main-container {
+    @media screen and (min-width: 992px) {
+        padding-top: calc(rem(46) + rem(1));
+    }
+
+    @media screen and (max-width: 991.98px) {
+        padding-top: calc(rem(46) + rem(1));
+    }
+}
+
+.sidebar-nav .ant-layout-sider-children {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.ant-layout-sider {
+    @media screen and (min-width: 768px) {
+        min-height: calc(100vh - (rem(48) + rem(1) + rem(47)));
+    }
+}
+
+@media screen and (max-width: 767.98px) {
+    .ant-menu.ant-menu-inline-collapsed>.ant-menu-item {
+        padding-left: 24px;
+    }
+
+    .ant-menu.ant-menu-inline-collapsed>.ant-menu-item .ant-menu-item-icon+span {
+        opacity: 1;
+    }
+
+    .ant-layout-sider-has-trigger {
+        padding-bottom: 0;
+        border-top: 1px solid #E9EBF8;
+    }
+
+    .ant-layout-sider.ant-layout-sider-collapsed {
+        position: relative !important;
+        flex: 0 0 0 !important;
+        max-width: 0 !important;
+        min-width: 0 !important;
+        width: 0 !important;
+
+        .ant-layout-sider-children {
+            flex: 0 0 0;
+            max-width: 0;
+            min-width: 0;
+            width: 0;
+
+        }
+    }
+
+    .ant-layout-sider {
+        position: fixed;
+        z-index: 99;
+        height: calc(100vh - 46px);
+
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        min-width: 100% !important;
+        width: 100% !important;
+        background-color: rgba(0, 0, 0, 0.45) !important;
+        // background-color: rgba(95, 99, 106, 0.35) !important;
+        transition: all 0s;
+
+        .ant-layout-sider-children {
+            flex: 0 0 290px;
+            max-width: 290px;
+            min-width: 290px;
+            width: 290px;
+            background-color: $white;
+            transition: all 0.2s;
+        }
+    }
+}
+
+.sidebar-nav-mobile-view {
+    @media screen and (min-width: 768px) {
+        display: none;
+    }
+}
+
+.sidebar-nav-desktop-view {
+    @media screen and (max-width: 767.98px) {
+        display: none;
+    }
+}

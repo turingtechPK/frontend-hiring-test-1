@@ -1,0 +1,13 @@
+// Importing Ant Design CSS
+// ANT-Design Doc: https://ant.design/docs/react/getting-started
+@import 'antd/dist/antd.css';
+
+// If you want to override variables do it here
+@import "variables";
+
+// If you want to override mixins do it here
+@import "form";
+
+
+// If you want to add something do it here
+@import "custom";

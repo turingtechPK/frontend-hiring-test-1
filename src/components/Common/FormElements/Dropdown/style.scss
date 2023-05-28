@@ -1,0 +1,23 @@
+@import '../../../../assets/sass/variables';
+
+.ant-select-arrow {
+    top: 50% !important;
+    -webkit-transform: translateY(-50%) !important;
+    -ms-transform: translateY(-50%) !important;
+    transform: translateY(-50%) !important;
+    right: rem(18) !important;
+    font-size: rem(26) !important;
+    // width: rem(24) !important;
+    // height: rem(24) !important;
+}
+
+.ant-select-arrow ~ .ant-select-clear {
+    right: 40px !important;
+}
+
+.ant-select-open {
+    .ant-select-arrow .icon-down {
+        transform: rotate(180deg);
+        display: inline-block;
+    }
+}
