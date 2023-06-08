@@ -1,40 +1,12 @@
+import { Pagnation } from "../components/Pagnation";
+import { InfoBox } from "../components/InfoBox";
+import { TableCall } from "../components/TableCall";
+import { Filter } from "../components/Filter";
 import React, { useContext, useEffect, useState } from "react";
 import callService from "../services/call";
 import loginService from "../services/login";
 import { UserContext } from "../context/UserContext";
-import {
-  Button,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-  Heading,
-  Text,
-  Box,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  HStack,
-  FormControl,
-  FormLabel,
-  Textarea,
-  Center,
-  useToast,
-  Select,
-  Input,
-  Flex,
-  Spacer,
-} from "@chakra-ui/react";
-
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { useDisclosure, useToast, Flex } from "@chakra-ui/react";
 
 const Dashboard = () => {
   const [data, setData] = useState(null);
@@ -79,7 +51,7 @@ const Dashboard = () => {
     const intRefresh = setInterval(handleRefresh, 9 * 60 * 1000); //refresh every 9 mins
 
     return () => intRefresh;
-  }, []);
+  }, [user, login]);
 
   useEffect(() => {
     const handleData = async () => {
@@ -286,269 +258,40 @@ const Dashboard = () => {
       justifyContent="center"
       alignItems="center"
     >
-      <Heading as="h1" p="20px" boxSizing="border-box" alignSelf="flex-start">
-        Turing Technologies Frontend Test
-      </Heading>
-      <Box p="20px" boxSizing="border-box">
-        <HStack>
-          <form>
-            <HStack>
-              <FormLabel>Filter By</FormLabel>
-              <Select w="130px" placeholder="Status" onChange={handleFilter}>
-                <option value="all">All</option>
-                <option value="archived">Archived</option>
-                <option value="unarchived">Unarchived</option>
-              </Select>
-            </HStack>
-          </form>
-          <Spacer />
-          <form onSubmit={handleDateChange}>
-            <HStack>
-              <FormLabel>Group By</FormLabel>
-              <Input
-                w="150px"
-                placeholder="Select Date and Time"
-                size="md"
-                type="date"
-                value={selectedDate}
-                onChange={filterDate}
-              />
-              <Button type="submit">Group</Button>
-            </HStack>
-          </form>
-        </HStack>
-      </Box>
-      <Box p="20px" boxSizing="border-box">
-        <TableContainer
-          bg="white"
-          border="1px solid"
-          borderColor="gray.400"
-          p="20px"
-          boxSizing="border-box"
-        >
-          <Table size="sm" p="20px" boxSizing="border-box">
-            <Thead>
-              <Tr>
-                <Th>CALL TYPE</Th>
-                <Th>DIRECTION</Th>
-                <Th>DURATION</Th>
-                <Th>FROM</Th>
-                <Th>TO</Th>
-                <Th>VIA</Th>
-                <Th>CREATED AT</Th>
-                <Th>STATUS</Th>
-                <Th>ACTION</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {data !== null &&
-                data !== undefined &&
-                data.nodes !== null &&
-                data.nodes !== undefined &&
-                data.nodes.map((node) => (
-                  <Tr key={node.id}>
-                    <Td>
-                      {node.call_type === "voicemail" ? (
-                        <Text color="blue.400">Voice Mail</Text>
-                      ) : node.call_type === "missed" ? (
-                        <Text color="red.400">Missed</Text>
-                      ) : (
-                        <Text color="green.400">Answered</Text>
-                      )}
-                    </Td>
-                    <Td>{node.direction}</Td>
-                    <Td>
-                      {
-                        <>
-                          {fixDuration(node.duration)}
-                          <Text size="sm" color="blue">
-                            ({node.duration} seconds)
-                          </Text>
-                        </>
-                      }
-                    </Td>
-                    <Td>{node.from}</Td>
-                    <Td>{node.to}</Td>
-                    <Td>{node.via}</Td>
-                    <Td>{changeDate(node.created_at)}</Td>
-                    <Td>
-                      {node.is_archived ? (
-                        <Button
-                          bg="teal.100"
-                          color="teal.500"
-                          size="sm"
-                          variant="ghost"
-                          minW="100px"
-                          id={node?.id}
-                          onClick={archiveCall}
-                        >
-                          Archived
-                        </Button>
-                      ) : (
-                        <Button
-                          bg="gray.100"
-                          color="gray.500"
-                          size="sm"
-                          variant="ghost"
-                          minW="100px"
-                          id={node?.id}
-                          onClick={archiveCall}
-                        >
-                          Unarchived
-                        </Button>
-                      )}
-                    </Td>
-                    <Td>
-                      <Button
-                        onClick={handleOpen}
-                        size="sm"
-                        variant="solid"
-                        colorScheme="blue"
-                        id={node?.id}
-                      >
-                        Add Note
-                      </Button>
-                    </Td>
-                  </Tr>
-                ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </Box>
+      <Filter
+        handleFilter={handleFilter}
+        handleDateChange={handleDateChange}
+        selectedDate={selectedDate}
+        filterDate={filterDate}
+      />
+      <TableCall
+        data={data}
+        fixDuration={fixDuration}
+        changeDate={changeDate}
+        archiveCall={archiveCall}
+        handleOpen={handleOpen}
+      />
       {isClicked && openedNode !== null && (
-        <Modal isOpen={isOpen} onClose={onClose} isCentered>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader borderBottom="1px" borderColor="gray.200">
-              Add Notes
-              <Text fontSize="sm" color="blue">
-                Call ID {openedNode && openedNode.id}
-              </Text>
-            </ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Box mb="10px" mt="5px">
-                <HStack>
-                  <Text as="b" minW="120px">
-                    Call Type
-                  </Text>
-                  {openedNode !== null &&
-                  openedNode.call_type === "voicemail" ? (
-                    <Text minW="120px" color="blue.400">
-                      Voice Mail
-                    </Text>
-                  ) : openedNode.call_type === "missed" ? (
-                    <Text minW="120px" color="red.400">
-                      Missed
-                    </Text>
-                  ) : (
-                    <Text minW="120px" color="green.400">
-                      Answered
-                    </Text>
-                  )}
-                </HStack>
-                <HStack>
-                  <Text as="b" minW="120px">
-                    Duration
-                  </Text>
-                  <Text minW="120px"> {fixDuration(openedNode.duration)} </Text>
-                </HStack>
-                <HStack>
-                  <Text as="b" minW="120px">
-                    From
-                  </Text>
-                  <Text minW="120px">{openedNode.from}</Text>
-                </HStack>
-                <HStack>
-                  <Text as="b" minW="120px">
-                    To
-                  </Text>
-                  <Text minW="120px">{openedNode.to}</Text>
-                </HStack>
-                <HStack>
-                  <Text as="b" minW="120px">
-                    Via
-                  </Text>
-                  <Text minW="120px">{openedNode.via}</Text>
-                </HStack>
-              </Box>
-              <form>
-                <FormControl>
-                  <FormLabel>Add Notes</FormLabel>
-                  <Textarea
-                    value={newNote}
-                    onChange={handleNote}
-                    placeholder="Add Notes"
-                    type="text"
-                    name="notes"
-                  />
-                </FormControl>
-              </form>
-            </ModalBody>
-
-            <ModalFooter borderTop="1px" borderColor="gray.200">
-              <Center>
-                <Button
-                  id={openedNode?.id}
-                  colorScheme="blue"
-                  w="400px"
-                  onClick={addNote}
-                >
-                  Save
-                </Button>
-              </Center>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+        <InfoBox
+          isOpen={isOpen}
+          onClose={onClose}
+          openedNode={openedNode}
+          fixDuration={fixDuration}
+          newNote={newNote}
+          handleNote={handleNote}
+          addNote={addNote}
+        />
       )}
 
-      <Box
-        paddingInline="20px"
-        boxSizing="border-box"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <HStack>
-          <Button
-            variant="ghost"
-            leftIcon={<ChevronLeftIcon />}
-            onClick={prevPage}
-          ></Button>
-          {data &&
-            totalLength &&
-            totalLength.map((value) => (
-              <Button
-                key={value}
-                variant="ghost"
-                onClick={handleClickPage}
-                value={value}
-              >
-                {value}
-              </Button>
-            ))}
-          <Button
-            leftIcon={<ChevronRightIcon />}
-            onClick={nextPage}
-            variant="ghost"
-          ></Button>
-        </HStack>
-      </Box>
-      <Box>
-        <Text>
-          Result{" "}
-          {data !== null && pageNumber !== null && data.totalCount !== null && (
-            <>
-              {pageNumber + 1} -{" "}
-              {totalLength &&
-              data &&
-              Number(pageNumber + 1 * 10) < data.totalCount
-                ? Number(pageNumber + 1 * 10)
-                : data.totalCount}{" "}
-              of {data && data.totalCount}
-            </>
-          )}
-        </Text>
-      </Box>
+      <Pagnation
+        prevPage={prevPage}
+        data={data}
+        totalLength={totalLength}
+        handleClickPage={handleClickPage}
+        nextPage={nextPage}
+        pageNumber={pageNumber}
+        Number={Number}
+      />
     </Flex>
   ) : (
     <h1>Login First</h1>

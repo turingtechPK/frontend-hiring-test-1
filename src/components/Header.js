@@ -1,10 +1,9 @@
-import { Box, Flex, Image } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import {
   Button,
   Text,
   Avatar,
-  Heading,
   Spacer,
   HStack,
   AvatarBadge,
