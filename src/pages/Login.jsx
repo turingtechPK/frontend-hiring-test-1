@@ -2,12 +2,14 @@ import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import loginService from "../services/login";
 import LoginForm from "../components/LoginForm";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { login } = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
 
   const handleUsername = (event) => {
     setUsername(event.target.value);
@@ -27,6 +29,7 @@ const Login = () => {
         password,
       });
       login(user);
+      navigate("/dashboard");
       setUsername("");
       setPassword("");
       console.log(user);

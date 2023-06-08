@@ -35,6 +35,8 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 
+import { Navigate } from "react-router-dom";
+
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 const Dashboard = () => {
@@ -296,7 +298,7 @@ const Dashboard = () => {
     setSelectedDate(Date);
   };
 
-  return (
+  return user ? (
     <Flex
       direction="column"
       h="100%"
@@ -567,6 +569,8 @@ const Dashboard = () => {
         </Text>
       </Box>
     </Flex>
+  ) : (
+    <Navigate replace to="/" />
   );
 };
 
