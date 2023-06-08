@@ -8,5 +8,14 @@ const login = async (info) => {
   return response.data;
 };
 
+const refreshToken = async (userObject, data) => {
+  const response = await axios.post(`${baseUrl}/auth/refresh-token`, data, {
+    headers: {
+      Authorization: `Bearer ${userObject.access_token}`,
+    },
+  });
+  return response.data;
+};
+
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { login };
+export default { login, refreshToken };

@@ -9,9 +9,15 @@ const UserProvider = ({ children }) => {
     console.log("INFO IS", info);
     setUser(info);
   };
+
+  const logout = () => {
+    setUser(null);
+  };
+
   const userContextValue = {
     user,
     login,
+    logout,
   };
 
   return (
