@@ -9,8 +9,6 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
-
   const handleUsername = (event) => {
     setUsername(event.target.value);
   };
@@ -21,18 +19,15 @@ const Login = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    const newObj = { username, password };
-    console.log("nn", newObj);
+
     try {
       const user = await loginService.login({
         username,
         password,
       });
       login(user);
-      navigate("/dashboard");
       setUsername("");
       setPassword("");
-      console.log(user);
     } catch (error) {
       console.log(error.response);
     }

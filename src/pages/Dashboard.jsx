@@ -24,7 +24,6 @@ import {
   useDisclosure,
   HStack,
   FormControl,
-  FormHelperText,
   FormLabel,
   Textarea,
   Center,
@@ -34,8 +33,6 @@ import {
   Flex,
   Spacer,
 } from "@chakra-ui/react";
-
-import { Navigate } from "react-router-dom";
 
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
@@ -73,7 +70,6 @@ const Dashboard = () => {
     const handleRefresh = async () => {
       try {
         const newData = await loginService.refreshToken(user, {});
-        console.log("HANDLE REFERET DATA", newData);
         login(newData);
       } catch (error) {
         console.log(error.response);
@@ -89,8 +85,6 @@ const Dashboard = () => {
     const handleData = async () => {
       try {
         const callData = await callService.getAll(user);
-
-        console.log("Initial UE");
         setData(callData);
         setAltData(callData);
 
@@ -114,7 +108,6 @@ const Dashboard = () => {
     const handlePageNumber = async () => {
       try {
         const callData = await callService.getCallsByPage(user, pageNumber, 10);
-        console.log("PG UE");
         setData(callData);
         setAltData(callData);
       } catch (error) {
@@ -201,16 +194,11 @@ const Dashboard = () => {
 
     try {
       const callData = await callService.archiveCalls(user, id);
-      console.log("arch data", callData);
-      console.log("id", id, typeof id);
-      console.log("fulldata", data);
 
       const newArr = data.nodes.map((node, index) => {
-        console.log("Node id", node.id, typeof node.id);
         return node.id === id ? callData : node;
       });
 
-      console.log("YAAR:", newArr);
       setData((prevData) => ({
         ...prevData,
         nodes: newArr,
@@ -244,11 +232,9 @@ const Dashboard = () => {
 
       case "archived":
         const newArr = altData.nodes.filter((node, index) => {
-          console.log("Node id", node.id, typeof node.id);
           return node.is_archived === true;
         });
 
-        console.log("YAAR:", newArr);
         setData((prevData) => ({
           ...prevData,
           nodes: newArr,
@@ -258,11 +244,9 @@ const Dashboard = () => {
 
       case "unarchived":
         const newArr1 = altData.nodes.filter((node, index) => {
-          console.log("Node id", node.id, typeof node.id);
           return node.is_archived === false;
         });
 
-        console.log("YAAR:", newArr1);
         setData((prevData) => ({
           ...prevData,
           nodes: newArr1,
@@ -282,14 +266,11 @@ const Dashboard = () => {
   const handleDateChange = (event) => {
     event.preventDefault();
     const dateValue = changeDate(selectedDate.toString());
-    console.log("data selected", dateValue, typeof dateValue);
 
     const newArr = altData.nodes.filter((node, index) => {
-      console.log("Node id", node.created_at, typeof node.created_at);
       return changeDate(node.created_at) === dateValue;
     });
 
-    console.log("YAAR:", newArr);
     setData((prevData) => ({
       ...prevData,
       nodes: newArr,
@@ -570,7 +551,7 @@ const Dashboard = () => {
       </Box>
     </Flex>
   ) : (
-    <Navigate replace to="/" />
+    <h1>Login First</h1>
   );
 };
 
