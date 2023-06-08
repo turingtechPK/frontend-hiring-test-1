@@ -1,37 +1,24 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import loginService from "./services/login";
+import Login from "./components/Login";
+import { UserContext } from "./context/UserContext";
 
 function App() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const { user } = useContext(UserContext);
 
-  const handleUsername = (event) => {
-    setUsername(event.target.value);
-  };
-
-  const handlePassword = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleLogin = (event) => {
-    event.preventDefault();
-    console.log("us", username, "ps", password);
-    alert(`use ${username} pass: ${password}`);
-  };
   return (
     <>
       <h1>Hi Mom!</h1>
       <div className="header">
         <img src="./design-files/TT-Logo.png" alt="Logo" />
       </div>
-      <div className="auth">
-        <form onSubmit={handleLogin}>
-          <label>Username</label>
-          <input type="text" value={username} onChange={handleUsername} />
-          <label>Password</label>
-          <input type="text" value={password} onChange={handlePassword} />
-          <button type="submit">Login</button>
-        </form>
-      </div>
+      <Login />
+      {user !== null && (
+        <h1>
+          User is: {user.user.username} {user.access_token}{" "}
+          {console.log("aa", user.user)}
+        </h1>
+      )}
     </>
   );
 }
