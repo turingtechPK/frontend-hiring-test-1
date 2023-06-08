@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import loginService from "../services/login";
+import LoginForm from "../components/LoginForm";
 
 const Login = () => {
   const { login } = useContext(UserContext);
@@ -36,15 +37,13 @@ const Login = () => {
 
   return (
     <>
-      <div className="auth">
-        <form onSubmit={handleLogin}>
-          <label>Username</label>
-          <input type="text" value={username} onChange={handleUsername} />
-          <label>Password</label>
-          <input type="text" value={password} onChange={handlePassword} />
-          <button type="submit">Login</button>
-        </form>
-      </div>
+      <LoginForm
+        handleLogin={handleLogin}
+        username={username}
+        handleUsername={handleUsername}
+        password={password}
+        handlePassword={handlePassword}
+      />
     </>
   );
 };
