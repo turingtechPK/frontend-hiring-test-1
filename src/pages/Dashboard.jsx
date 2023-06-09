@@ -40,6 +40,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const handleRefresh = async () => {
+      console.log("REFERSH UE");
       try {
         const newData = await loginService.refreshToken(user, {});
         login(newData);

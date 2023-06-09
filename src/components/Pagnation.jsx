@@ -20,11 +20,13 @@ export function Pagnation({
         justifyContent="center"
       >
         <HStack>
-          <Button
-            variant="ghost"
-            leftIcon={<ChevronLeftIcon />}
-            onClick={prevPage}
-          ></Button>
+          {pageNumber && pageNumber > 0 && (
+            <Button
+              variant="ghost"
+              leftIcon={<ChevronLeftIcon />}
+              onClick={prevPage}
+            ></Button>
+          )}
           {data &&
             totalLength &&
             totalLength.map((value) => (
@@ -37,11 +39,13 @@ export function Pagnation({
                 {value}
               </Button>
             ))}
-          <Button
-            leftIcon={<ChevronRightIcon />}
-            onClick={nextPage}
-            variant="ghost"
-          ></Button>
+          {data && data.hasNextPage && data.hasNextPage && (
+            <Button
+              leftIcon={<ChevronRightIcon />}
+              onClick={nextPage}
+              variant="ghost"
+            ></Button>
+          )}
         </HStack>
       </Box>
       <Box>
@@ -53,7 +57,7 @@ export function Pagnation({
               {totalLength &&
               data &&
               Number(pageNumber + 1 * 10) < data.totalCount
-                ? Number(pageNumber + 1 * 10)
+                ? Number(pageNumber + 1 * data.nodes.length)
                 : data.totalCount}{" "}
               of {data && data.totalCount}
             </>
