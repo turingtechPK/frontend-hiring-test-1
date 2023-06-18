@@ -1,10 +1,9 @@
-import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 import { Login } from './pages/login/login';
-
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { ListTechnologies } from './pages/list-technologies/list-technologies';
 
 function App() {
   return (
@@ -12,6 +11,7 @@ function App() {
        <Router>
           <Routes>
               <Route path="/" element={<Login />}/>
+              <Route path="/home" element={<ListTechnologies />}/>
           </Routes>
         </Router>
     </div>
