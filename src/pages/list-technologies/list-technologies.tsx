@@ -1,59 +1,68 @@
-import React, {useEffect, useState} from 'react'
-import { ListTechnologiesStyled } from './list-technologies.style'
-import { Box, TableCell } from '@mui/material';
-// import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-// import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+//lib
 import Paper from '@mui/material/Paper';
-import { getList } from '../../services/list-technologies/list-technologies.api';
+import Table from '@mui/material/Table';
+import { useNavigate } from 'react-router';
+import TableRow from '@mui/material/TableRow';
+import TableBody from '@mui/material/TableBody';
+import TableHead from '@mui/material/TableHead';
+import React, {useEffect, useState} from 'react';
+import { CircularProgress } from '@mui/material';
+import { Box, Button, TableCell } from '@mui/material';
+import TableContainer from '@mui/material/TableContainer';
+//src
+import { Navbar } from '../../components/navbar/navbar';
 import { TableDataType } from './list-technologies.type';
-
-// const StyledTableCell = styled(TableCell)(({ theme }) => ({
-//   [`&.${tableCellClasses.head}`]: {
-//     backgroundColor: theme.palette.common.black,
-//     color: theme.palette.common.white,
-//   },
-//   [`&.${tableCellClasses.body}`]: {
-//     fontSize: 14,
-//   },
-// }));
-
-// const StyledTableRow = styled(TableRow)(({ theme }) => ({
-//   '&:nth-of-type(odd)': {
-//     backgroundColor: theme.palette.action.hover,
-//   },
-//   // hide last border
-//   '&:last-child td, &:last-child th': {
-//     border: 0,
-//   },
-// }));
+import { ListTechnologiesStyled } from './list-technologies.style'
+import { AddNotesDialog } from './add-notes-dialog/add-notes-dialog';
+import { getList } from '../../services/list-technologies/list-technologies.api';
+import { PaginationWrapper } from '../../components/paginnation-wrapper/pagination-wrapper';
 
 
 export const ListTechnologies = () => {
+    const limit = 10;
+    const navigate = useNavigate();
+    const [id, setId] = useState('');
+    const [offset, setOffset] = useState<number>(0);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [tableData, setTableData] = useState<TableDataType>();
-    const getFullList = async(token: string) =>{
-        const list = await getList(token);
+
+    const handleClose = () => {
+        setIsDialogOpen(false);
+    }
+
+    const handleClick = (id: string) => {
+        setIsDialogOpen(true);
+        setId(id);
+    }
+
+    const getFullList = async(token: string, offset: number, limit: number) =>{
+        setIsLoading(true);
+        const list = await getList(token, offset, limit);
         setTableData(list);
-        console.log('list',list);
+        setIsLoading(false);
     }
 
     useEffect(()=>{
         const token = localStorage.getItem('jwtToken');
         if(token){
-            getFullList(token)
+            getFullList(token, offset ,limit)
         }
-    },[])
+        else{
+            navigate('/')
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[offset,limit])
     
   return (
     <ListTechnologiesStyled>
+        <Navbar/>
+        {isLoading && <CircularProgress color='secondary' size={50} className='loader'/>}
+        {!isLoading &&
         <Box className='container'>
             <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                    <TableHead>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table" className="table-wrapper">
+                    <TableHead className='head'>
                     <TableRow>
                         <TableCell>CALL TYPE</TableCell>
                         <TableCell >DIRECTION</TableCell>
@@ -66,24 +75,31 @@ export const ListTechnologies = () => {
                         <TableCell >ACTIONS</TableCell>
                     </TableRow>
                     </TableHead>
-                    <TableBody>
+                    
+                    <TableBody className='body'>
                         {tableData?.nodes?.map((row) => (
                             <TableRow key={row.id}>
-                                <TableCell >{row.call_type}</TableCell>
-                                <TableCell >{row.direction}</TableCell>
+                                <TableCell className={row.call_type}>{row.call_type.toUpperCase()}</TableCell>
+                                <TableCell className='direction'>{row.direction}</TableCell>
                                 <TableCell >{row.duration}</TableCell>
                                 <TableCell >{row.from}</TableCell>
                                 <TableCell >{row.to}</TableCell>
                                 <TableCell >{row.via}</TableCell>
                                 <TableCell >{row.created_at}</TableCell>
                                 <TableCell >{row.is_archived ? 'Archived':'Unarchived'}</TableCell>
-                                <TableCell >action</TableCell>
+                                <TableCell ><Button className='button' onClick={()=> handleClick(row.id)} id={row.id}>Action</Button></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
+                
                 </Table>
             </TableContainer>
         </Box>
+        }
+        <Box className='pagination'>
+            <PaginationWrapper setOffset={setOffset} totalPages={tableData?.totalCount || 0}/>
+        </Box>
+        <AddNotesDialog isDialogOpen={isDialogOpen} onClose={handleClose} id={id}/>
     </ListTechnologiesStyled>
   )
 }
