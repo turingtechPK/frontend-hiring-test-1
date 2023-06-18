@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import { TextField, Button, Box } from '@mui/material';
 
 import { LoginStyled } from './login.style';
@@ -7,15 +8,17 @@ import { LoginApi } from '../../services/login/login.api';
 
 
 export const Login = () =>{
-  const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = async (data: any) => {
-    try{ //Todo: Have to look at it again
-        const response =await LoginApi(data);
-        localStorage.setItem('jwtToken',response.access_token);
-    } catch(error) {
-        console.log(error);
-    }
+    const onSubmit = async (data: any) => {
+        try{ //Todo: Have to look at it again
+            const response =await LoginApi(data);
+            localStorage.setItem('jwtToken',response.access_token);
+            navigate('/home')
+        } catch(error) {
+            console.log(error);
+        }
     };
 
   return (
