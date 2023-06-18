@@ -1,3 +1,4 @@
+#Initial Test
 # :phone: TuringTech - Frontend technical test
 
 This test is a part of our hiring process at TuringTech for the Frontend Engineer position. It should take you between 6 to 8 hours, depending on your experience, to implement the minimal version. But we thought about a few bonuses, so feel free to spend some time on them if you want.
