@@ -1,12 +1,9 @@
 import * as React from "react";
 import logo from "../..//assets/Logo.png";
 import Image from "next/image";
+import { clear } from "../../utils/utils";
 
 export default function Navbar() {
-  const logout = () => {
-    localStorage.clear();
-    window.location.href = "/";
-  };
   return (
     <nav className="header">
       <div className="container-fluid">
@@ -18,7 +15,7 @@ export default function Navbar() {
         type="button"
         className="btn btn-note"
         style={{ borderRadius: "5px", marginRight: "3rem" }}
-        onClick={logout}
+        onClick={clear}
       >
         Logout
       </button>

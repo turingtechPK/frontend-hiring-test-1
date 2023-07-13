@@ -1,10 +1,7 @@
 import axios from "axios";
+import { clear } from "../utils/utils";
 
 const baseUrl = "https://frontend-test-api.aircall.io";
-const Reload = () => {
-  localStorage.clear();
-  window.location.href = "/";
-};
 
 export const getData = async () => {
   try {
@@ -18,7 +15,7 @@ export const getData = async () => {
   } catch (error) {
     console.log("error", error);
     if (error.response && error.response.status === 401) {
-      Reload();
+      clear();
     }
   }
 };
@@ -32,7 +29,7 @@ export const siginCall = async (userName: string, password: string) => {
   } catch (error) {
     console.log("error", error);
     if (error.response && error.response.status === 401) {
-      Reload();
+      clear();
     }
   }
 };
@@ -47,7 +44,7 @@ export const getPaginationData = async (offset: number) => {
   } catch (error) {
     console.log("error", error);
     if (error.response && error.response.status === 401) {
-      Reload();
+      clear();
     }
   }
 };
@@ -66,7 +63,7 @@ export const addNote = async (id: string, note: string) => {
   } catch (error) {
     console.log("error", error);
     if (error.response && error.response.status === 401) {
-      Reload();
+      clear();
     }
   }
 };
@@ -85,7 +82,7 @@ export const archiveCall = async (id: string) => {
   } catch (error) {
     console.log("error", error);
     if (error.response && error.response.status === 401) {
-      Reload();
+      clear();
     }
   }
 };
