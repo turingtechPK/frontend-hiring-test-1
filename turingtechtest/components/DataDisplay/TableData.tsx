@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
-import { archiveCall, getData, getPaginationData } from "../utilities/api";
-import DetailModal from "./modal";
+import { archiveCall, getData, getPaginationData } from "../../utilities/api";
+import DetailModal from "./Detail";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
-function Table() {
+function TableData() {
   const [callsData, setCallsData] = useState([]);
   const [callsDataFiltered, setCallsDataFiltered] = useState([]);
   const [offset, setOffset] = useState(0);
@@ -34,7 +34,9 @@ function Table() {
     const retreiveData = async () => {
       let res = await getData();
 
-      await setCallsData(res.data.nodes);
+      console.log("ress", res);
+
+      await setCallsData(res.data?.nodes);
       setCallsDataFiltered(res.data.nodes);
       setOffset(0);
     };
@@ -206,4 +208,4 @@ function Table() {
   );
 }
 
-export default Table;
+export default TableData;

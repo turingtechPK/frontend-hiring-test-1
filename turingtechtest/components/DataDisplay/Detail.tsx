@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addNote } from "../utilities/api";
+import { addNote } from "../../utilities/api";
 
 interface props {
   rowData: any;

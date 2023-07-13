@@ -1,11 +1,11 @@
 import * as React from "react";
-import logo from "../assets/Logo.png";
+import logo from "../..//assets/Logo.png";
 import Image from "next/image";
 
 export default function Navbar() {
   const logout = () => {
     localStorage.clear();
-    window.location.reload();
+    window.location.href = "/";
   };
   return (
     <nav className="header">

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./Navbar";
-import Table from "./Table";
-import { siginCall } from "../utilities/api";
+import Navbar from "../Navbar/Navbar";
+import { siginCall } from "../../utilities/api";
+import TableData from "../DataDisplay/TableData";
 
 const ACCESS_TOKEN_KEY = "access_token";
 const REFRESH_TOKEN_KEY = "refresh_token";
 
-function SignIn() {
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -70,9 +70,9 @@ function SignIn() {
   return (
     <>
       <Navbar />
-      {!authenticated ? renderSignInForm() : <Table />}
+      {!authenticated ? renderSignInForm() : <TableData />}
     </>
   );
 }
 
-export default SignIn;
+export default Login;

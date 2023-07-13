@@ -3,7 +3,7 @@ import axios from "axios";
 const baseUrl = "https://frontend-test-api.aircall.io";
 const Reload = () => {
   localStorage.clear();
-  window.location.reload();
+  window.location.href = "/";
 };
 
 export const getData = async () => {
