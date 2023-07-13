@@ -1,0 +1,27 @@
+{
+  "name": "turingtechtest",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@mui/material": "^5.14.0",
+    "@types/react-bootstrap-table": "^4.3.12",
+    "antd": "^5.7.0",
+    "axios": "^1.4.0",
+    "next": "13.4.9",
+    "react": "18.2.0",
+    "react-bootstrap-table-next": "^4.0.3",
+    "react-dom": "18.2.0",
+    "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "20.4.2",
+    "eslint": "8.44.0",
+    "eslint-config-next": "13.4.9"
+  }
+}

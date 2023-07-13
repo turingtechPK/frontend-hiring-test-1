@@ -1,0 +1,201 @@
+.navbar {
+  background-color: #fff;
+  padding: 20px;
+  border-bottom: 1px solid #d3d5d8;
+}
+.navbar-brand {
+  margin-left: 30px;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+.signIn-container {
+  width: 100%;
+  background-color: #f4eeee;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card-custom {
+  width: 40%;
+  padding: 40px 30px;
+  border: none;
+}
+.required {
+  color: red;
+}
+.form-control {
+  border-radius: 0;
+}
+.btn {
+  border-radius: 0;
+}
+.btn-login {
+  background-color: #1990ff;
+  color: white;
+}
+.react-bootstrap-table {
+  width: 95%;
+  margin: auto;
+  border: 2px solid #e0e3e7;
+  border-bottom: none;
+  border-top: none;
+}
+table,
+th,
+td {
+  border-left: none;
+  border-right: none;
+}
+.react-bootstrap-table thead {
+  background-color: #f4f4f9;
+}
+.voicemail {
+  color: #365de7;
+}
+.answered {
+  color: #0e9958;
+}
+.missed {
+  color: #cb2847;
+}
+.status {
+  display: inline-block;
+  padding: 5px;
+}
+.Archived {
+  background-color: #edfbfa;
+  color: #6adc9a;
+  border-radius: 3px;
+}
+.Unarchive {
+  background-color: #eeeeee;
+  color: #727272;
+  border-radius: 3px;
+}
+.btn-note,
+.btn-note:hover {
+  background-color: #4f46f8;
+  color: white;
+}
+.pagination {
+  width: 95%;
+  margin: auto;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 990;
+}
+.modal {
+  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.id {
+  color: #4f46f8;
+  font-size: 14px;
+}
+
+.modal table td {
+  padding: 10px;
+}
+textarea {
+  border: 1px solid black;
+}
+.btn-save {
+  width: 90%;
+  margin: auto;
+}
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid\9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+.react-bootstrap-table th > .react-bootstrap-table-sort-order > .caret {
+  margin: 10px 6.5px;
+}
+.dropup .caret,
+.navbar-fixed-bottom .dropdown .caret {
+  content: "";
+  border-top: 0;
+  border-bottom: 4px dashed;
+  border-bottom: 4px solid\9;
+}
+.heading {
+  width: 95%;
+  margin: auto;
+}
+select {
+  border: none;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  color: #4f46f8;
+}
+.table-wrapper {
+  padding: 1rem;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.backdrop {
+  /* Styles for backdrop */
+}
+
+/* Responsive styles for the table */
+.table-responsive {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.actions-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.header {
+  background-color: #ffffff;
+  border-bottom: 1px solid rgb(190, 190, 190);
+  /* padding: 1em 0em 1em 2em; */
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #d3d5d8;
+}
+
+.logoutButton {
+  margin-right: 2em;
+  background-color: #4f46f8;
+  color: white;
+  border-radius: 3;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+}
