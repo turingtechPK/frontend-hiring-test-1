@@ -69,8 +69,14 @@ function Login() {
 
   return (
     <>
-      <Navbar />
-      {!authenticated ? renderSignInForm() : <TableData />}
+      {!authenticated ? (
+        renderSignInForm()
+      ) : (
+        <>
+          <Navbar />
+          <TableData />
+        </>
+      )}
     </>
   );
 }
