@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { Container, TextField, Button, Paper, FormControl, Typography } from "@mui/material";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { login } from "../../api";
 
-import axios from 'axios';
 
 const theme = createTheme({
   status: {
@@ -31,16 +31,9 @@ const SignInForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const Base_URL= 'https://frontend-test-api.aircall.io';
-
         try{
-            const response = await axios.post(
-                Base_URL,{
-                    username: email,
-                    password: password,
-                }
-            );
-        
+            const response = await login(email, password);
+            console.log(response);
             const {access_token} = response.data;
             localStorage.setItem("access_token", access_token);
             navigate("/dashboard")
