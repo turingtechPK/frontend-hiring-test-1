@@ -1,0 +1,17 @@
+.loginForm {
+  display: flex;
+  margin: 60px;
+  
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+
+  
+}
+.loginBackground {
+  height: 100%;
+  width: 100%;
+  
+  flex-direction: column;
+  display: flex;
+}
