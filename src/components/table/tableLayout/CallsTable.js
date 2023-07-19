@@ -1,24 +1,72 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
-import classes from "./CallsTable.module.css";
 import { archiveCall, getData } from "../../../api/apiUtils";
 import { Button } from "@mui/material";
-import { convertToMinutes, findTotalPages, formatDate } from "../../../utils";
+import {
+  capitalizeFirstLetters,
+  convertToMinutes,
+  findTotalPages,
+  formatDate,
+} from "../../../utils";
 import PaginationList from "../pagination/PaginationList";
 import { makeStyles } from "@mui/styles";
 import AddNote from "../../note/AddNote";
 import CallView from "../../ui/call/CallView";
+import TableHeaders from "./TableHeaders";
 
 export default function CallsTable() {
   const useStyles = makeStyles({
     tableContainer: {
       border: "1px solid #CBD6E2",
+    },
+    table: {
+      alignSelf: "center",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    tableText: {
+      fontFamily: "Avenir-Roman",
+      fontSize: "16px",
+
+      lineHeight: "24px",
+      fontStyle: "normal",
+      textAlign: "center",
+    },
+    notesBtn: {
+      height: "32px",
+      width: "100px",
+      borderColor: "#000000",
+      borderWidth: "1px",
+      borderStyle: "dashed",
+      backgroundColor: "#4f46f8",
+      fontFamily: "Avenir-Normal",
+
+      fontStyle: "normal",
+      textAlign: "center",
+      color: "#ffffff",
+    },
+    archiveBtn: {
+      height: "32px",
+      width: "100px",
+      border: "none",
+      boxShadow: "none",
+      fontFamily: "Avenir-Normal",
+
+      fontStyle: "normal",
+      textAlign: "center",
+      color: "#ffffff",
+      textTransform: "none",
+    },
+    hoverable: {
+      cursor: "pointer",
+      "&:hover": {
+        backgroundColor: "#f5f5f5",
+      },
     },
   });
 
@@ -29,7 +77,6 @@ export default function CallsTable() {
   const [notesButtonTrigger, setNotesButtonTrigger] = useState(false);
   const [callViewTrigger, setCallViewTrigger] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [archived, setArchived] = useState(false);
 
   // const [filterValue, setFilterValue] = useState("");
 
@@ -80,79 +127,14 @@ export default function CallsTable() {
     setCallViewTrigger(false);
   };
 
-  const makeClasses = useStyles();
+  const classes = useStyles();
   return (
     <>
       {/* <Filter options={categories} value={filterValue} onChange={handleFilterChange}/> */}
-      <h4>Filter: Placeholder</h4>
+      <p>Filter by: Placeholder</p>
       <TableContainer className={[classes.table]}>
-        <Table sx={{ minWidth: 650 }} className={makeClasses.tableContainer}>
-          <TableHead sx={{ background: "#f4f4f9" }}>
-            <TableRow>
-              <TableCell
-                style={{ fontWeight: "bold" }}
-                className={classes.tableHeader}
-              >
-                Call type
-              </TableCell>
-              <TableCell
-                style={{ fontWeight: "bold" }}
-                className={classes.tableHeader}
-                align="right"
-              >
-                Direction
-              </TableCell>
-              <TableCell
-                style={{ fontWeight: "bold" }}
-                className={classes.tableHeader}
-                align="right"
-              >
-                Duration
-              </TableCell>
-              <TableCell
-                style={{ fontWeight: "bold" }}
-                className={classes.tableHeader}
-                align="right"
-              >
-                FROM
-              </TableCell>
-              <TableCell
-                style={{ fontWeight: "bold" }}
-                className={classes.tableHeader}
-                align="right"
-              >
-                TO
-              </TableCell>
-              <TableCell
-                style={{ fontWeight: "bold" }}
-                className={classes.tableHeader}
-                align="right"
-              >
-                VIA
-              </TableCell>
-              <TableCell
-                style={{ fontWeight: "bold" }}
-                className={classes.tableHeader}
-                align="right"
-              >
-                CREATED AT
-              </TableCell>
-              <TableCell
-                style={{ fontWeight: "bold" }}
-                className={classes.tableHeader}
-                align="right"
-              >
-                STATUS
-              </TableCell>
-              <TableCell
-                style={{ fontWeight: "bold" }}
-                className={classes.tableHeader}
-                align="right"
-              >
-                ACTIONS
-              </TableCell>
-            </TableRow>
-          </TableHead>
+        <Table sx={{ minWidth: 650 }} className={classes.tableContainer}>
+          <TableHeaders />
           <TableBody>
             {data !== []
               ? data.map((row) => (
@@ -164,6 +146,7 @@ export default function CallsTable() {
                       }
                     }}
                     key={row.id}
+                    className={classes.hoverable}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell
@@ -179,36 +162,36 @@ export default function CallsTable() {
                       component="th"
                       scope="row"
                     >
-                      {row.call_type}
+                      {capitalizeFirstLetters(row.call_type)}
                     </TableCell>
                     <TableCell
                       style={{ color: "#325ae7" }}
                       className={classes.tableText}
-                      align="right"
+                      align="center"
                     >
-                      {row.direction}
+                      {capitalizeFirstLetters(row.direction)}
                     </TableCell>
-                    <TableCell className={classes.tableText} align="right">
+                    <TableCell className={classes.tableText} align="center">
                       <span>{convertToMinutes(row.duration)}</span>
                       <br />
                       <span style={{ color: "#325ae7" }}>
                         ({row.duration} seconds)
                       </span>
                     </TableCell>
-                    <TableCell className={classes.tableText} align="right">
+                    <TableCell className={classes.tableText} align="center">
                       {row.from}
                     </TableCell>
-                    <TableCell className={classes.tableText} align="right">
+                    <TableCell className={classes.tableText} align="center">
                       {row.to}
                     </TableCell>
-                    <TableCell className={classes.tableText} align="right">
+                    <TableCell className={classes.tableText} a align="center">
                       {row.via}
                     </TableCell>
-                    <TableCell className={classes.tableText} align="right">
+                    <TableCell className={classes.tableText} align="center">
                       {formatDate(row.created_at)}
                     </TableCell>
                     {row.isArchived ? (
-                      <TableCell className={classes.tableText} align="right">
+                      <TableCell className={classes.tableText} align="center">
                         <Button
                           variant="contained"
                           sx={{
@@ -221,7 +204,7 @@ export default function CallsTable() {
                         </Button>
                       </TableCell>
                     ) : (
-                      <TableCell className={classes.tableText} align="right">
+                      <TableCell className={classes.tableText} align="center">
                         <Button
                           style={{
                             background: row.is_archived
@@ -242,7 +225,7 @@ export default function CallsTable() {
                         </Button>
                       </TableCell>
                     )}
-                    <TableCell align="right">
+                    <TableCell align="center">
                       <Button
                         onClick={() => {
                           setSelectedItem(row);
@@ -264,40 +247,48 @@ export default function CallsTable() {
               : null}
           </TableBody>
         </Table>
-        {selectedItem ? (
-          <AddNote
-            trigger={notesButtonTrigger}
-            onClose={onNotesViewCloseHandler}
-            ID={selectedItem.id}
-            to={selectedItem.to}
-            from={selectedItem.from}
-            via={selectedItem.via}
-            duration={selectedItem.duration}
-            call_type={selectedItem.call_type}
-          />
-        ) : (
-          ""
-        )}
 
-        {selectedItem ? (
-          <CallView
-            trigger={callViewTrigger}
-            onClose={rowClickHandler}
-            ID={selectedItem.id}
-            to={selectedItem.to}
-            from={selectedItem.from}
-            notes={selectedItem.notes}
-            via={selectedItem.via}
-            duration={selectedItem.duration}
-            direction={selectedItem.direction}
-            call_type={selectedItem.call_type}
-            created_at={selectedItem.created_at}
-            is_archived={selectedItem.is_archived}
-          />
-        ) : (
-          ""
-        )}
+        {
+          //Displays the Note PopUp conditionally
+          selectedItem ? (
+            <AddNote
+              trigger={notesButtonTrigger}
+              onClose={onNotesViewCloseHandler}
+              ID={selectedItem.id}
+              to={selectedItem.to}
+              from={selectedItem.from}
+              via={selectedItem.via}
+              duration={selectedItem.duration}
+              call_type={selectedItem.call_type}
+            />
+          ) : (
+            ""
+          )
+        }
+
+        {
+          //Displays the Call View conditionall
+          selectedItem ? (
+            <CallView
+              trigger={callViewTrigger}
+              onClose={rowClickHandler}
+              ID={selectedItem.id}
+              to={selectedItem.to}
+              from={selectedItem.from}
+              notes={selectedItem.notes}
+              via={selectedItem.via}
+              duration={selectedItem.duration}
+              direction={selectedItem.direction}
+              call_type={selectedItem.call_type}
+              created_at={selectedItem.created_at}
+              is_archived={selectedItem.is_archived}
+            />
+          ) : (
+            ""
+          )
+        }
       </TableContainer>
+
       <PaginationList
         totalCount={totalCount}
         setPage={setPage}

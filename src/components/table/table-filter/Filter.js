@@ -1,6 +1,8 @@
 import React from 'react';
 import { Select, MenuItem } from '@material-ui/core';
 
+
+//Filter Logic
 const Filter = ({ options, value, onChange }) => {
   return (
       <Select value={value} onChange={onChange}>

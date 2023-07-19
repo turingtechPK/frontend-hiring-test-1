@@ -52,3 +52,16 @@ export const groupData = (data) => {
 export const findTotalPages = (total) => {
   return Math.ceil(total / 9);
 };
+
+//Capitalize first letters of the string
+
+export const capitalizeFirstLetters = (str) => {
+  if (typeof str !== "string" || str.length === 0) {
+    return str;
+  }
+
+  return str
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};

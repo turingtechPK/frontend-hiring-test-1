@@ -1,6 +1,8 @@
 import axios from "axios";
 const API_URL = "https://frontend-test-api.aircall.io";
 
+//Used to fetch JWT Token
+
 export const getToken = async (username, password) => {
   try {
     axios
@@ -11,7 +13,7 @@ export const getToken = async (username, password) => {
       .then((response) => {
         if (response.data.access_token) {
           console.log("Inside getToken: " + JSON.stringify(response.data));
-          //const mykey = JSON.stringify(response.data.access_token);
+        
           localStorage.setItem("user", JSON.stringify(response.data));
         }
       });
@@ -20,6 +22,8 @@ export const getToken = async (username, password) => {
   }
 };
 
+
+//Used to fetch the Calls table via GET Request
 export const getData = async (offset, total) => {
   let user = JSON.parse(localStorage.getItem("user"));
   const token = user.access_token;
@@ -41,6 +45,8 @@ export const getData = async (offset, total) => {
     });
 };
 
+
+//Used to Archive or Unarchive a call via PUT Request
 export const archiveCall = async (id, isArchived) => {
   let user = JSON.parse(localStorage.getItem("user"));
   const token = user.access_token;
@@ -52,13 +58,14 @@ export const archiveCall = async (id, isArchived) => {
     })
     .then((response) => {
       const call = response.data;
-      console.log(call);
     })
     .catch((e) => {
       console.log(e.err);
     });
 };
 
+
+//Used to add a new note via POST Request
 export const addNote = async (id, note) => {
   let user = JSON.parse(localStorage.getItem("user"));
   console.log("USSS:" + id);

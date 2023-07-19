@@ -5,8 +5,7 @@ import { Box, Button, InputAdornment, TextField } from "@mui/material";
 import classes from "./login.module.css";
 import { getToken } from "../../api/apiUtils";
 import { makeStyles } from "@mui/styles";
-import { AccountCircle, LockOutlined } from "@mui/icons-material";
-
+import {LockOutlined,PersonOutline } from "@mui/icons-material";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -49,10 +48,11 @@ const Login = () => {
                 >
                   <TextField
                     required
+                    style={{ width: "500px" }}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
-                          <AccountCircle />
+                          <PersonOutline />
                         </InputAdornment>
                       ),
                     }}
@@ -73,6 +73,7 @@ const Login = () => {
                   }}
                 >
                   <TextField
+                    style={{ width: "500px" }}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -94,9 +95,19 @@ const Login = () => {
                   borderRadius: 0,
                   textTransform: "none",
                   marginTop: "10px",
+                  width:'200px',
+                  
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignContent: 'center',
+                  justifyItems: 'center',
+                  justifySelf: 'center',
+                  marginLeft: '140px',
+                  display: 'flex',
+
                   backgroundColor: "#4F46F8",
                 }}
-                fullWidth
+                
                 type="submit"
                 variant="contained"
                 onClick={onLoginHandler}

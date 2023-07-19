@@ -58,8 +58,6 @@ function BootstrapDialogTitle(props) {
 }
 
 function AddNote({ trigger, onClose, ID, to, from, via, duration, call_type }) {
-  // const concatedData = notes.join(', ');
-
   const myClasses = useStyles();
 
   const [inputValue, setInputValue] = useState("");
