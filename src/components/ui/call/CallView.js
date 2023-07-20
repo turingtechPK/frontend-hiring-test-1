@@ -1,14 +1,13 @@
 import React from "react";
-
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { convertToMinutes, formatDate } from "../../../utils";
+import { makeStyles } from "@mui/styles";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -43,6 +42,12 @@ function BootstrapDialogTitle(props) {
   );
 }
 
+const useStyles = makeStyles({
+  text: {
+    fontWeight: "bold",
+  },
+});
+
 function CallView({
   trigger,
   onClose,
@@ -58,6 +63,7 @@ function CallView({
   is_archived,
 }) {
   console.log(is_archived);
+  const classes = useStyles();
   return trigger ? (
     <div>
       <BootstrapDialog
@@ -66,69 +72,69 @@ function CallView({
         open={trigger}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={onClose}>
-          <span style={{ fontWeight: "bold" }}>Call Details</span>
+          <span className={classes.text}>Call Details</span>
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            <span style={{ fontWeight: "bold" }}>Caller ID:</span>{" "}
+            <span className={classes.text}>Caller ID:</span>{" "}
             <span style={{ color: "#4F46F8" }}>{ID}</span>
           </Typography>
         </DialogContent>
 
         <DialogContent dividers>
           <Typography gutterBottom>
-            <span style={{ fontWeight: "bold" }}> Call Type:</span>{" "}
-            <span style={{ color: "#325AE7" }}>{call_type}</span>
+            <span className={classes.text}> Call Type:</span>{" "}
+            <span>{call_type}</span>
           </Typography>
         </DialogContent>
 
         <DialogContent dividers>
           <Typography gutterBottom>
-            <span style={{ fontWeight: "bold" }}>Direction:</span> {direction}
+            <span className={classes.text}>Direction:</span> {direction}
           </Typography>
         </DialogContent>
 
         <DialogContent dividers>
           <Typography gutterBottom>
-            <span style={{ fontWeight: "bold" }}>Duration:</span>{" "}
+            <span className={classes.text}>Duration:</span>{" "}
             {convertToMinutes(duration)}
           </Typography>
         </DialogContent>
 
         <DialogContent dividers>
           <Typography gutterBottom>
-            <span style={{ fontWeight: "bold" }}>FROM:</span> {from}
+            <span className={classes.text}>FROM:</span> {from}
           </Typography>
         </DialogContent>
 
         <DialogContent dividers>
           <Typography gutterBottom>
-            <span style={{ fontWeight: "bold" }}>TO:</span> {to}
+            <span className={classes.text}>TO:</span> {to}
           </Typography>
         </DialogContent>
 
         <DialogContent dividers>
           <Typography gutterBottom>
-            <span style={{ fontWeight: "bold" }}>VIA:</span> {via}
+            <span className={classes.text}>VIA:</span> {via}
           </Typography>
         </DialogContent>
 
         <DialogContent dividers>
           <Typography gutterBottom>
-            <span style={{ fontWeight: "bold" }}>Created At</span>:{" "}
+            <span className={classes.text}>Created At</span>:{" "}
             {formatDate(created_at)}
           </Typography>
         </DialogContent>
 
         <DialogContent dividers>
           <Typography gutterBottom>
-            <span style={{ fontWeight: "bold" }}>Archived? </span>{" "}
+            <span className={classes.text}>Archived? </span>{" "}
             {is_archived ? "true" : "false"}
           </Typography>
         </DialogContent>
 
         <DialogContent dividers>
-          <span style={{ fontWeight: "bold" }}>Notes: </span>
+          <span className={classes.text}>Notes: </span>
           {notes !== undefined && notes !== null
             ? notes.map((item, index) => (
                 <Typography gutterBottom key={index}>

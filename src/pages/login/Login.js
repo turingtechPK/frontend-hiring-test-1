@@ -2,15 +2,39 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/layout/Header";
 import { Box, Button, InputAdornment, TextField } from "@mui/material";
-import classes from "./login.module.css";
 import { getToken } from "../../api/apiUtils";
 import { makeStyles } from "@mui/styles";
-import {LockOutlined,PersonOutline } from "@mui/icons-material";
+import { LockOutlined, PersonOutline } from "@mui/icons-material";
+
+const useStyles = makeStyles({
+  loginBtn: {
+    
+    justifyContent: "center",
+    display: "flex",
+  },
+  loginForm: {
+    display: "flex",
+    margin: "120px",
+    marginLeft: "25%",
+    marginRight: "25%",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "60vh",
+    backgroundColor: "white",
+  },
+  loginBackground: {
+    background: "#f4efee",
+    width: "100%",
+    height: "100vh",
+    flexDirection: "column",
+    display: "flex",
+  },
+});
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const useStyleClasses = makeStyles();
+  const classes = useStyles();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -90,25 +114,9 @@ const Login = () => {
                 </Box>
               </div>
               <Button
-                className={useStyleClasses.loginBtn}
-                sx={{
-                  borderRadius: 0,
-                  textTransform: "none",
-                  marginTop: "10px",
-                  width:'200px',
-                  
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  alignContent: 'center',
-                  justifyItems: 'center',
-                  justifySelf: 'center',
-                  marginLeft: '140px',
-                  display: 'flex',
-
-                  backgroundColor: "#4F46F8",
-                }}
-                
+                className={classes.loginBtn}
                 type="submit"
+                fullWidth
                 variant="contained"
                 onClick={onLoginHandler}
               >

@@ -9,7 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { Box, Divider, TextField } from "@mui/material";
 import { addNote } from "../../api/apiUtils";
-import { convertToMinutes } from "../../utils";
+import { capitalizeFirstLetters, convertToMinutes } from "../../utils";
 import { makeStyles } from "@mui/styles";
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -93,7 +93,9 @@ function AddNote({ trigger, onClose, ID, to, from, via, duration, call_type }) {
         <DialogContent>
           <Typography gutterBottom>
             <span className={myClasses.title}>Call Type </span>{" "}
-            <span style={{ color: "#325AE7" }}>{call_type}</span>
+            <span style={{ color: "#325AE7" }}>
+              {capitalizeFirstLetters(call_type)}
+            </span>
           </Typography>
           <Typography gutterBottom>
             <span className={myClasses.title}>Duration</span>{" "}

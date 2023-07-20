@@ -2,7 +2,6 @@ import axios from "axios";
 const API_URL = "https://frontend-test-api.aircall.io";
 
 //Used to fetch JWT Token
-
 export const getToken = async (username, password) => {
   try {
     axios
@@ -13,15 +12,14 @@ export const getToken = async (username, password) => {
       .then((response) => {
         if (response.data.access_token) {
           console.log("Inside getToken: " + JSON.stringify(response.data));
-        
+
           localStorage.setItem("user", JSON.stringify(response.data));
         }
       });
   } catch (e) {
-    console.log(e.err);
+    console.log("error", e);
   }
 };
-
 
 //Used to fetch the Calls table via GET Request
 export const getData = async (offset, total) => {
@@ -41,10 +39,9 @@ export const getData = async (offset, total) => {
       return [calls, totalCount, hasNextPage];
     })
     .catch((e) => {
-      console.log(e.err);
+      console.log("error", e);
     });
 };
-
 
 //Used to Archive or Unarchive a call via PUT Request
 export const archiveCall = async (id, isArchived) => {
@@ -58,12 +55,12 @@ export const archiveCall = async (id, isArchived) => {
     })
     .then((response) => {
       const call = response.data;
+      return call;
     })
     .catch((e) => {
-      console.log(e.err);
+      console.log("error", e);
     });
 };
-
 
 //Used to add a new note via POST Request
 export const addNote = async (id, note) => {
@@ -79,10 +76,9 @@ export const addNote = async (id, note) => {
           Authorization: `Bearer ${token}`,
         },
       }
-     
     );
     console.log("success!");
   } catch (e) {
-    console.log(e.err);
+    console.log("error", e);
   }
 };

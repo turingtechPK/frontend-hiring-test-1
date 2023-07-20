@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -17,6 +17,8 @@ import { makeStyles } from "@mui/styles";
 import AddNote from "../../note/AddNote";
 import CallView from "../../ui/call/CallView";
 import TableHeaders from "./TableHeaders";
+import { Filter } from "@mui/icons-material";
+import TableFilter from "../table-filter/TableFilter";
 
 export default function CallsTable() {
   const useStyles = makeStyles({
@@ -71,45 +73,60 @@ export default function CallsTable() {
   });
 
   const [data, setData] = useState([]);
+  const [dataFiltered, setDataFiltered] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [page, setPage] = useState(9);
   const [totalPages, setNumberOfPageNumber] = useState(10);
   const [notesButtonTrigger, setNotesButtonTrigger] = useState(false);
   const [callViewTrigger, setCallViewTrigger] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [filter, setFilter] = useState("all");
+  const [archivedData, setArchivedData] = useState({});
 
-  // const [filterValue, setFilterValue] = useState("");
 
-  // const handleFilterChange = (event) => {
-  //   setFilterValue(event.target.value);
-  // };
-
-  // const filteredData = filterValue
-  //   ? data.filter((item) => item.is_archived === filterValue)
-  //   : data;
-  // console.log(filteredData);
-  // const categories = [...new Set(data.map((item) => item.is_archived))];
-  // console.log(categories);
+  //Data filtering logic
+  
+  const setFilterData = (filterValue) => {
+    if (filterValue === "all") {
+      setDataFiltered(data);
+    } else if (filterValue === "archived") {
+      setDataFiltered(data.filter((item) => item.is_archived === true));
+    } else if (filterValue === "unarchived") {
+      setDataFiltered(data.filter((item) => item.is_archived === false));
+    }
+  };
 
   async function fetchData() {
     const calls = await getData(page, 10);
     console.log(calls[1]);
 
     setData(JSON.parse(calls[0]));
+    setFilterData(JSON.parse(calls[0]));
     setTotalCount(calls[1]);
 
     setNumberOfPageNumber(findTotalPages(calls[1]));
   }
+
+  useEffect(() => {
+    
+    setTimeout(() => {
+      fetchData();
+    }, 1000);
+
+    setFilterData("all");
+  }, []);
 
   const onNotesViewCloseHandler = () => {
     setNotesButtonTrigger(false);
   };
 
   const onArchiveHandler = async (row) => {
+    setFilter("all");
+    let result;
     if (row.is_archived) {
-      await archiveCall(row.id, false);
+      result = await archiveCall(row.id, false);
     } else {
-      await archiveCall(row.id, true);
+      result = await archiveCall(row.id, true);
     }
 
     setTimeout(() => {
@@ -121,7 +138,7 @@ export default function CallsTable() {
     setTimeout(() => {
       fetchData();
     }, 1000);
-  }, [page, notesButtonTrigger, callViewTrigger]);
+  }, [page, notesButtonTrigger, callViewTrigger, archivedData]);
 
   const rowClickHandler = () => {
     setCallViewTrigger(false);
@@ -130,8 +147,12 @@ export default function CallsTable() {
   const classes = useStyles();
   return (
     <>
-      {/* <Filter options={categories} value={filterValue} onChange={handleFilterChange}/> */}
-      <p>Filter by: Placeholder</p>
+      <TableFilter
+        setFilterData={setFilterData}
+        setFilter={setFilter}
+        filter={filter}
+      />
+
       <TableContainer className={[classes.table]}>
         <Table sx={{ minWidth: 650 }} className={classes.tableContainer}>
           <TableHeaders />
