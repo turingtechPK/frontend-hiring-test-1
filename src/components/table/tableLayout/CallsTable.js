@@ -83,9 +83,10 @@ export default function CallsTable() {
   const [filter, setFilter] = useState("all");
   const [archivedData, setArchivedData] = useState({});
 
+  const classes = useStyles();
 
   //Data filtering logic
-  
+
   const setFilterData = (filterValue) => {
     if (filterValue === "all") {
       setDataFiltered(data);
@@ -108,12 +109,7 @@ export default function CallsTable() {
   }
 
   useEffect(() => {
-    
-    setTimeout(() => {
-      fetchData();
-    }, 1000);
-
-    setFilterData("all");
+    fetchData();
   }, []);
 
   const onNotesViewCloseHandler = () => {
@@ -121,7 +117,6 @@ export default function CallsTable() {
   };
 
   const onArchiveHandler = async (row) => {
-    setFilter("all");
     let result;
     if (row.is_archived) {
       result = await archiveCall(row.id, false);
@@ -138,13 +133,12 @@ export default function CallsTable() {
     setTimeout(() => {
       fetchData();
     }, 1000);
-  }, [page, notesButtonTrigger, callViewTrigger, archivedData]);
+  }, [page, notesButtonTrigger]);
 
   const rowClickHandler = () => {
     setCallViewTrigger(false);
   };
 
-  const classes = useStyles();
   return (
     <>
       <TableFilter

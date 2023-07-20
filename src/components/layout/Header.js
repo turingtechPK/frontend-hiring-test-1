@@ -4,6 +4,7 @@ import classes from "./Header.module.css";
 import Logo from "../../TTLogo.png";
 function Header({ hideLogout, navigate }) {
   const onLogoutHandler = async () => {
+    localStorage.clear();
     navigate("/");
   };
 
