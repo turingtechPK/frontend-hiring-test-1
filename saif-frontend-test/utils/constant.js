@@ -1,4 +1,7 @@
-import StatusButton from "../components/StatusButton"
+import { Typography } from "@mui/material"
+import DurationCell from "../components/DurationCell"
+import StatusButton from "../components/StatusDisplayButton"
+import AddNoteCell from "../components/AddNoteCell"
 
 const calculateColumnWidth = (width) => {
     if (typeof window !== 'undefined') {
@@ -22,6 +25,9 @@ export const columns = [
         field: 'duration',
         headerName: 'DURATION',
         width: calculateColumnWidth(24),
+        renderCell: (row) => (
+            <DurationCell duration={row?.duration} />
+        ),
     },
     {
         field: 'from',
@@ -43,13 +49,14 @@ export const columns = [
         field: 'created_at',
         headerName: 'CREATED AT',
         width: calculateColumnWidth(10),
+        isDate: true,
     },
     {
         field: 'status',
         headerName: 'STATUS',
         width: calculateColumnWidth(10),
         renderCell: (row) => (
-            <StatusButton isArchived={row?.is_archived}>Details</StatusButton>
+            <StatusButton isArchived={row?.is_archived} />
         ),
     },
     {
@@ -57,11 +64,7 @@ export const columns = [
         headerName: 'ACTIONS',
         width: calculateColumnWidth(10),
         renderCell: (row) => (
-            <a
-            href={`/my-graana/${row?.path}/${row?.propertyId}`}
-            >
-            Details
-            </a>
+            <AddNoteCell data={row} />
         ),
     },
   ]

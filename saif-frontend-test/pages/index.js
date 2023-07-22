@@ -4,20 +4,36 @@ import { refreshToken } from '../utils/API';
 import { useEffect } from 'react';
 
 export default function Home() {
-
-  useEffect(() => {
-    const refreshInterval = setInterval(() => {
-      refreshToken()
-        .then((response) => {
+  const startInterval = () => {
+    const intervalStartTime = new Date().getTime();
+    localStorage.setItem("intervalStartTime", intervalStartTime);
+    setInterval(refreshToken().then((response) => {
           localStorage.setItem('turingUserToken', response?.data?.access_token)
           localStorage.setItem('turingRefreshToken', response?.data?.refresh_token)
         })
         .catch((error) => {
           console.log(error)
-        });
-    }, 9.5 * 60 * 1000);
-
-    return () => clearInterval(refreshInterval);
+        }), 600000);
+  };
+  
+  const checkInterval = () => {
+    const intervalStartTime = localStorage.getItem("intervalStartTime");
+    if (intervalStartTime) {
+      const currentTime = new Date().getTime();
+      const timeElapsed = currentTime - parseInt(intervalStartTime, 10);
+      const remainingTime = 590000 - timeElapsed;
+      if (remainingTime > 0) {
+        setTimeout(() => {
+          startInterval();
+        }, remainingTime);
+      } else {
+      }
+    } else {
+      startInterval();
+    }
+  };
+  useEffect(() => {
+    checkInterval()
   }, []);
   return (
     <div>

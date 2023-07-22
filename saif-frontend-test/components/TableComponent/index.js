@@ -1,11 +1,24 @@
 import React, { useState } from 'react'
 import { styles } from './style'
-import { Box, TableRow } from '@mui/material'
+import { Box, Button, TableRow } from '@mui/material'
+import moment from 'moment'
 
-const CustomTableComponent = ({ columns, rows }) => {
+const CustomTableComponent = ({ columns, rows, setOpen, setSelectedCall }) => {
+  const handleAction = (row) => {
+    setOpen(true)
+    setSelectedCall(row)
+  }
   const renderCell = (column, row) => {
     if (column.renderCell) {
-      return column.renderCell(row)
+      if (column.field === 'action') {
+        return <Button onClick={() => handleAction(row)}>{column.renderCell(row)}</Button>
+      }
+      else {
+        return column.renderCell(row)
+      }
+    }
+    if (column.isDate) {
+        return moment(row[column.field]).format('DD-MM-YYYY')
     }
     return row[column.field]
   }

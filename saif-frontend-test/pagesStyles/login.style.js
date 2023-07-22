@@ -2,12 +2,10 @@ import { TextField, styled } from "@mui/material"
 
 export const StyledTextField = styled(TextField)(
     () => ({
-       '.MuiTextField-root': {
-            width: '100% !important',
-        },
       '.MuiInputBase-root, .MuiInputLabel-root': {
         height: '40px',
-        // width: '100%',
+        marginBottom: '30px',
+        width: '35vw !important',
       },
     }),
   )
@@ -23,8 +21,8 @@ export const styles = {
     },
     loginForm: {
         backgroundColor: 'white',
+        padding: '3vw 30px',
         width: '40vw',
-        height: '40vh',
     },
     required: {
         color: 'red',
@@ -32,5 +30,9 @@ export const styles = {
     inputIcon: {
         width:'30px',
         height: '30px',
+    },
+    loginBtn: {
+      color: 'white',
+      backgroundColor: '#1b90fe',
     }
 }

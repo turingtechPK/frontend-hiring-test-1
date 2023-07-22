@@ -40,34 +40,15 @@ const Login = () => {
                     placeholder="Email"
                     onChange={(e) => handleEmailChange(e.target.value)}
                     value={email}
-                    InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                        <Image
-                            style={styles.inputIcon}
-                            src={PermIdentityIcon}
-                        />
-                        </InputAdornment>
-                    ),
-                    }}
                 />
                 <Typography><span style={styles.required}>* </span>Password</Typography>
                 <StyledTextField
                     placeholder="Password"
                     onChange={(e) => handlePasswordChange(e.target.value)}
                     value={password}
-                    InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                        <Image
-                            style={styles.inputIcon}
-                            src={PermIdentityIcon}
-                        />
-                        </InputAdornment>
-                    ),
-                    }}
+                    type="password"
                 />
-                <Button onClick={loginHandler}>Login</Button>
+                <Button sx={styles.loginBtn} onClick={loginHandler}>Login</Button>
             </Box>
         </Box>
     )
