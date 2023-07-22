@@ -1,4 +1,4 @@
-import StatusButton from "../components/statusButton"
+import StatusButton from "../components/StatusButton"
 
 const calculateColumnWidth = (width) => {
     if (typeof window !== 'undefined') {
