@@ -1,0 +1,13 @@
+.statusoption1 {
+  background-color: #6eccaf !important;
+  padding: 5px !important;
+  border-radius: 4px !important;
+  cursor: pointer;
+}
+
+.statusoption2 {
+  background-color: #eaeaea !important;
+  padding: 5px !important;
+  border-radius: 4px !important;
+  cursor: pointer;
+}
