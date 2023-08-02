@@ -59,8 +59,10 @@ export const CURRENT_USER_QUERY = `
   }
 `;
 
-// Wrapper function for paginatedCalls query
-export const getPaginatedCalls = async (offset = 0, limit = 10) => {
+export const getPaginatedCalls = async (pageNumber = 0, itemsPerPage = 10) => {
+  const offset = (pageNumber) * itemsPerPage;
+  const limit = itemsPerPage;
+
   const response = await makeGraphQLRequest(PAGINATED_CALLS_QUERY, { offset, limit });
   return response?.paginatedCalls || null;
 };

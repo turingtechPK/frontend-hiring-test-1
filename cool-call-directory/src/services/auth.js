@@ -25,6 +25,8 @@ export const auth = async (username, password) => {
     });
 
     const authToken = response.data.login.access_token;
+    // Store the timestamp when the token was stored
+    localStorage.setItem('authTokenTimestamp', Date.now());
     localStorage.setItem('authToken', authToken);
     return true;
   } catch (error) {
@@ -37,8 +39,8 @@ export const auth = async (username, password) => {
 export const authRefresh = async (oldAuthToken) => {
   try {
     const REFRESH_TOKEN_MUTATION = gql`
-      mutation RefreshToken($oldAuthToken: String!) {
-        refreshToken(oldToken: $oldAuthToken) {
+      mutation RefreshToken{
+        refreshToken{
           access_token
         }
       }
@@ -46,7 +48,6 @@ export const authRefresh = async (oldAuthToken) => {
 
     const response = await client.mutate({
       mutation: REFRESH_TOKEN_MUTATION,
-      variables: { oldAuthToken },
     });
 
     const newAuthToken = response.data.refreshToken.access_token;
