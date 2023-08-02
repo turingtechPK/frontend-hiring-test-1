@@ -7,14 +7,14 @@ import { useRouter } from 'next/navigation';
 
 const styles = {
   container: {
-    marginTop: '50px',
+    marginTop: '100px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
   paper: {
     padding: '20px',
-    width: '300px',
+    width: '500px',
     maxWidth: '90%',
   },
   form: {
@@ -44,7 +44,6 @@ const Login = () => {
 
   useEffect(()=>{
     if(success){
-
         router.push('/');
     }
   },[success])

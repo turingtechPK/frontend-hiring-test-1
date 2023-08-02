@@ -4,13 +4,12 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import ArchiveIcon from '@mui/icons-material/Archive';
 import { alpha } from '@mui/material/styles';
-import { Tooltip } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 
 
-export default function CallsTableToolbar(props) {
-    const { numSelected } = props;
-
+export default function CallsTableToolbar({ numSelected, onArchive, onSelectFilter }) {
     return (
         <Toolbar
         sx={{
@@ -44,16 +43,16 @@ export default function CallsTableToolbar(props) {
         )}
 
         {numSelected > 0 ? (
-            <Tooltip title="Delete">
-            <IconButton>
-                <DeleteIcon />
-            </IconButton>
+            <Tooltip title="Archive">
+                <IconButton>
+                    <ArchiveIcon/>
+                </IconButton>
             </Tooltip>
         ) : (
             <Tooltip title="Filter list">
-            <IconButton>
-                <FilterListIcon />
-            </IconButton>
+                <IconButton>
+                    <FilterListIcon />
+                </IconButton>
             </Tooltip>
         )}
         </Toolbar>

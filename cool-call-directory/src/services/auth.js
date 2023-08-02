@@ -25,9 +25,11 @@ export const auth = async (username, password) => {
     });
 
     const authToken = response.data.login.access_token;
+
+    localStorage.setItem('authToken', authToken);
     // Store the timestamp when the token was stored
     localStorage.setItem('authTokenTimestamp', Date.now());
-    localStorage.setItem('authToken', authToken);
+
     return true;
   } catch (error) {
     console.error('Authentication failed:', error);
@@ -36,15 +38,21 @@ export const auth = async (username, password) => {
 };
 
 // Function to refresh the authentication token and update it in local storage
-export const authRefresh = async (oldAuthToken) => {
+export const authRefresh = async () => {
   try {
     const REFRESH_TOKEN_MUTATION = gql`
-      mutation RefreshToken{
+      mutation {
         refreshToken{
           access_token
         }
       }
     `;
+    
+    const authToken = localStorage.getItem('authToken');
+    
+    const headers = {
+      Authorization: `Bearer ${authToken}`,
+    };
 
     const response = await client.mutate({
       mutation: REFRESH_TOKEN_MUTATION,
@@ -52,6 +60,8 @@ export const authRefresh = async (oldAuthToken) => {
 
     const newAuthToken = response.data.refreshToken.access_token;
     localStorage.setItem('authToken', newAuthToken);
+    // Store the timestamp when the token was stored
+    localStorage.setItem('authTokenTimestamp', Date.now());
     return true;
   } catch (error) {
     console.error('Token refresh failed:', error);

@@ -5,12 +5,12 @@ import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
 import { Skeleton } from '@mui/material';
 
-export default function CallsTableSekelton() {
+export default function CallsTableSekelton({rows=10}) {
  return (
     <TableBody>
-    {[1,2,3,4,5,6,7,8,9,10].map((row, index) => {
+    {[...Array(rows).keys()].map((row, index) => {
         return (
-            <TableRow>
+            <TableRow key={index+'_key'}>
                 <TableCell padding="checkbox">
                     <Checkbox
                     color="primary"

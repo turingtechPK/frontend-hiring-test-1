@@ -5,6 +5,8 @@ import Navbar from '@/components/Navbar'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Container } from '@mui/material';
+import { useEffect } from 'react';
+import { authRefresh } from '../services/auth';
 
 const darkTheme = createTheme({
   palette: {
@@ -13,6 +15,18 @@ const darkTheme = createTheme({
 });
 
 export default function RootLayout({ children }) {
+  useEffect(() => {
+    // Set up the interval to call authRefresh every 9 minutes (9 * 60 * 1000 milliseconds)
+    const intervalId = setInterval(() => {
+      authRefresh();
+    }, 9 * 60 * 1000);
+
+    // Clean up the interval when the component unmounts
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   return (
     <html lang="en">
       <body>
