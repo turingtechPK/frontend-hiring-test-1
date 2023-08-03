@@ -2,13 +2,20 @@ import PropTypes from 'prop-types';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import { alpha } from '@mui/material/styles';
 import { Tooltip } from '@mui/material';
+import Filters from './Filters';
+import { useEffect, useState } from 'react';
 
 
 export default function CallsTableToolbar({ numSelected, onArchive, onSelectFilter }) {
+    const [filters,setFilters] = useState([]);
+
+    useEffect(()=>{
+        onSelectFilter(filters);
+    },[filters])
+
     return (
         <Toolbar
         sx={{
@@ -49,9 +56,10 @@ export default function CallsTableToolbar({ numSelected, onArchive, onSelectFilt
             </Tooltip>
         ) : (
             <Tooltip title="Filter list">
-                <IconButton>
-                    <FilterListIcon />
-                </IconButton>
+                <Filters
+                    selected={filters}
+                    setSelected={setFilters}
+                />
             </Tooltip>
         )}
         </Toolbar>
@@ -60,4 +68,5 @@ export default function CallsTableToolbar({ numSelected, onArchive, onSelectFilt
 
 CallsTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
-};  
+};
+

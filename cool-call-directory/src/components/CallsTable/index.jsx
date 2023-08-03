@@ -12,11 +12,11 @@ import { getPaginatedCalls } from '@/services/queries';
 import CallsTableToolbar from './components/Toolbar';
 import CallsTableHead from './components/Head';
 import CallsTableSkeleton from './components/Skeleton';
-import { Button, Chip, Typography } from '@mui/material';
+import { Button, Chip, FormControlLabel, Switch, TableFooter, Typography } from '@mui/material';
 import CallModal from '../CallModal';
 import { useRouter } from 'next/navigation';
 import { archiveCall } from '../../services/mutations';
-import { convertSecondsToMinutesAndSeconds } from '../../helpers/util';
+import { convertSecondsToMinutesAndSeconds, getComparator, stableSort } from '../../helpers/util';
 
 
 function createData({id, call_type, direction, duration, from, to, via, created_at, status, action,is_archived,notes}) {
@@ -48,6 +48,9 @@ export default function CallsTable() {
   const [totalCount,setTotalCount] = useState(0);
   const [selectedCall, setSelectedCall] = useState(null);  
   const [callDetailsModalOpen, setCallDetailModalOpen] = useState(false);
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [groupByDate, setGroupByDate] = useState(false);
+
   const router = useRouter();
 
   useEffect(()=>{
@@ -60,15 +63,22 @@ export default function CallsTable() {
     }
   },[selectedCall])
 
+  useEffect(()=>{
+    if (groupByDate) {
+      setFilteredResults(stableSort(calls,getComparator('desc','created_at')));
+    }
+  },[groupByDate,calls])
+
   const fetchPaginatedCalls = async () => {
     try{
       setLoading(true);
       const calls = await getPaginatedCalls(page, rowsPerPage);
       setCalls(calls.nodes.map((call) => createData(call)));
+      setFilteredResults(calls.nodes.map((call) => createData(call)));
       setHasNext(calls.hasNext);
       setTotalCount(calls.totalCount);
     } catch(e) {
-      alert('Session Expired');
+      alert('Session Expired. Please signin again.');
       router.push('/auth');
     } finally {
       setLoading(false);
@@ -80,7 +90,16 @@ export default function CallsTable() {
       return archiveCall(id);
     }));
     await fetchPaginatedCalls();
-  } 
+  }
+  
+  const filter = (filters) => {
+    if(filters.length<1){
+      setFilteredResults(calls);
+      return;
+    }
+
+    setFilteredResults(calls.filter((call)=> filters.includes(call.call_type)));
+  }
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -139,7 +158,7 @@ export default function CallsTable() {
       />
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
-          <CallsTableToolbar numSelected={selected.length} onArchive={archiveSelected}/>
+          <CallsTableToolbar numSelected={selected.length} onArchive={archiveSelected} onSelectFilter={filter}/>
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -165,9 +184,12 @@ export default function CallsTable() {
                   </TableBody>
                 ): (
                   <TableBody>
-                  {calls.map((row, index) => {
+                  {filteredResults.map((row, index, allResults) => {
                     const isItemSelected = isSelected(row.id);
                     const labelId = `enhanced-table-checkbox-${index}`;
+                    const currentGroupDate = new Date(row.created_at).toLocaleDateString();
+                    const indexToLookAt = index - 1 < 0 ? 0 : index-1;
+                    const lastGroupDate = new Date(allResults[indexToLookAt].created_at).toLocaleDateString();
     
                     return (
                       <TableRow
@@ -177,7 +199,9 @@ export default function CallsTable() {
                         tabIndex={-1}
                         key={row.id}
                         selected={isItemSelected}
-                        sx={{ cursor: 'pointer' }}
+                        sx={{ cursor: 'pointer', 
+                          borderTop: groupByDate && (currentGroupDate !== lastGroupDate) ? 'solid 3px white' : 'inherit'
+                        }}
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
@@ -230,6 +254,7 @@ export default function CallsTable() {
                 )}     
             </Table>
           </TableContainer>
+
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
@@ -240,6 +265,10 @@ export default function CallsTable() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Paper>
+        <FormControlLabel
+          control={<Switch checked={groupByDate} onChange={(e)=> setGroupByDate(e.target.checked)} />}
+          label="Group by date"
+        />
       </Box>
     </React.Fragment>
   );
