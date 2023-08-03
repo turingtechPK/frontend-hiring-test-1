@@ -18,3 +18,10 @@ export const checkUserAuthentication = () => {
         
     return true;
 } 
+
+export const logout = () => {
+    localStorage.setItem('authToken', null);
+    localStorage.setItem('authTokenTimestamp', null);
+
+    return true;
+}
