@@ -111,6 +111,7 @@ export default function CallsTable() {
   };
 
   const handleClick = (event, id) => {
+    event.stopPropagation();
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
@@ -202,6 +203,7 @@ export default function CallsTable() {
                         sx={{ cursor: 'pointer', 
                           borderTop: groupByDate && (currentGroupDate !== lastGroupDate) ? 'solid 3px white' : 'inherit'
                         }}
+                        onClick={(e) => { handleViewCall(e, row.id) }}
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
@@ -232,8 +234,8 @@ export default function CallsTable() {
                         </TableCell>
                         <TableCell align="left"><Typography textTransform={'capitalize'} className='text-info'>{row.direction}</Typography></TableCell>
                         <TableCell align="left">
-                          <Typography>{convertSecondsToMinutesAndSeconds(row.duration)}</Typography>
-                          <Typography fontSize={'0.8rem'}>(<span className='text-info'>{row.duration}</span> seconds)</Typography>
+                          <Typography>{convertSecondsToMinutesAndSeconds(row.duration/1000)}</Typography>
+                          <Typography fontSize={'0.8rem'}>(<span className='text-info'>{Math.floor(row.duration/1000)}</span> seconds)</Typography>
                         </TableCell>
                         <TableCell align="left">{row.from}</TableCell>
                         <TableCell align="left">{row.to}</TableCell>

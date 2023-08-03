@@ -9,6 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import NotesIcon from '@mui/icons-material/Notes';
 import Button from '@mui/lab/LoadingButton';
 import { addNote } from '../../services/mutations';
+import { convertSecondsToMinutesAndSeconds } from '../../helpers/util';
 
 const style = {
     position: 'absolute',
@@ -110,7 +111,7 @@ export default function CallModal({ call, open, setOpen, refetchCurrentPage }) {
                     </TableRow>
                     <TableRow>
                         <TableCell sx={{ borderBottom: 'none' }}>Duration:</TableCell>
-                        <TableCell sx={{ borderBottom: 'none' }}>{call?.duration}</TableCell>
+                        <TableCell sx={{ borderBottom: 'none' }}>{convertSecondsToMinutesAndSeconds(call?.duration/1000)}</TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell sx={{ borderBottom: 'none' }}>From:</TableCell>
