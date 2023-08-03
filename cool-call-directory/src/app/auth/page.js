@@ -1,9 +1,11 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
-import { TextField, Button, Container, Paper, Typography } from '@mui/material';
+import { TextField, Container, Paper, Typography } from '@mui/material';
 import { auth } from '../../services/auth';
 import { useRouter } from 'next/navigation';
+import Button from '@mui/lab/LoadingButton';
+
 
 const styles = {
   container: {
@@ -74,9 +76,9 @@ const Login = () => {
             onClick={handleLogin}
             style={styles.submitButton}
             fullWidth
-            loading
+            loading={authenticating}
           >
-            {authenticating? 'Loading...' : 'Login'}
+            {success? 'Redirecting' : 'Login'}
           </Button>
         </form>
       </Paper>

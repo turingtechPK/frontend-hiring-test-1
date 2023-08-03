@@ -9,15 +9,16 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import { getPaginatedCalls } from '@/services/queries';
-import { stableSort, getComparator} from '@/helpers/util';
 import CallsTableToolbar from './components/Toolbar';
 import CallsTableHead from './components/Head';
 import CallsTableSkeleton from './components/Skeleton';
 import { Button } from '@mui/material';
 import CallModal from '../CallModal';
+import { useRouter } from 'next/navigation';
+import { archiveCall } from '../../services/mutations';
 
 
-function createData({id, call_type, direction, duration, from, to, via, created_at, status, action}) {
+function createData({id, call_type, direction, duration, from, to, via, created_at, status, action,is_archived,notes}) {
   return {
     id,
     call_type, 
@@ -28,7 +29,9 @@ function createData({id, call_type, direction, duration, from, to, via, created_
     via, 
     created_at, 
     status, 
-    action
+    action,
+    is_archived,
+    notes
   };
 }
 
@@ -44,6 +47,7 @@ export default function CallsTable() {
   const [totalCount,setTotalCount] = useState(0);
   const [selectedCall, setSelectedCall] = useState(null);  
   const [callDetailsModalOpen, setCallDetailModalOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(()=>{
     fetchPaginatedCalls();
@@ -59,15 +63,24 @@ export default function CallsTable() {
     try{
       setLoading(true);
       const calls = await getPaginatedCalls(page, rowsPerPage);
+      console.log({calls});
       setCalls(calls.nodes.map((call) => createData(call)));
       setHasNext(calls.hasNext);
       setTotalCount(calls.totalCount);
     } catch(e) {
-      alert(JSON.stringify(e))
+      alert('Session Expired');
+      router.push('/auth');
     } finally {
       setLoading(false);
     }
   }
+
+  const archiveSelected = async () => { 
+    await Promise.all(selected.map((id)=>{
+      return archiveCall(id);
+    }));
+    await fetchPaginatedCalls();
+  } 
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -121,10 +134,12 @@ export default function CallsTable() {
         call={selectedCall}
         open={callDetailsModalOpen}
         setOpen={setCallDetailModalOpen}
+        refetchCurrentPage={fetchPaginatedCalls}
+        
       />
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
-          <CallsTableToolbar numSelected={selected.length} />
+          <CallsTableToolbar numSelected={selected.length} onArchive={archiveSelected}/>
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -183,7 +198,11 @@ export default function CallsTable() {
                         <TableCell align="left">{row.via}</TableCell>
                         <TableCell align="left">{row.created_at}</TableCell>
                         <TableCell align="left">{row.is_archived ? 'Archived' : 'Unarchived'}</TableCell>
-                        <TableCell align="left"><Button variant='contained' onClick={(e) => { handleViewCall(e, row.id) }}>View</Button></TableCell>
+                        <TableCell align="left">
+                          <Button variant='contained' onClick={(e) => { handleViewCall(e, row.id) }}>
+                            Add Note
+                          </Button>
+                        </TableCell>
                       </TableRow>
                     );
                   })}

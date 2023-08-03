@@ -2,11 +2,10 @@ import PropTypes from 'prop-types';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ArchiveIcon from '@mui/icons-material/Archive';
 import { alpha } from '@mui/material/styles';
-import { Button, Tooltip } from '@mui/material';
+import { Tooltip } from '@mui/material';
 
 
 export default function CallsTableToolbar({ numSelected, onArchive, onSelectFilter }) {
@@ -44,7 +43,7 @@ export default function CallsTableToolbar({ numSelected, onArchive, onSelectFilt
 
         {numSelected > 0 ? (
             <Tooltip title="Archive">
-                <IconButton>
+                <IconButton onClick={onArchive}>
                     <ArchiveIcon/>
                 </IconButton>
             </Tooltip>
