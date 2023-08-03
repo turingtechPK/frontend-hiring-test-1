@@ -16,7 +16,7 @@ import { Button, Chip, Typography } from '@mui/material';
 import CallModal from '../CallModal';
 import { useRouter } from 'next/navigation';
 import { archiveCall } from '../../services/mutations';
-import { convertMiliSecondsToMinutesAndSeconds, convertSecondsToMinutesAndSeconds } from '../../helpers/util';
+import { convertSecondsToMinutesAndSeconds } from '../../helpers/util';
 
 
 function createData({id, call_type, direction, duration, from, to, via, created_at, status, action,is_archived,notes}) {
@@ -64,7 +64,6 @@ export default function CallsTable() {
     try{
       setLoading(true);
       const calls = await getPaginatedCalls(page, rowsPerPage);
-      console.log({calls});
       setCalls(calls.nodes.map((call) => createData(call)));
       setHasNext(calls.hasNext);
       setTotalCount(calls.totalCount);
@@ -157,7 +156,13 @@ export default function CallsTable() {
                 {loading ? (
                   <CallsTableSkeleton rows={rowsPerPage}/>
                 ) : calls.length === 0 ? (
-                  <>No Data</>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>
+                        No Data
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
                 ): (
                   <TableBody>
                   {calls.map((row, index) => {

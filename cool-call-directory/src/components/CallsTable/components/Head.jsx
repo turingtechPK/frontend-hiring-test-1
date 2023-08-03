@@ -100,7 +100,6 @@ export default function CallsTableHead(props) {
   
   CallsTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
     onSelectAllClick: PropTypes.func.isRequired,
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,

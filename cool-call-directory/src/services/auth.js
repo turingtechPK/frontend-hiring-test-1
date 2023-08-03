@@ -56,6 +56,7 @@ export const authRefresh = async () => {
 
     const response = await client.mutate({
       mutation: REFRESH_TOKEN_MUTATION,
+      context: {headers}
     });
 
     const newAuthToken = response.data.refreshToken.access_token;

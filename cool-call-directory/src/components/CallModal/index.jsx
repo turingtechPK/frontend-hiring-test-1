@@ -132,7 +132,7 @@ export default function CallModal({ call, open, setOpen, refetchCurrentPage }) {
                             </List>
                             <List dense>
                                 {notes?.map((note) => 
-                                    <ListItem disablePadding sx={{marginBottom:'5px'}}>
+                                    <ListItem key={note.id} disablePadding sx={{marginBottom:'5px'}}>
                                         <ListItemIcon>
                                             <NotesIcon />
                                         </ListItemIcon>
