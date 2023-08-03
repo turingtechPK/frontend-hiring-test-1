@@ -29,7 +29,6 @@ export const ADD_NOTE_MUTATION = `
 
 // Wrapper function for archiveCall mutation
 export const archiveCall = async (id) => {
-  console.log('being archived', {id});
   const response = await makeGraphQLRequest(ARCHIVE_CALL_MUTATION, { id }, HEADERS , IS_MUTATION );
   return response?.archiveCall || null;
 };

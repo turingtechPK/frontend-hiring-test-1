@@ -16,6 +16,8 @@ const darkTheme = createTheme({
 
 export default function RootLayout({ children }) {
   useEffect(() => {
+    authRefresh();
+    
     // Set up the interval to call authRefresh every 9 minutes (9 * 60 * 1000 milliseconds)
     const intervalId = setInterval(() => {
       authRefresh();

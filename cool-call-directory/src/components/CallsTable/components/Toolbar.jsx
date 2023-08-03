@@ -42,7 +42,7 @@ export default function CallsTableToolbar({ numSelected, onArchive, onSelectFilt
         )}
 
         {numSelected > 0 ? (
-            <Tooltip title="Archive">
+            <Tooltip title="Archive/Unarchive">
                 <IconButton onClick={onArchive}>
                     <ArchiveIcon/>
                 </IconButton>

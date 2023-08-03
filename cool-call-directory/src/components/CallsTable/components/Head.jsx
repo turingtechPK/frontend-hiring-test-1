@@ -3,7 +3,7 @@ import TableHead from '@mui/material/TableHead';
 import Checkbox from '@mui/material/Checkbox';
 import PropTypes from 'prop-types';
 import { visuallyHidden } from '@mui/utils';
-import { Box, TableCell, TableRow } from '@mui/material';
+import { Box, TableCell, TableRow, Typography } from '@mui/material';
 
 const headCells = [
     {
@@ -90,7 +90,7 @@ export default function CallsTableHead(props) {
               padding={headCell.disablePadding ? 'none' : 'normal'}
             >
               
-                {headCell.label}
+                <Typography fontSize={'1.1rem'} fontWeight={700}>{headCell.label}</Typography>
             </TableCell>
           ))}
         </TableRow>

@@ -29,3 +29,17 @@ export function stableSort(array, comparator) {
     });
     return stabilizedThis.map((el) => el[0]);
 }
+
+export function convertSecondsToMinutesAndSeconds(durationInSeconds) {
+  const seconds = Math.floor(durationInSeconds);
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  if (minutes === 0) {
+    return `${remainingSeconds} second${remainingSeconds !== 1 ? 's' : ''}`;
+  } else if (remainingSeconds === 0) {
+    return `${minutes} minute${minutes !== 1 ? 's' : ''}`;
+  } else {
+    return `${minutes} minute${minutes !== 1 ? 's' : ''} and ${remainingSeconds} second${remainingSeconds !== 1 ? 's' : ''}`;
+  }
+}

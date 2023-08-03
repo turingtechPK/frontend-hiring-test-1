@@ -58,7 +58,8 @@ const Login = () => {
           <TextField
             fullWidth
             label="Username"
-            value={username}
+            value={username || null}
+            autoFocus
             onChange={(e) => setUsername(e.target.value)}
             margin="normal"
           />
@@ -66,9 +67,13 @@ const Login = () => {
             fullWidth
             label="Password"
             type="password"
-            value={password}
+            value={password || null}
+            autoFocus
             onChange={(e) => setPassword(e.target.value)}
             margin="normal"
+            inputProps={{
+              autoComplete: 'new-password',
+            }}
           />
           <Button
             variant="contained"

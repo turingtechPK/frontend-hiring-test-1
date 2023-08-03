@@ -12,10 +12,11 @@ import { getPaginatedCalls } from '@/services/queries';
 import CallsTableToolbar from './components/Toolbar';
 import CallsTableHead from './components/Head';
 import CallsTableSkeleton from './components/Skeleton';
-import { Button } from '@mui/material';
+import { Button, Chip, Typography } from '@mui/material';
 import CallModal from '../CallModal';
 import { useRouter } from 'next/navigation';
 import { archiveCall } from '../../services/mutations';
+import { convertMiliSecondsToMinutesAndSeconds, convertSecondsToMinutesAndSeconds } from '../../helpers/util';
 
 
 function createData({id, call_type, direction, duration, from, to, via, created_at, status, action,is_archived,notes}) {
@@ -189,15 +190,29 @@ export default function CallsTable() {
                           scope="row"
                           padding="none"
                         >
-                          {row.call_type}
+                          <Typography 
+                            textTransform={'capitalize'}
+                            className={`
+                              ${row.call_type === 'answered'
+                              ? ' text-success ' 
+                              : row.call_type === 'missed' 
+                              ? ' text-danger ' 
+                              : ' text-info ' }
+                            `}
+                          >{row.call_type}</Typography>
                         </TableCell>
-                        <TableCell align="left">{row.direction}</TableCell>
-                        <TableCell align="left">{row.duration}</TableCell>
+                        <TableCell align="left"><Typography textTransform={'capitalize'} className='text-info'>{row.direction}</Typography></TableCell>
+                        <TableCell align="left">
+                          <Typography>{convertSecondsToMinutesAndSeconds(row.duration)}</Typography>
+                          <Typography fontSize={'0.8rem'}>(<span className='text-info'>{row.duration}</span> seconds)</Typography>
+                        </TableCell>
                         <TableCell align="left">{row.from}</TableCell>
                         <TableCell align="left">{row.to}</TableCell>
                         <TableCell align="left">{row.via}</TableCell>
-                        <TableCell align="left">{row.created_at}</TableCell>
-                        <TableCell align="left">{row.is_archived ? 'Archived' : 'Unarchived'}</TableCell>
+                        <TableCell align="left">{new Date(row.created_at).toLocaleDateString()}</TableCell>
+                        <TableCell align="left">
+                          <Chip label={row.is_archived ? 'Archived' : 'Unarchived'} color={row.is_archived ? 'success' : 'default'}/>
+                        </TableCell>
                         <TableCell align="left">
                           <Button variant='contained' onClick={(e) => { handleViewCall(e, row.id) }}>
                             Add Note

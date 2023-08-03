@@ -12,14 +12,13 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color='primary'>
         <Toolbar>
-          <div>
             <Image
-            src={'/images/logo.png'}
+            src={'/images/logo-only.png'}
             alt='Logo'
-            width={250}
+            width={30}
             height={30}
             />
-          </div>
+            <Typography sx={{marginLeft:'10px'}} fontWeight={800}>Turing Technologies</Typography>
         </Toolbar>
       </AppBar>
     </Box>

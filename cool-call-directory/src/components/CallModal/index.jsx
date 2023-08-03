@@ -86,14 +86,27 @@ export default function CallModal({ call, open, setOpen, refetchCurrentPage }) {
             Add Notes
             </Typography>
             <Typography variant="subtitle2" component="h5" fontSize={'0.6rem'} color={'color.primary'}>
-            Call ID {call?.id}
+            Call ID <span className='text-info'>{call?.id}</span>
             </Typography>
             <Divider sx={{ margin: '20px 0' }} variant="fullWidth" />
             <Table sx={{ marginBottom:'10px'}}>
                 <TableBody>
                     <TableRow>
                         <TableCell sx={{ borderBottom: 'none' }}>Call Type:</TableCell>
-                        <TableCell sx={{ borderBottom: 'none' }}>{call?.call_type}</TableCell>
+                        <TableCell sx={{ borderBottom: 'none' }}>
+                            <Typography 
+                                textTransform={'capitalize'}
+                                className={`
+                                    ${call?.call_type === 'answered'
+                                    ? ' text-success ' 
+                                    : call?.call_type === 'missed' 
+                                    ? ' text-danger ' 
+                                    : ' text-info ' }
+                                `}
+                            >
+                                {call?.call_type}
+                            </Typography>
+                        </TableCell>
                     </TableRow>
                     <TableRow>
                         <TableCell sx={{ borderBottom: 'none' }}>Duration:</TableCell>
