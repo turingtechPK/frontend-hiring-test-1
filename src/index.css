@@ -1,0 +1,30 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #e9e0e0;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+@font-face {
+  font-family: "AvenirLTStd-Black";
+  src: url("./assets/font/AvenirLTStd-Black.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "AvenirLTStd-Book";
+  src: url("./assets//font/AvenirLTStd-Book.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "AvenirLTStd-Roman";
+  src: url("./assets/font/AvenirLTStd-Roman.otf") format("opentype");
+}
