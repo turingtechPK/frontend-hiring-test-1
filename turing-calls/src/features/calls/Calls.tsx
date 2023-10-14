@@ -1,10 +1,11 @@
-import { Alert, Button, Pagination, Table } from 'antd'
+import { Button, Pagination, Table } from 'antd'
 import { useState } from 'react'
 
 import { ColumnsType } from 'antd/es/table'
 import { useCalls } from './useCalls.ts'
 import { Call, CallType } from './types.ts'
 import { CallDetailsModal } from './CallDetailsModal.tsx'
+import { Error } from '../../components/Error.tsx'
 
 const LIMIT = 10
 
@@ -161,11 +162,7 @@ const Calls: React.FC = () => {
         Turing Technologies Frontend Test
       </h1>
       {error ? (
-        <Alert
-          message="Something went wrong!"
-          description="Something went wrong while fetching Calls :("
-          type="error"
-        />
+        <Error error={error} />
       ) : (
         <>
           <Table
