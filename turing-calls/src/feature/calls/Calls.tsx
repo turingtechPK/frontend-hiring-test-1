@@ -1,7 +1,10 @@
-import { Alert, Button, Table } from 'antd'
+import { Alert, Button, Pagination, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { useCalls } from './useCalls.ts'
 import { Call } from './types.ts'
+import { useState } from 'react'
+
+const LIMIT = 10
 
 const columns: ColumnsType<Call> = [
   {
@@ -77,8 +80,15 @@ const columns: ColumnsType<Call> = [
 ]
 
 export const Calls: React.FC = () => {
-  const { data, error, isLoading } = useCalls(0, 10)
+  const [offset, setOffset] = useState(0)
+  const { data, error, isLoading } = useCalls(offset, 10)
+
   const calls = data?.paginatedCalls.nodes
+  const currentPage = offset === 0 ? 1 : offset / LIMIT + 1
+
+  const handlePageChange = (page: number) => {
+    setOffset((page - 1) * 10)
+  }
 
   return (
     <div style={{ padding: '2rem' }}>
@@ -92,7 +102,15 @@ export const Calls: React.FC = () => {
           type="error"
         />
       ) : (
-        <Table columns={columns} dataSource={calls} rowKey={r => r.id} />
+        <>
+          <Table columns={columns} dataSource={calls} rowKey={r => r.id} />
+          <Pagination
+            defaultCurrent={currentPage}
+            showSizeChanger={false}
+            total={data?.paginatedCalls.totalCount}
+            onChange={handlePageChange}
+          />
+        </>
       )}
     </div>
   )
