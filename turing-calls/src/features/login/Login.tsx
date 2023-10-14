@@ -1,8 +1,10 @@
-import { Button, Form, Input, Space } from 'antd'
+import { Button, Flex, Form, Input, Space } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
 import { LoginInput } from './types.ts'
 import { useLogin } from './useLogin.ts'
+import { IconUser } from '../../components/icons/IconUser.tsx'
+import { IconLock } from '../../components/icons/IconLock.tsx'
 
 type FieldType = {
   username?: string
@@ -22,14 +24,25 @@ export const Login: React.FC = () => {
   return (
     <Space
       direction="horizontal"
-      style={{ width: '100%', justifyContent: 'center', alignItems: 'center' }}
+      style={{
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F4EEEE',
+        height: '100vh',
+      }}
     >
       <Form
         name="login"
         layout="vertical"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
+        style={{
+          width: 600,
+          height: 400,
+          backgroundColor: 'white',
+          padding: '2rem 2rem',
+        }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         autoComplete="off"
@@ -39,7 +52,7 @@ export const Login: React.FC = () => {
           name="username"
           rules={[{ required: true, message: 'Please input your username!' }]}
         >
-          <Input />
+          <Input placeholder="john.doe" prefix={<IconUser />} />
         </Form.Item>
 
         <Form.Item<FieldType>
@@ -47,14 +60,14 @@ export const Login: React.FC = () => {
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
-          <Input.Password />
+          <Input.Password placeholder="********" prefix={<IconLock />} />
         </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+        <Flex justify="start">
           <Button type="primary" htmlType="submit">
             Log in
           </Button>
-        </Form.Item>
+        </Flex>
       </Form>
     </Space>
   )
