@@ -1,7 +1,7 @@
 import { Alert, Button, Pagination, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { useCalls } from './useCalls.ts'
-import { Call } from './types.ts'
+import { Call, CallType } from './types.ts'
 import { useState } from 'react'
 import { CallDetailsModal } from './CallDetailsModal.tsx'
 
@@ -26,11 +26,32 @@ const Calls: React.FC = () => {
       title: 'Call Type',
       dataIndex: 'call_type',
       key: 'call_type',
+      render: (callType: Call['call_type']) => {
+        const map = {
+          [CallType.Missed]: 'Missed',
+          [CallType.Answered]: 'Answered',
+          [CallType.Voicemail]: 'Voice Mail',
+        }
+        const formattedCallType = map[callType]
+        const color =
+          callType === CallType.Answered
+            ? '#4BD2C5'
+            : callType === CallType.Missed
+            ? '#C81C3E'
+            : '#335AE6'
+
+        return <span style={{ color }}>{formattedCallType}</span>
+      },
     },
     {
       title: 'Direction',
       dataIndex: 'direction',
       key: 'direction',
+      render: (direction: Call['direction']) => {
+        const formattedDirection =
+          direction.charAt(0).toUpperCase() + direction.slice(1)
+        return <span style={{ color: '#335AE6' }}>{formattedDirection}</span>
+      },
     },
     {
       title: 'Duration',
@@ -78,9 +99,16 @@ const Calls: React.FC = () => {
       title: 'Status',
       key: 'is_archived',
       dataIndex: 'is_archived',
-      render: (isArchived: Call['is_archived']) => (
-        <span>{isArchived ? 'Archived' : 'Unarchived'}</span>
-      ),
+      render: (isArchived: Call['is_archived']) => {
+        const style: React.CSSProperties = {
+          color: isArchived ? '#1CC8B7' : '#B5B5B4',
+          backgroundColor: isArchived ? '#ECFAFA' : '#EFEFEE',
+          padding: '3px 6px',
+        }
+        return (
+          <span style={style}>{isArchived ? 'Archived' : 'Unarchived'}</span>
+        )
+      },
     },
     {
       title: 'Actions',
@@ -140,6 +168,7 @@ const Calls: React.FC = () => {
       ) : (
         <>
           <Table
+            bordered={true}
             columns={columns}
             dataSource={calls}
             rowKey={r => r.id}
