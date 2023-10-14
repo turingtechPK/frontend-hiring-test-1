@@ -13,6 +13,10 @@ export type LoginResponse = {
   login: Login
 }
 
+export type RefreshTokenResponse = {
+  refreshTokenV2: Login
+}
+
 export type User = {
   id: string
   username: string
