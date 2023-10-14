@@ -1,7 +1,8 @@
 import './App.css'
+import { AppRouter } from './feature/router/AppRouter.tsx'
 
 function App() {
-  return <h1>Hello World!</h1>
+  return <AppRouter />
 }
 
 export default App
