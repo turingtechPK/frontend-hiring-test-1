@@ -7,7 +7,7 @@ import { CallDetailsModal } from './CallDetailsModal.tsx'
 
 const LIMIT = 10
 
-export const Calls: React.FC = () => {
+const Calls: React.FC = () => {
   const [offset, setOffset] = useState(0)
   const [selectedCallId, setSelectedCallId] = useState<string | null>(null)
   const [savingCall, setSavingCall] = useState(false)
@@ -153,3 +153,5 @@ export const Calls: React.FC = () => {
     </div>
   )
 }
+
+export default Calls

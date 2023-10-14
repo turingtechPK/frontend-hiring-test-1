@@ -1,14 +1,15 @@
 import { Layout, Space } from 'antd'
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
 import './App.css'
 import { Login } from './features/login/Login.tsx'
-import { Calls } from './features/calls/Calls.tsx'
 import { AppHeader } from './components/AppHeader.tsx'
 import { AuthRoute } from './components/AuthRoute.tsx'
 import { useLogin } from './features/login/useLogin.ts'
 import { User } from './features/login/types.ts'
+
+const Calls = lazy(() => import('./features/calls/Calls.tsx'))
 
 const { Header, Content } = Layout
 
@@ -63,7 +64,9 @@ function App() {
               path="/calls"
               element={
                 <AuthRoute>
-                  <Calls />
+                  <Suspense fallback="...">
+                    <Calls />
+                  </Suspense>
                 </AuthRoute>
               }
             />
