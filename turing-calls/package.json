@@ -9,7 +9,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "format.check": "prettier . --cache --check",
-    "format.fix": "prettier . --cache --write"
+    "format.fix": "prettier . --cache --write",
+    "test": "vitest"
   },
   "dependencies": {
     "antd": "^5.10.0",
@@ -20,6 +21,7 @@
     "swr": "^2.2.4"
   },
   "devDependencies": {
+    "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -29,8 +31,10 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "jsdom": "^22.1.0",
     "prettier": "^3.0.3",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vitest": "^0.34.6"
   }
 }
