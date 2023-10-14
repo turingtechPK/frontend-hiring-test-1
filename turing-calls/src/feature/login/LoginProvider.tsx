@@ -17,6 +17,10 @@ const authProvider = {
 
     callback(res.login)
   },
+  signInFromSessionStorage(login: Login, callback: (res: Login) => void) {
+    this.isAuthenticated = true
+    callback(login)
+  },
   signOut(callback: VoidFunction) {
     this.isAuthenticated = false
     callback()
@@ -35,6 +39,19 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
       setRefreshToken(res.refresh_token)
       sessionStorage.setItem('refreshToken', res.refresh_token)
       sessionStorage.setItem('accessToken', res.access_token)
+      sessionStorage.setItem('user', JSON.stringify(res.user))
+      callback()
+    })
+  }
+
+  function signInFromSessionStorage(login: Login, callback: VoidFunction) {
+    return authProvider.signInFromSessionStorage(login, res => {
+      setUser(res.user)
+      setAccessToken(res.access_token)
+      setRefreshToken(res.refresh_token)
+      sessionStorage.setItem('refreshToken', res.refresh_token)
+      sessionStorage.setItem('accessToken', res.access_token)
+      sessionStorage.setItem('user', JSON.stringify(res.user))
       callback()
     })
   }
@@ -46,6 +63,7 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
       setRefreshToken(null)
       sessionStorage.removeItem('accessToken')
       sessionStorage.removeItem('refreshToken')
+      sessionStorage.removeItem('user')
       callback()
     })
   }
@@ -55,6 +73,7 @@ export const LoginProvider = ({ children }: { children: ReactNode }) => {
     accessToken,
     refreshToken,
     signIn,
+    signInFromSessionStorage,
     signOut,
   }
 

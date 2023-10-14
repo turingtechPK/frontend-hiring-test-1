@@ -1,11 +1,14 @@
 import { Layout, Space } from 'antd'
+import { useEffect } from 'react'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
 import './App.css'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Login } from './feature/login/Login.tsx'
 import { Calls } from './feature/calls/Calls.tsx'
 import { AppHeader } from './components/AppHeader.tsx'
 import { AuthRoute } from './components/AuthRoute.tsx'
+import { useLogin } from './feature/login/useLogin.ts'
+import { User } from './feature/login/types.ts'
 
 const { Header, Content } = Layout
 
@@ -26,6 +29,26 @@ const contentStyle: React.CSSProperties = {
 }
 
 function App() {
+  const context = useLogin()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!context.user) {
+      const accessToken = sessionStorage.getItem('accessToken')
+      const refreshToken = sessionStorage.getItem('refreshToken')
+      const user = JSON.parse(sessionStorage.getItem('user')!) as User
+
+      if (accessToken && refreshToken && user) {
+        context.signInFromSessionStorage(
+          { user, access_token: accessToken, refresh_token: refreshToken },
+          () => {
+            navigate('/calls')
+          }
+        )
+      }
+    }
+  }, [context, navigate])
+
   return (
     <Space direction="vertical" style={{ width: '100%' }} size={[0, 48]}>
       <Layout style={{ height: '100vh' }}>

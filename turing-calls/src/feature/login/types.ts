@@ -23,5 +23,6 @@ export type LoginContextType = {
   accessToken: string | null
   refreshToken: string | null
   signIn: (credentials: LoginInput, callback: VoidFunction) => void
+  signInFromSessionStorage: (login: Login, callback: VoidFunction) => void
   signOut: (callback: VoidFunction) => void
 }
