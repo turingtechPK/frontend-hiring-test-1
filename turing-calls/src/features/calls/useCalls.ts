@@ -53,9 +53,10 @@ export const useCalls = (offset: number, limit: number) => {
   }
 
   return {
-    data,
+    calls: data?.paginatedCalls.nodes,
     isLoading,
     error,
+    total: data?.paginatedCalls.totalCount,
     addNoteToCall,
     toggleArchiveStatus,
   }

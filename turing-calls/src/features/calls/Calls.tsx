@@ -13,12 +13,10 @@ const Calls: React.FC = () => {
   const [offset, setOffset] = useState(0)
   const [selectedCallId, setSelectedCallId] = useState<string | null>(null)
   const [savingCall, setSavingCall] = useState(false)
-  const { data, error, isLoading, addNoteToCall, toggleArchiveStatus } =
+  const { calls, error, isLoading, total, addNoteToCall, toggleArchiveStatus } =
     useCalls(offset, 10)
 
-  const calls = data?.paginatedCalls.nodes
   const currentPage = offset === 0 ? 1 : offset / LIMIT + 1
-  const totalCount = data?.paginatedCalls.totalCount
   const startIndex = offset + 1
   const endIndex = offset + LIMIT
   const selectedCall = calls?.find(c => c.id === selectedCallId)
@@ -174,16 +172,21 @@ const Calls: React.FC = () => {
             rowKey={r => r.id}
             pagination={false}
           />
-          <Pagination
-            style={{ marginTop: '2rem' }}
-            defaultCurrent={currentPage}
-            showSizeChanger={false}
-            total={totalCount}
-            onChange={handlePageChange}
-          />
-          <span>
-            {startIndex} - {endIndex} of {totalCount} results
-          </span>
+          {!isLoading && (
+            <>
+              <Pagination
+                style={{ marginTop: '2rem' }}
+                defaultCurrent={currentPage}
+                showSizeChanger={false}
+                total={total}
+                onChange={handlePageChange}
+              />
+              <span>
+                {startIndex} - {endIndex} of {total} results
+              </span>
+            </>
+          )}
+
           <CallDetailsModal
             open={!!selectedCallId}
             call={selectedCall}
