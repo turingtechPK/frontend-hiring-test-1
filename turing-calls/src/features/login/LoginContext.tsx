@@ -7,5 +7,6 @@ export const LoginContext = createContext<LoginContextType>({
   refreshToken: null,
   user: null,
   signIn: () => {},
+  signInFromSessionStorage: () => {},
   signOut: () => {},
 })
