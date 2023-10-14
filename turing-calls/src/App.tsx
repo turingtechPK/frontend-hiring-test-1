@@ -26,6 +26,7 @@ const contentStyle: React.CSSProperties = {
   minHeight: 120,
   lineHeight: '120px',
   color: '#000',
+  backgroundColor: '#fff',
 }
 
 function App() {
