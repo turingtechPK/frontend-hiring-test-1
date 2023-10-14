@@ -15,10 +15,6 @@ export const PAGINATED_CALLS = gql`
         is_archived
         call_type
         created_at
-        notes {
-          id
-          content
-        }
       }
     }
   }
