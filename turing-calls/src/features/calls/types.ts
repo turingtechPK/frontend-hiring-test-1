@@ -36,3 +36,10 @@ export type Note = {
   id: string
   content: string
 }
+
+export type ArchiveCallResponse = {
+  archiveCall: {
+    id: string
+    is_archived: boolean
+  }
+}

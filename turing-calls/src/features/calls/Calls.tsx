@@ -11,7 +11,8 @@ const Calls: React.FC = () => {
   const [offset, setOffset] = useState(0)
   const [selectedCallId, setSelectedCallId] = useState<string | null>(null)
   const [savingCall, setSavingCall] = useState(false)
-  const { data, error, isLoading, addNoteToCall } = useCalls(offset, 10)
+  const { data, error, isLoading, addNoteToCall, toggleArchiveStatus } =
+    useCalls(offset, 10)
 
   const calls = data?.paginatedCalls.nodes
   const currentPage = offset === 0 ? 1 : offset / LIMIT + 1
@@ -84,18 +85,30 @@ const Calls: React.FC = () => {
     {
       title: 'Actions',
       render: (_, call: Call) => (
-        <Button
-          style={{ color: 'white', backgroundColor: `var(--color-primary)` }}
-          onClick={() => handleAddNote(call.id)}
-        >
-          Add Note
-        </Button>
+        <>
+          <Button
+            style={{ color: 'white', backgroundColor: `var(--color-primary)` }}
+            onClick={() => handleAddNote(call.id)}
+          >
+            Add Note
+          </Button>
+          <Button
+            style={{ color: 'white', backgroundColor: `var(--color-primary)` }}
+            onClick={() => handleArchiveCall(call.id)}
+          >
+            {call.is_archived ? 'Un-Archive' : 'Archive'}
+          </Button>
+        </>
       ),
     },
   ]
 
   const handleAddNote = (id: string) => {
     setSelectedCallId(id)
+  }
+
+  const handleArchiveCall = async (id: string) => {
+    await toggleArchiveStatus(id)
   }
 
   const handlePageChange = (page: number) => {

@@ -27,3 +27,12 @@ export const ADD_NOTE = gql`
     }
   }
 `
+
+export const ARCHIVE_CALL = gql`
+  mutation ArchiveCall($id: ID!) {
+    archiveCall(id: $id) {
+      is_archived
+      id
+    }
+  }
+`
