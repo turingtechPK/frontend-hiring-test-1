@@ -1,5 +1,4 @@
 import { ReactNode, useState } from 'react'
-import request from 'graphql-request'
 
 import {
   Login,
@@ -10,26 +9,25 @@ import {
 } from './types.ts'
 import { LoginContext } from './LoginContext.tsx'
 import { LOGIN_MUTATION, REFRESH_TOKEN_MUTATION } from './graphql.ts'
+import { sendGraphQlRequest } from '../../utils/http.ts'
 
 const NINE_MINUTES_IN_MS = 9 * 60 * 60
-const URL = 'https://frontend-test-api.aircall.dev/graphql'
 
 let tokenRefreshIntervalId: number
 
 const authProvider = {
   isAuthenticated: false,
   async signIn(loginInput: LoginInput, callback: (res: Login) => void) {
-    const res = await request<LoginResponse>({
-      url: URL,
-      document: LOGIN_MUTATION,
-      variables: { input: loginInput },
-    })
+    const res = await sendGraphQlRequest<LoginResponse>(
+      LOGIN_MUTATION,
+      { input: loginInput },
+      undefined
+    )
     this.isAuthenticated = true
 
     clearInterval(tokenRefreshIntervalId)
     tokenRefreshIntervalId = setInterval(async () => {
-      const res = await request<RefreshTokenResponse>(
-        URL,
+      const res = await sendGraphQlRequest<RefreshTokenResponse>(
         REFRESH_TOKEN_MUTATION,
         undefined,
         {

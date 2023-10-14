@@ -1,34 +1,20 @@
-import request from 'graphql-request'
 import useSWR from 'swr'
 
 import { ADD_NOTE, ARCHIVE_CALL, PAGINATED_CALLS } from './graphql.ts'
 import { ArchiveCallResponse, CallsResponse } from './types.ts'
+import { sendGraphQlRequest } from '../../utils/http.ts'
 
 const fetcher = ({
-  url,
   limit,
   offset,
 }: {
   url: string
   limit: number
   offset: number
-}) =>
-  request<CallsResponse>(
-    url,
-    PAGINATED_CALLS,
-    { limit, offset },
-    { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` }
-  )
+}) => sendGraphQlRequest<CallsResponse>(PAGINATED_CALLS, { limit, offset })
 
 const archiveCall = (id: string) =>
-  request<ArchiveCallResponse>(
-    URL,
-    ARCHIVE_CALL,
-    { id },
-    { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` }
-  )
-
-const URL = 'https://frontend-test-api.aircall.dev/graphql'
+  sendGraphQlRequest<ArchiveCallResponse>(ARCHIVE_CALL, { id })
 
 export const useCalls = (offset: number, limit: number) => {
   const { data, error, isLoading, mutate } = useSWR(
@@ -40,14 +26,9 @@ export const useCalls = (offset: number, limit: number) => {
   )
 
   const addNoteToCall = async (id: string, note: string) => {
-    await request(
-      URL,
-      ADD_NOTE,
-      {
-        input: { activityId: id, content: note },
-      },
-      { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` }
-    )
+    await sendGraphQlRequest(ADD_NOTE, {
+      input: { activityId: id, content: note },
+    })
   }
 
   const toggleArchiveStatus = async (id: string) => {
