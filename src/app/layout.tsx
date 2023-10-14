@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import StyledComponentsRegistry from '../lib/AntdRegistry';
+import { Layout, Space } from 'antd';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <StyledComponentsRegistry>
+          <Space direction='vertical'>
+            <Layout.Header>Navbar</Layout.Header>
+            <Layout.Content>{children}</Layout.Content>
+          </Space>
+        </StyledComponentsRegistry>
       </body>
     </html>
   )
