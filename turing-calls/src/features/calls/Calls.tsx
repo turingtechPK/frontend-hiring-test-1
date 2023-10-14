@@ -126,7 +126,12 @@ export const Calls: React.FC = () => {
         />
       ) : (
         <>
-          <Table columns={columns} dataSource={calls} rowKey={r => r.id} />
+          <Table
+            columns={columns}
+            dataSource={calls}
+            rowKey={r => r.id}
+            pagination={false}
+          />
           <Pagination
             defaultCurrent={currentPage}
             showSizeChanger={false}
