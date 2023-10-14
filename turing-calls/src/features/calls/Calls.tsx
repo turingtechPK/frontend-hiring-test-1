@@ -1,8 +1,9 @@
 import { Alert, Button, Pagination, Table } from 'antd'
+import { useState } from 'react'
+
 import { ColumnsType } from 'antd/es/table'
 import { useCalls } from './useCalls.ts'
 import { Call, CallType } from './types.ts'
-import { useState } from 'react'
 import { CallDetailsModal } from './CallDetailsModal.tsx'
 
 const LIMIT = 10
@@ -23,7 +24,7 @@ const Calls: React.FC = () => {
 
   const columns: ColumnsType<Call> = [
     {
-      title: 'Call Type',
+      title: 'CALL TYPE',
       dataIndex: 'call_type',
       key: 'call_type',
       render: (callType: Call['call_type']) => {
@@ -44,7 +45,7 @@ const Calls: React.FC = () => {
       },
     },
     {
-      title: 'Direction',
+      title: 'DIRECTION',
       dataIndex: 'direction',
       key: 'direction',
       render: (direction: Call['direction']) => {
@@ -54,7 +55,7 @@ const Calls: React.FC = () => {
       },
     },
     {
-      title: 'Duration',
+      title: 'DURATION',
       dataIndex: 'duration',
       key: 'duration',
       render: (duration: Call['duration']) => {
@@ -73,22 +74,22 @@ const Calls: React.FC = () => {
       },
     },
     {
-      title: 'From',
+      title: 'FROM',
       key: 'from',
       dataIndex: 'from',
     },
     {
-      title: 'To',
+      title: 'TO',
       key: 'to',
       dataIndex: 'to',
     },
     {
-      title: 'Via',
+      title: 'VIA',
       key: 'via',
       dataIndex: 'via',
     },
     {
-      title: 'Created At',
+      title: 'CREATED AT',
       key: 'created_at',
       dataIndex: 'created_at',
       render: (createdAt: Call['created_at']) => (
@@ -96,7 +97,7 @@ const Calls: React.FC = () => {
       ),
     },
     {
-      title: 'Status',
+      title: 'STATUS',
       key: 'is_archived',
       dataIndex: 'is_archived',
       render: (isArchived: Call['is_archived']) => {
@@ -111,7 +112,7 @@ const Calls: React.FC = () => {
       },
     },
     {
-      title: 'Actions',
+      title: 'ACTIONS',
       render: (_, call: Call) => (
         <>
           <Button
@@ -156,7 +157,9 @@ const Calls: React.FC = () => {
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h1>Turing Technologies Frontend Test</h1>
+      <h1 style={{ textAlign: 'left', fontWeight: 400 }}>
+        Turing Technologies Frontend Test
+      </h1>
       {isLoading ? (
         'Loading...'
       ) : error ? (
@@ -168,6 +171,7 @@ const Calls: React.FC = () => {
       ) : (
         <>
           <Table
+            className="calls-table"
             bordered={true}
             columns={columns}
             dataSource={calls}
