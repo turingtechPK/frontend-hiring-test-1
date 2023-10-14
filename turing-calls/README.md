@@ -1,27 +1,10 @@
-# React + TypeScript + Vite
+# Frontend Hiring Test - Solution
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is my attempt at the Frontend Hiring Test. The only requirement to run this is [pnpm](https://pnpm.io/).
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Instructions
+1. Install pnpm
+2. Clone this repo: `git clone `
+3. cd into the turing-calls directory: `cd turing-calls`
+4. Run `pnpm i` to install dependencies
+5. Run `pnpm dev` to run the application in dev mode, or `pnpm build && pnpm preview` to run it in prod mode
