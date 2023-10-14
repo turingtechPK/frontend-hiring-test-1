@@ -5,6 +5,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Login } from './feature/login/Login.tsx'
 import { Calls } from './feature/calls/Calls.tsx'
 import { AppHeader } from './components/AppHeader.tsx'
+import { AuthRoute } from './components/AuthRoute.tsx'
 
 const { Header, Content } = Layout
 
@@ -35,7 +36,14 @@ function App() {
           <Content style={contentStyle}>
             <Routes>
               <Route path="/login" element={<Login />} />
-              <Route path="/calls" element={<Calls />} />
+              <Route
+                path="/calls"
+                element={
+                  <AuthRoute>
+                    <Calls />
+                  </AuthRoute>
+                }
+              />
               <Route path="/" element={<Navigate to="/calls" />} />
             </Routes>
           </Content>
