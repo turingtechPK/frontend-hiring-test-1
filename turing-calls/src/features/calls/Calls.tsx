@@ -157,7 +157,7 @@ const Calls: React.FC = () => {
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h1 style={{ textAlign: 'left', fontWeight: 400 }}>
+      <h1 style={{ textAlign: 'left', fontWeight: 400, margin: '1rem 0' }}>
         Turing Technologies Frontend Test
       </h1>
       {isLoading ? (

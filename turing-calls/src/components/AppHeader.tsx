@@ -15,17 +15,21 @@ export const AppHeader: React.FC = () => {
   }
 
   return (
-    <Flex justify="space-between" align="center">
+    <Flex
+      style={{ padding: '1rem 1rem', borderBottom: '2px solid #D2D4D8' }}
+      justify="space-between"
+      align="center"
+    >
       <img src={turingLogo} alt="Turing Technologies" width={400} />
       {context.user && (
         <Button
           style={{
-            backgroundColor: 'var(--color-primary',
+            backgroundColor: 'var(--color-primary)',
             color: 'white',
           }}
           onClick={handleLogout}
         >
-          Logout
+          Log out
         </Button>
       )}
     </Flex>

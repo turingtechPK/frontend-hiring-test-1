@@ -16,16 +16,13 @@ const { Header, Content } = Layout
 const headerStyle: React.CSSProperties = {
   textAlign: 'center',
   color: '#fff',
-  height: 64,
-  paddingInline: 50,
-  lineHeight: '64px',
   backgroundColor: 'white',
+  padding: 0,
 }
 
 const contentStyle: React.CSSProperties = {
   textAlign: 'center',
   minHeight: 120,
-  lineHeight: '120px',
   color: '#000',
   backgroundColor: '#fff',
 }
