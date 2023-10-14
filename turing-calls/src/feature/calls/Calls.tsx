@@ -85,6 +85,9 @@ export const Calls: React.FC = () => {
 
   const calls = data?.paginatedCalls.nodes
   const currentPage = offset === 0 ? 1 : offset / LIMIT + 1
+  const totalCount = data?.paginatedCalls.totalCount
+  const startIndex = offset + 1
+  const endIndex = offset + LIMIT
 
   const handlePageChange = (page: number) => {
     setOffset((page - 1) * 10)
@@ -107,9 +110,12 @@ export const Calls: React.FC = () => {
           <Pagination
             defaultCurrent={currentPage}
             showSizeChanger={false}
-            total={data?.paginatedCalls.totalCount}
+            total={totalCount}
             onChange={handlePageChange}
           />
+          <p>
+            {startIndex} - {endIndex} of {totalCount} results
+          </p>
         </>
       )}
     </div>
