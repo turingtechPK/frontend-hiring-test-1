@@ -27,29 +27,27 @@ const contentStyle: React.CSSProperties = {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Space direction="vertical" style={{ width: '100%' }} size={[0, 48]}>
-        <Layout style={{ height: '100vh' }}>
-          <Header style={headerStyle}>
-            <AppHeader />
-          </Header>
-          <Content style={contentStyle}>
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route
-                path="/calls"
-                element={
-                  <AuthRoute>
-                    <Calls />
-                  </AuthRoute>
-                }
-              />
-              <Route path="/" element={<Navigate to="/calls" />} />
-            </Routes>
-          </Content>
-        </Layout>
-      </Space>
-    </BrowserRouter>
+    <Space direction="vertical" style={{ width: '100%' }} size={[0, 48]}>
+      <Layout style={{ height: '100vh' }}>
+        <Header style={headerStyle}>
+          <AppHeader />
+        </Header>
+        <Content style={contentStyle}>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/calls"
+              element={
+                <AuthRoute>
+                  <Calls />
+                </AuthRoute>
+              }
+            />
+            <Route path="/" element={<Navigate to="/calls" />} />
+          </Routes>
+        </Content>
+      </Layout>
+    </Space>
   )
 }
 
