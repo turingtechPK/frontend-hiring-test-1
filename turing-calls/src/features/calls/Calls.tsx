@@ -179,14 +179,15 @@ const Calls: React.FC = () => {
             pagination={false}
           />
           <Pagination
+            style={{ marginTop: '2rem' }}
             defaultCurrent={currentPage}
             showSizeChanger={false}
             total={totalCount}
             onChange={handlePageChange}
           />
-          <p>
+          <span>
             {startIndex} - {endIndex} of {totalCount} results
-          </p>
+          </span>
           <CallDetailsModal
             open={!!selectedCallId}
             call={selectedCall}
