@@ -23,3 +23,11 @@ export const PAGINATED_CALLS = gql`
     }
   }
 `
+
+export const ADD_NOTE = gql`
+  mutation AddNote($input: AddNoteInput!) {
+    addNote(input: $input) {
+      id
+    }
+  }
+`

@@ -1,7 +1,7 @@
 import request from 'graphql-request'
 import useSWR from 'swr'
 
-import { PAGINATED_CALLS } from './graphql.ts'
+import { ADD_NOTE, PAGINATED_CALLS } from './graphql.ts'
 import { CallsResponse } from './types.ts'
 
 const fetcher = ({
@@ -20,15 +20,29 @@ const fetcher = ({
     { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` }
   )
 
+const URL = 'https://frontend-test-api.aircall.dev/graphql'
+
 export const useCalls = (offset: number, limit: number) => {
   const { data, error, isLoading } = useSWR(
-    { url: 'https://frontend-test-api.aircall.dev/graphql', offset, limit },
+    { url: URL, offset, limit },
     fetcher
   )
+
+  const addNoteToCall = async (id: string, note: string) => {
+    await request(
+      URL,
+      ADD_NOTE,
+      {
+        input: { activityId: id, content: note },
+      },
+      { Authorization: `Bearer ${sessionStorage.getItem('accessToken')}` }
+    )
+  }
 
   return {
     data,
     isLoading,
     error,
+    addNoteToCall,
   }
 }
