@@ -160,9 +160,7 @@ const Calls: React.FC = () => {
       <h1 style={{ textAlign: 'left', fontWeight: 400, margin: '1rem 0' }}>
         Turing Technologies Frontend Test
       </h1>
-      {isLoading ? (
-        'Loading...'
-      ) : error ? (
+      {error ? (
         <Alert
           message="Something went wrong!"
           description="Something went wrong while fetching Calls :("
@@ -171,6 +169,7 @@ const Calls: React.FC = () => {
       ) : (
         <>
           <Table
+            loading={isLoading}
             className="calls-table"
             bordered={true}
             columns={columns}

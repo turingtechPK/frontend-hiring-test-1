@@ -1,4 +1,4 @@
-import { Layout, Space } from 'antd'
+import { Layout, Space, Spin } from 'antd'
 import { lazy, Suspense, useEffect } from 'react'
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
@@ -61,7 +61,7 @@ function App() {
               path="/calls"
               element={
                 <AuthRoute>
-                  <Suspense fallback="...">
+                  <Suspense fallback={<Spin />}>
                     <Calls />
                   </Suspense>
                 </AuthRoute>
