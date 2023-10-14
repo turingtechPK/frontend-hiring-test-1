@@ -1,6 +1,6 @@
 import { Navigate, useLocation } from 'react-router-dom'
 
-import { useLogin } from '../feature/login/useLogin.ts'
+import { useLogin } from '../features/login/useLogin.ts'
 
 export const AuthRoute = ({ children }: { children: JSX.Element }) => {
   const login = useLogin()

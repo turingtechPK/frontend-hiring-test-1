@@ -1,7 +1,7 @@
 import { Button, Flex } from 'antd'
 
 import turingLogo from '../assets/TT Logo.png'
-import { useLogin } from '../feature/login/useLogin.ts'
+import { useLogin } from '../features/login/useLogin.ts'
 import { useNavigate } from 'react-router-dom'
 
 export const AppHeader: React.FC = () => {
