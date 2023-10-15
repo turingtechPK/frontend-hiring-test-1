@@ -14,6 +14,7 @@ import momentDuration from 'moment-duration-format'
 import { useCallback, useMemo, useState } from 'react'
 import { ModalHeader, ModalInfoGrid } from './CallsTable.style'
 import TextArea from 'antd/es/input/TextArea'
+import { CallInfoModal } from '../CallInfoModal'
 
 momentDuration(moment as any)
 
@@ -41,8 +42,6 @@ export const CallsTable: React.FC<Props> = ({ filterValue }) => {
     if (!filterValue) return dataQuery.data?.nodes ?? []
     return dataQuery.data?.nodes.filter((call) => {
       const value = call.is_archived ? 'archived' : 'unarchived'
-      console.log('a', value)
-      console.log('b', filterValue)
       return value === filterValue
     })
   }
@@ -113,73 +112,10 @@ export const CallsTable: React.FC<Props> = ({ filterValue }) => {
       header: 'Actions',
       cell: (info) => {
         const call = info.row.original
-        const [value, setValue] = useState<string>('')
-        const [error, setError] = useState<string>('')
-        const [isModalOpen, setIsModalOpen] = useState(false)
-        const mutation = useMutation({
-          mutationFn: () => postNote({ id: call.id, content: value }),
-          onSuccess: () => {
-            setValue('')
-            setIsModalOpen(false)
-          },
-        })
-        const handleOk = () => {
-          if (value.length > 0) {
-            setError('')
-            mutation.mutate()
-          } else {
-            setError('error')
-          }
-        }
-        const handleCancel = () => {
-          setIsModalOpen(false)
-        }
+
         return (
           <div>
-            <ActionButton
-              onClick={() => {
-                setIsModalOpen(true)
-              }}
-            >
-              Add Note
-            </ActionButton>
-            <Modal
-              title="Add Notes"
-              open={isModalOpen}
-              okText="Save"
-              onOk={handleOk}
-              destroyOnClose
-              onCancel={handleCancel}
-            >
-              <ModalHeader>Call ID {call.id}</ModalHeader>
-              <ModalInfoGrid>
-                <div>Call Type</div>
-                <div>{call.call_type}</div>
-                <div>Duration</div>
-                <div>
-                  {moment
-                    .duration(call.duration, 'seconds')
-                    .format('hh [hours] mm [minutes]')}
-                </div>
-                <div>FROM</div>
-                <div>{call.from}</div>
-                <div>TO</div>
-                <div>{call.to}</div>
-                <div>VIA</div>
-                <div>{call.via}</div>
-              </ModalInfoGrid>
-              <div>
-                <div>Notes</div>
-                <TextArea
-                  rows={4}
-                  value={value}
-                  placeholder="Add Notes"
-                  onChange={(e) => setValue(e.target.value)}
-                  status={error as any}
-                  style={{ resize: 'none' }}
-                />
-              </div>
-            </Modal>
+            <CallInfoModal call={call} />
           </div>
         )
       },

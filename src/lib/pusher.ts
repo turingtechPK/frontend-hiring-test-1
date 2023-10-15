@@ -1,11 +1,10 @@
 import Pusher from 'pusher-js'
 
 export const getPusher = () => {
-  console.log(process.env.NEXT_PUBLIC_PUSHER_KEY)
-  const pusher = new Pusher('d44e3d910d38a928e0be' as string, {
-    cluster: 'eu' as string,
+  const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_KEY as string, {
+    cluster: process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER as string,
     channelAuthorization: {
-      endpoint: 'https://frontend-test-api.aircall.dev/pusher/auth' as string,
+      endpoint: process.env.NEXT_PUBLIC_PUSHER_URL as string,
       transport: 'ajax',
     },
   })

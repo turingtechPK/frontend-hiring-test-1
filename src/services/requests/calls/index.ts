@@ -23,7 +23,6 @@ export const getCallsServer = async ({
       }),
     },
   )
-  console.log(response.url)
   if (!response.ok) {
     // This will activate the closest `error.js` Error Boundary
     throw new Error('Failed to fetch data')

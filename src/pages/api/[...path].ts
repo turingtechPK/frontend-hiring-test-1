@@ -1,18 +1,6 @@
-import httpProxy from 'http-proxy'
 import Cookies from 'cookies'
+import httpProxy from 'http-proxy'
 import url from 'url'
-import jwt_decode from 'jwt-decode'
-import moment from 'moment'
-import { access } from 'fs'
-
-const isValidToken = (token: string) => {
-  const decoded: any = jwt_decode(token)
-  console.log(moment().isBefore(decoded.exp * 1000))
-  if (moment().isBefore(decoded.exp * 1000)) {
-    return true
-  }
-  return false
-}
 
 // Get the actual API_URL as an environment variable. For real
 // applications, you might want to get it from 'next/config' instead.
@@ -38,7 +26,6 @@ const ApiHandler = (req: any, res: any) => {
     // In case the current API request is for logging in,
     // we'll need to intercept the API response.
     // More on that in a bit.
-    console.log(req.url)
     const pathname = url.parse(req.url).pathname
     const isLogin = pathname === '/api/auth/login'
     const isRefresh = pathname === '/api/auth/refresh-token'

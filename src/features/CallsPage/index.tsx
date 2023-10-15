@@ -13,7 +13,6 @@ import { getPusher } from '@/lib/pusher'
 export const CallsPage: React.FC = () => {
   const [filterValue, setFilterValue] = useState<string | null>(null)
   const handleChange = (value: string) => {
-    console.log(`selected ${value}`)
     setFilterValue(value)
   }
   const [pusher, setPusher] = useState<any>(null)

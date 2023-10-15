@@ -34,7 +34,6 @@ export const AuthForm: React.FC = () => {
     },
     validationSchema: authFormSchema,
     onSubmit: (values) => {
-      console.log('submitting')
       loginMutation.mutate(values)
     },
   })
