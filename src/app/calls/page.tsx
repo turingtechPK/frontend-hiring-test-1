@@ -1,3 +1,5 @@
-export default async function CallsPage() {
-  return <div>CallsPage</div>
+import { CallsPage } from '@/features/CallsPage'
+
+export default async function Page() {
+  return <CallsPage />
 }

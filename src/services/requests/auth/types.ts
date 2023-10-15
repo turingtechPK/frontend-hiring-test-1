@@ -1,5 +1,6 @@
 export enum API_ENDPOINT {
   LOGIN = 'auth/login',
+  REFRESH = 'auth/refresh-token',
 }
 
 export type LoginPayload = {

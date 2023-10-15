@@ -4,9 +4,11 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { AuthFormWrapper } from './AuthForm.styles'
 import { AuthFormFieldType } from '@/lib/types'
-import { useMutation } from '@tanstack/react-query'
-import { login } from '@/services/requests/auth'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { login, refreshToken } from '@/services/requests/auth'
 import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { AxiosError } from 'axios'
 
 const authFormSchema = Yup.object().shape({
   username: Yup.string().required('Required'),
@@ -15,6 +17,7 @@ const authFormSchema = Yup.object().shape({
 
 export const AuthForm: React.FC = () => {
   const router = useRouter()
+
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: (data) => {

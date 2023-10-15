@@ -1,15 +1,17 @@
+import { AxiosError } from 'axios'
 import { server } from '..'
 import { CALLS_API_ENDPOINTS, GetCallsPayload, GetCallsResponse } from './types'
+import { Call } from '@/lib/types'
 
-export const getCalls = async ({
-  offset = 0,
-  limit = 100,
+export const getCallsServer = async ({
+  pageIndex,
+  pageSize = 9,
   accessToken,
 }: GetCallsPayload): Promise<GetCallsResponse> => {
   const response = await fetch(
     'https://frontend-test-api.aircall.dev/' +
       CALLS_API_ENDPOINTS.GET_CALLS +
-      `?offset=${offset}&limit=${limit}`,
+      `?offset=${pageIndex}&limit=${pageSize}`,
     {
       next: {
         revalidate: 0,
@@ -28,4 +30,28 @@ export const getCalls = async ({
   }
   const data = await response.json()
   return data
+}
+
+export const getCalls = async ({
+  pageIndex,
+  pageSize = 9,
+}: GetCallsPayload): Promise<GetCallsResponse> => {
+  try {
+    const { data } = await server.get(
+      CALLS_API_ENDPOINTS.GET_CALLS + `?offset=${pageIndex}&limit=${pageSize}`,
+    )
+    return data
+  } catch (err) {
+    throw err
+  }
+}
+
+type PostNotePayload = {
+  id: string
+  content: string
+}
+
+export const postNote = async ({ id, content }: PostNotePayload): Promise<Call> => {
+  const response = await server.post<Call>(`calls/${id}/note`, { content })
+  return response.data
 }

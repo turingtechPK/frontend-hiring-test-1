@@ -1,10 +1,15 @@
 import AntdRegistry from '@/lib/AntdRegistry'
+import StyledComponentsRegistry from '@/lib/StyledComponentsRegistry'
+import getQueryClient from '@/lib/query/QueryClient'
+import { QueryProvider } from '@/lib/query/QueryProvider'
 import { LayoutWrapper } from '@/styles/layout.styles'
+import { Hydrate, dehydrate } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import StyledComponentsRegistry from '@/lib/StyledComponentsRegistry'
-const inter = Inter({ subsets: ['latin'] })
+import { Navbar } from '@/features/Nav/Navbar'
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -12,15 +17,22 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const queryClient = getQueryClient()
+  const dehydratedState = dehydrate(queryClient)
   return (
     <html lang="en">
       <body className={inter.className}>
         <StyledComponentsRegistry>
           <AntdRegistry>
-            <LayoutWrapper>
-              <div>Navbar</div>
-              {children}
-            </LayoutWrapper>
+            <QueryProvider>
+              <Hydrate state={dehydratedState}>
+                <LayoutWrapper>
+                  <Navbar />
+                  {children}
+                </LayoutWrapper>
+              </Hydrate>
+              <ReactQueryDevtools />
+            </QueryProvider>
           </AntdRegistry>
         </StyledComponentsRegistry>
       </body>

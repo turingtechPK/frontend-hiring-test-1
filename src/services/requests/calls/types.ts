@@ -2,6 +2,7 @@ import { Call } from '@/lib/types'
 
 export enum CALLS_API_ENDPOINTS {
   GET_CALLS = 'calls',
+  POST_NOTE = 'calls/note',
 }
 
 type ServerPayload = {
@@ -9,8 +10,8 @@ type ServerPayload = {
 }
 
 type Pagination = {
-  offset?: number
-  limit?: number
+  pageIndex: number
+  pageSize: number
 }
 
 export type GetCallsPayload = {} & Pagination & Partial<ServerPayload>
