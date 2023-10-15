@@ -75,6 +75,7 @@ export const TableData = styled('td')<{ type: keyof typeof ValueType }>`
     color: #727272;
     border-radius: 2px;
     width: fit-content;
+    cursor: pointer;
     &.archived {
       background-color: rgba(29, 201, 183, 0.08);
       color: #1dc9b7;

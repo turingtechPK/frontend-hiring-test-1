@@ -4,10 +4,10 @@ import { Table } from '@/components/table'
 import { ActionButton } from '@/components/table/table.styles'
 import { capitalizeFirstLetter } from '@/lib/helpers'
 import { Call } from '@/lib/types'
-import { getCalls, postNote } from '@/services/requests/calls'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { getCalls, postNote, updateCall } from '@/services/requests/calls'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { PaginationState, createColumnHelper } from '@tanstack/react-table'
-import { Modal } from 'antd'
+import { Modal, Popconfirm } from 'antd'
 import clsx from 'clsx'
 import moment from 'moment'
 import momentDuration from 'moment-duration-format'
@@ -15,6 +15,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { ModalHeader, ModalInfoGrid } from './CallsTable.style'
 import TextArea from 'antd/es/input/TextArea'
 import { CallInfoModal } from '../CallInfoModal'
+import { produce } from 'immer'
 
 momentDuration(moment as any)
 
@@ -25,6 +26,8 @@ type Props = {
 }
 
 export const CallsTable: React.FC<Props> = ({ filterValue }) => {
+  const queryClient = useQueryClient()
+
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 9,
@@ -58,6 +61,24 @@ export const CallsTable: React.FC<Props> = ({ filterValue }) => {
     return Math.ceil(dataQuery.data?.totalCount / pageSize)
   }, [dataQuery.data?.totalCount, pageSize])
 
+  const updateCallMutation = useMutation({
+    mutationFn: updateCall,
+    onMutate: async (data) => {
+      await queryClient.invalidateQueries(['callsPaginated', fetchDataOptions])
+      queryClient.setQueryData(['callsPaginated', fetchDataOptions], (old: any) =>
+        produce(old, (draft: any) => {
+          const callToUpdate = draft.nodes?.find((call: Call) => call.id === data)
+          callToUpdate.is_archived = !callToUpdate.is_archived
+        }),
+      )
+    },
+    onSuccess(data, variables, context) {
+      dataQuery.refetch()
+    },
+    onError() {
+      dataQuery.refetch()
+    },
+  })
   const columnHelper = createColumnHelper<CallTableColumns>()
 
   const defaultColumns = [
@@ -96,14 +117,23 @@ export const CallsTable: React.FC<Props> = ({ filterValue }) => {
     columnHelper.accessor((row) => row.is_archived, {
       id: 'status',
       cell: (info) => {
+        const status = info.getValue()
         return (
-          <div
+          <Popconfirm
+            title={'Confirm Action!'}
+            description={`Are you sure you want to ${
+              status ? 'unarchive' : 'archive'
+            } this call?`}
             className={clsx('badge', {
               archived: info.getValue(),
             })}
+            style={{ cursor: 'pointer' }}
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => updateCallMutation.mutate(info.row.original.id)}
           >
             {info.getValue() ? 'Archived' : 'Unarchived'}
-          </div>
+          </Popconfirm>
         )
       },
     }),

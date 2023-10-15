@@ -21,3 +21,8 @@ export type GetCallsResponse = {
   totalCount: number
   hasNextPage: boolean
 }
+
+export type PostNotePayload = {
+  id: string
+  content: string
+}

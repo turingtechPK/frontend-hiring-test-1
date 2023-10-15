@@ -1,6 +1,11 @@
 import { AxiosError } from 'axios'
 import { server } from '..'
-import { CALLS_API_ENDPOINTS, GetCallsPayload, GetCallsResponse } from './types'
+import {
+  CALLS_API_ENDPOINTS,
+  GetCallsPayload,
+  GetCallsResponse,
+  PostNotePayload,
+} from './types'
 import { Call } from '@/lib/types'
 
 export const getCallsServer = async ({
@@ -45,12 +50,12 @@ export const getCalls = async ({
   }
 }
 
-type PostNotePayload = {
-  id: string
-  content: string
-}
-
 export const postNote = async ({ id, content }: PostNotePayload): Promise<Call> => {
   const response = await server.post<Call>(`calls/${id}/note`, { content })
+  return response.data
+}
+
+export const updateCall = async (id: string) => {
+  const response = await server.put(`calls/${id}/archive`)
   return response.data
 }
