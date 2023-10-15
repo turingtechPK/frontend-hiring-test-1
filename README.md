@@ -1,3 +1,18 @@
+## The deployed version of this frontend can be found at [Vercel](https://turing-tech-test-mu.vercel.app/calls)
+
+### The above frontend is built on top of Nextjs and Antd. 
+### Project structure is as follows components -> features -> pages -> src
+### Other directories within the project are either helper directories for types or handle services such as api requests, providers and etc
+
+### Auth
+We store all token in httpOnly cookies by leveraging Nextjs's api routes to intercept requests, strip out access tokens and store them as httpOnly cookie. For a request from our frontend, we follow the same route, intercept the request, from the cookies, attach the header for authorization: bearer `access token` and ship the request off to the server.
+
+### Requests
+For requests we use axios and fetch depending on which request is server side and which is client side. On top of this, we use React-Query to manage our requests and maintain a store for caching and app wide access in different compoenents in the react tree
+
+### Tables
+For tables, we utilize React-Table which works really well with react-query. 
+
 <<<<<<< HEAD
 # :phone: TuringTech - Frontend technical test
 
