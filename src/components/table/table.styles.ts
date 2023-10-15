@@ -40,6 +40,9 @@ export const TableHead = styled('th')`
   text-transform: uppercase;
   padding: 14px 0;
   text-align: left;
+  & div {
+    padding-left: 0px !important;
+  }
 `
 
 export const TableBody = styled('tbody')`

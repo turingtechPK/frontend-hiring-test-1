@@ -6,9 +6,11 @@ import { Call } from '@/lib/types'
 import {
   ColumnDef,
   PaginationState,
+  SortingState,
   flexRender,
   getCoreRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
 import { Button, Flex } from 'antd'
@@ -24,6 +26,8 @@ interface TableProps {
   pagination: PaginationState
   onPaginationChange: Dispatch<SetStateAction<PaginationState>>
   totalCount: number
+  sorting: SortingState
+  onSortingChange: Dispatch<SetStateAction<SortingState>>
 }
 
 export const Table: React.FC<TableProps> = ({
@@ -33,6 +37,8 @@ export const Table: React.FC<TableProps> = ({
   pagination,
   onPaginationChange,
   totalCount,
+  sorting,
+  onSortingChange,
 }) => {
   const table = useReactTable({
     data,
@@ -42,8 +48,11 @@ export const Table: React.FC<TableProps> = ({
     pageCount,
     state: {
       pagination,
+      sorting,
     },
     onPaginationChange,
+    onSortingChange,
+    getSortedRowModel: getSortedRowModel(),
     manualPagination: true,
   })
 
@@ -55,12 +64,23 @@ export const Table: React.FC<TableProps> = ({
             <Styled.TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <Styled.TableHead key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
+                  {header.isPlaceholder ? null : (
+                    <div
+                      style={{ cursor: 'pointer' }}
+                      {...{
+                        onClick: header.column.getToggleSortingHandler(),
+                      }}
+                    >
+                      {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
                       )}
+                      {{
+                        asc: ' 🔼',
+                        desc: ' 🔽',
+                      }[header.column.getIsSorted() as string] ?? null}
+                    </div>
+                  )}
                 </Styled.TableHead>
               ))}
             </Styled.TableRow>
@@ -99,10 +119,10 @@ export const Table: React.FC<TableProps> = ({
           </Styled.PaginationArrows>
         </Flex>
         <Flex justify="center" align="center">
-          {pagination.pageIndex + 1}-
-          {pagination.pageIndex + 9 <= totalCount
-            ? pagination.pageIndex + 9
-            : pagination.pageIndex + 9 - totalCount}{' '}
+          {pagination.pageIndex * 9 + 1} -{' '}
+          {pagination.pageIndex * 9 + 9 > totalCount
+            ? totalCount
+            : pagination.pageIndex * 9 + 9}{' '}
           of {totalCount}
         </Flex>
       </Styled.PaginationWrapper>

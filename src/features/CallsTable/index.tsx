@@ -6,7 +6,11 @@ import { capitalizeFirstLetter } from '@/lib/helpers'
 import { Call } from '@/lib/types'
 import { getCalls, postNote, updateCall } from '@/services/requests/calls'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { PaginationState, createColumnHelper } from '@tanstack/react-table'
+import {
+  PaginationState,
+  SortingState,
+  createColumnHelper,
+} from '@tanstack/react-table'
 import { Modal, Popconfirm } from 'antd'
 import clsx from 'clsx'
 import moment from 'moment'
@@ -32,6 +36,7 @@ export const CallsTable: React.FC<Props> = ({ filterValue }) => {
     pageIndex: 0,
     pageSize: 9,
   })
+  const [sorting, setSorting] = useState<SortingState>([])
   const fetchDataOptions = {
     pageIndex,
     pageSize,
@@ -161,6 +166,8 @@ export const CallsTable: React.FC<Props> = ({ filterValue }) => {
         pagination={pagination}
         onPaginationChange={setPagination}
         totalCount={dataQuery.data?.totalCount ?? 0}
+        sorting={sorting}
+        onSortingChange={setSorting}
       />
     </>
   )
