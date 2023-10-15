@@ -1,5 +1,12 @@
-import { HomePage } from '@/features/HomePage'
+'use client'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Home() {
-  return <HomePage />
+  const router = useRouter()
+  useEffect(() => {
+    router.push('/calls')
+  }, [])
+
+  return <></>
 }
