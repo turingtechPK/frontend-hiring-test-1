@@ -187,9 +187,13 @@ const CallDataTable = ({
                           setDialogStates({ ...dialogStates, [call.id]: value })
                         }
                       >
-                        <DialogTrigger key={call.id} asChild>
+                        <DialogTrigger
+                          key={call.id}
+                          className='  w-full  flex items-center pl-7 py-4 h-[76px]'
+                          asChild
+                        >
                           <td
-                            className={`whitespace-nowrap py-4 pl-4 pr-3 text-sm capitalize font-medium  sm:pl-6 ${
+                            className={` text-sm capitalize font-medium   ${
                               call.call_type === 'missed'
                                 ? 'text-[#C91D3E]'
                                 : call.call_type === 'answered'
