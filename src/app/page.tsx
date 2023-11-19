@@ -1,4 +1,5 @@
 import CallsData from '@/components/ui/CallsData'
+import { LucideLoader2 } from 'lucide-react'
 
 import React, { Suspense } from 'react'
 
@@ -10,7 +11,14 @@ const page = (props: PageProps) => {
   const { page } = props.searchParams as { [key: string]: string }
   return (
     <div>
-      <Suspense fallback='Loading' key={page}>
+      <Suspense
+        fallback={
+          <h1 className='h-screen grid place-items-center '>
+            <LucideLoader2 className=' h-20 w-20 animate-spin' />
+          </h1>
+        }
+        key={page}
+      >
         <CallsData {...props} />
       </Suspense>
     </div>

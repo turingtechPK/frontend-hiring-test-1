@@ -1,12 +1,10 @@
-'use server'
-
 import { cn } from '@/lib/utils'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
 type PaginationProps = {
-  page?: string
+  page?: number
   totalPages: number
   hasNextPage: boolean
 }
@@ -23,8 +21,8 @@ export const Pagination = (props: PaginationProps) => {
     if (currentPage <= 10) {
       startPage = 1
       endPage = 10
-    } else if (currentPage >= totalPages - 2) {
-      startPage = totalPages - 4
+    } else if (currentPage >= totalPages - 10) {
+      startPage = totalPages - 9
       endPage = totalPages
     }
 
@@ -41,7 +39,7 @@ export const Pagination = (props: PaginationProps) => {
       <Link
         className={cn(
           ' hover:bg-gray-50',
-          currentPage === 1 ? 'pointer-events-none bg-gray-100' : ''
+          currentPage === 1 ? 'pointer-events-none cursor-not-allowed ' : ''
         )}
         href={`?page=${currentPage - 1}`}
       >
@@ -73,7 +71,7 @@ export const Pagination = (props: PaginationProps) => {
       <Link
         className={cn(
           ' hover:bg-gray-50',
-          !hasNextPage ? 'pointer-events-none bg-gray-100' : ''
+          !hasNextPage ? 'pointer-events-none cursor-not-allowed ' : ''
         )}
         href={`?page=${currentPage + 1}`}
       >

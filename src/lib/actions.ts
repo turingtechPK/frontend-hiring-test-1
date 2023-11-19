@@ -1,4 +1,5 @@
 'use server'
+import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 type AuthResponseType = {
   data: {
@@ -64,17 +65,46 @@ export async function authenticate(prevState: any, formData: FormData) {
     cookies().set('access_token', data.access_token)
     cookies().set('refresh_token', data.refresh_token)
     return { message: 'Logged In Successfully' }
-    //   if (data.errors) {
-    //     // Handle GraphQL errors
-    //     console.error('GraphQL Error:', data.errors)
-    //     return
-    //     }
-    //     console.log(data);
-
-    // Update the access token and user state
-    //   setAccessToken(data.data.login.access_token)
-    //   setUser(data.data.login.user)
   } catch (error) {
     console.error('Login Error:', error)
+  }
+}
+export async function addNotes(prevState: any, formData: FormData) {
+  // console.log(formData)
+  const activityId = formData.get('activityId')
+  const content = formData.get('note')
+  try {
+    const response = await fetch(
+      `https://frontend-test-api.aircall.dev/graphql`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cookies().get('access_token')?.value}`,
+        },
+        body: JSON.stringify({
+          query: `
+            mutation addNote($input: AddNoteInput!) {
+  
+  addNote(input: $input) {
+   id
+  }
+}
+          `,
+          variables: {
+            input: {
+              activityId,
+              content,
+            },
+          },
+        }),
+      }
+    )
+    const res = await response.json()
+    console.log(res)
+    revalidatePath('/')
+    return { message: 'Note Added' }
+  } catch (error) {
+    console.error('Adding Note Error:', error)
   }
 }
