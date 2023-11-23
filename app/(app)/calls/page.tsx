@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 
 import { CallsSection } from "@sections/calls";
 
-function CompanyManagement(): JSX.Element {
+function Calls(): JSX.Element {
   return (
     <Box>
       <CallsSection />
@@ -13,4 +13,4 @@ function CompanyManagement(): JSX.Element {
   );
 }
 
-export default CompanyManagement;
+export default Calls;

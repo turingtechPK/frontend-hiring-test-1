@@ -31,7 +31,7 @@ interface LayoutProps {
 
 const persistor = persistStore(store);
 
-const theme: Theme = createTheme({
+const theme: any = createTheme({
   direction: "ltr",
   responsiveFontSizes: false,
   colorPreset: "indigo",

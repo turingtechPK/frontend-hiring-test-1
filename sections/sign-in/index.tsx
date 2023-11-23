@@ -1,17 +1,12 @@
 import React from "react";
 
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import type { SignInPayloadProps } from "./types";
 import { signInInitialValue, signInFormSchema } from "./schema";
 import { useRouter, useSearchParams } from "next/navigation";
 import { EmailIcon, TurningLogo, PasswordIcon } from "@assets";
-import {
-  RHFTextField,
-  FormProvider,
-  RHFCheckbox,
-  StyledLink,
-} from "@components";
+import { RHFTextField, FormProvider, RHFCheckbox } from "@components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
 import { LoadingButton } from "@mui/lab";
@@ -79,9 +74,6 @@ export function SignInSection(): JSX.Element {
             }}
           >
             <RHFCheckbox name="loggedIn" label="Remember me" />
-            {/* <Typography variant="body2" component="span" textAlign="center">
-              <StyledLink href="#">Forgot Password</StyledLink>
-            </Typography> */}
           </Box>
           <LoadingButton
             fullWidth
