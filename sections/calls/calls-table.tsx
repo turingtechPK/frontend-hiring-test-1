@@ -108,7 +108,7 @@ export function CallsTable(): JSX.Element {
       id: "direction",
       cell: (info: any) => (
         <Box sx={{ color: "primary.main" }}>
-          {capitalizeFirstLetter(info.getValue())}
+          {capitalizeFirstLetter(info.getValue() ?? "-")}
         </Box>
       ),
       header: () => <span>Direction</span>,

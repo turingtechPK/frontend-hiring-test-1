@@ -19,7 +19,7 @@ import type { TableHeaderProps } from "./table-header.types";
 const getDefaultParams: any = ({ tableHeaderData }: any) => {
   const defaultParams: any = {};
   tableHeaderData.forEach((data: any) => {
-    defaultParams[data.FieldProps.name] = undefined;
+    defaultParams[data.FieldProps.name] = "";
   });
   return defaultParams;
 };
