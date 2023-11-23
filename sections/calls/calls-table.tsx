@@ -168,7 +168,7 @@ export function CallsTable(): JSX.Element {
       id: "Actions",
       cell: (info: any) => (
         <Box>
-          <AddNote apiData={info.row.original} submitLabel="Add Note" />
+          <AddNote apiData={info.row.original} />
         </Box>
       ),
       header: () => <span>Actions</span>,

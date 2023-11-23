@@ -1,56 +1,82 @@
-import { Button, Grid, Box, MenuItem } from "@mui/material";
+import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { CustomModal, FormProvider } from "@components";
-import { AddFormData, AddFormDataValue } from "./calls.data";
+import { CustomModal, FormProvider, RHFTextField } from "@components";
+import { addDefaultValues, schema } from "./calls.data";
 import { useState } from "react";
 import { useAddNoteMutation } from "@services/calls-api";
 import toast from "react-hot-toast";
 import { LoadingButton } from "@mui/lab";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { getFormattedDuration } from "@utils";
 
-export function AddNote({
-  submitLabel,
-  apiData,
-}: {
-  submitLabel?: string;
+function capitalizeFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
-  apiData?: any;
-}): JSX.Element {
+export function AddNote({ apiData }: any): JSX.Element {
   const [openModal, setOpenModal] = useState(false);
-  const updateData: any = {};
-
-  for (const keys in apiData) {
-    updateData[keys] = apiData[keys];
-    if (keys === "allowedCompany") {
-      updateData[keys] = apiData[keys].map((item: any, index: number) => {
-        return { id: index + 1, name: item, value: item };
-      });
-    }
-    if (keys === "address") {
-      updateData.addressUpdate = `${apiData[keys].addressLine} ${apiData[keys].city} ${apiData[keys].country}`;
-    }
-  }
 
   const methods = useForm({
-    defaultValues: apiData ? updateData : AddFormDataValue,
-    //  resolver: yupResolver(formSchemaModel),
+    defaultValues: addDefaultValues,
+    resolver: yupResolver(schema),
   });
+
   //API HANDLERS
-  const [createCompanyUser, { isLoading }] = useAddNoteMutation();
+  const [mutation, { isLoading }] = useAddNoteMutation();
   const { control, handleSubmit } = methods;
 
-  async function onSubmit(data: any): Promise<any> {
+  async function onSubmit({ content }: any): Promise<any> {
     try {
-      const { message } = await createCompanyUser({
+      const { message } = await mutation({
         body: {
-          userId: data._id,
+          content,
+        },
+        params: {
+          callId: apiData?.id,
         },
       }).unwrap();
-      toast.success(message || "Company user created successfully");
+      toast.success(message || "Add Note Successfully");
       setOpenModal(false);
     } catch (error: any) {
-      toast.error(error?.data?.message || "error occur");
+      toast.error(error?.data?.message || "Something went wrong");
     }
   }
+
+  const data = [
+    { name: "Call Id", value: apiData?.id },
+    { name: "Call Type", value: capitalizeFirstLetter(apiData?.call_type) },
+    { name: "Duration", value: getFormattedDuration(apiData?.duration) },
+    { name: "To", value: apiData?.to },
+    { name: "From", value: apiData?.from },
+    { name: "Via", value: apiData?.via },
+  ];
+
+  const DataDisplay = () => {
+    return (
+      <Stack spacing={1.5}>
+        {data.map((item) => (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="body2" fontWeight={600}>
+              {item?.name}
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                color: "primary.main",
+              }}
+            >
+              {item?.value}
+            </Typography>
+          </Box>
+        ))}
+      </Stack>
+    );
+  };
 
   return (
     <>
@@ -59,7 +85,7 @@ export function AddNote({
           setOpenModal(true);
         }}
         variant="contained"
-        sx={{ px: 1, py: 0.5 }}
+        sx={{ py: 0.5, px: 1 }}
       >
         Add Note
       </Button>
@@ -78,44 +104,34 @@ export function AddNote({
         isOpen={openModal}
       >
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-          <Grid container>
-            {AddFormData.map((form: any) => (
-              <Grid key={form.id} xs={form.grid} sx={{ py: 1, px: 1 }} item>
-                <form.component control={control} disabled {...form.RhfValue} />
+          <Grid container px={1}>
+            <Divider />
+            <Grid item container xs={12} rowGap={2} sx={{ py: 2 }}>
+              <Grid xs={12}>
+                <DataDisplay />
               </Grid>
-            ))}
+              <Grid item xs={12}>
+                <RHFTextField
+                  name="content"
+                  outerLabel="Note"
+                  placeholder="Add Note"
+                  multiline
+                  rows={3}
+                />
+              </Grid>
+            </Grid>
+            <Divider />
             <Grid xs={12} item>
-              <Box mt={1} display="flex">
-                <Box
-                  ml="auto"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  gap={1}
-                >
-                  <Button
-                    onClick={() => {
-                      setOpenModal(false);
-                    }}
-                    size="small"
-                    variant="outlined"
-                  >
-                    Cancel
-                  </Button>
-                  <LoadingButton
-                    loading={isLoading}
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    sx={{
-                      height: 35,
-                    }}
-                    type="submit"
-                  >
-                    {submitLabel ? submitLabel : "Add"}
-                  </LoadingButton>
-                </Box>
-              </Box>
+              <LoadingButton
+                loading={isLoading}
+                variant="contained"
+                color="primary"
+                size="small"
+                type="submit"
+                fullWidth={true}
+              >
+                Save
+              </LoadingButton>
             </Grid>
           </Grid>
         </FormProvider>

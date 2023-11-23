@@ -4,6 +4,7 @@ import { Modal, Box, Typography, Button, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { Style } from "./custom-modal.styles";
 import type { CustomModalProps } from "./custom-modal.types";
+import { LoadingButton } from "@mui/lab";
 
 export function CustomModal({
   isOpen,
@@ -41,7 +42,9 @@ export function CustomModal({
         {footer && (
           <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
             <Button {...cancelButtonsProps}>Cancel</Button>
-            <Button {...acceptButtonProps}>{acceptButtonLabel}</Button>
+            <LoadingButton {...acceptButtonProps}>
+              {acceptButtonLabel}
+            </LoadingButton>
           </Box>
         )}
       </Box>
