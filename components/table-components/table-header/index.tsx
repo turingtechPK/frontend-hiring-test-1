@@ -19,7 +19,7 @@ import type { TableHeaderProps } from "./table-header.types";
 const getDefaultParams: any = ({ tableHeaderData }: any) => {
   const defaultParams: any = {};
   tableHeaderData.forEach((data: any) => {
-    defaultParams[data.FieldProps.name] = "";
+    defaultParams[data.FieldProps.name] = undefined;
   });
   return defaultParams;
 };
@@ -75,13 +75,13 @@ export function TableHeader(props: TableHeaderProps): JSX.Element {
     });
   }
 
-  function dateChangeHandler(value: any, name: any): void {
-    setParams((oldParams: any) => {
-      const updatedParams = { ...oldParams, [name]: value };
-      onChanged(updatedParams);
-      return updatedParams;
-    });
-  }
+  // function dateChangeHandler(value: any, name: any): void {
+  //   setParams((oldParams: any) => {
+  //     const updatedParams = { ...oldParams, [name]: value };
+  //     onChanged(updatedParams);
+  //     return updatedParams;
+  //   });
+  // }
 
   function onClear(): void {
     const defaultParams = getDefaultParams({ tableHeaderData });

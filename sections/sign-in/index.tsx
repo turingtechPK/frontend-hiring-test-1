@@ -79,9 +79,9 @@ export function SignInSection(): JSX.Element {
             }}
           >
             <RHFCheckbox name="loggedIn" label="Remember me" />
-            <Typography variant="body2" component="span" textAlign="center">
+            {/* <Typography variant="body2" component="span" textAlign="center">
               <StyledLink href="#">Forgot Password</StyledLink>
-            </Typography>
+            </Typography> */}
           </Box>
           <LoadingButton
             fullWidth

@@ -33,6 +33,18 @@ const tableHeaderData: ITableHeaderData[] = [
       { label: "UnArchived", value: "unArchived" },
     ],
   },
+  {
+    type: "select",
+    FieldProps: {
+      name: "callType",
+      label: "Call Type",
+    },
+    options: [
+      { label: "Missed", value: "missed" },
+      { label: "Answered", value: "answered" },
+      { label: "VoiceMail", value: "voiceMail" },
+    ],
+  },
 ];
 
 export function CallsTable(): JSX.Element {
@@ -53,7 +65,7 @@ export function CallsTable(): JSX.Element {
       const { message } = await mutation({
         params: {
           callId: rowData.id,
-          status: rowData.is_archived ? "archived" : "unarchived",
+          status: rowData.is_archived ? "unarchived" : "archived",
         },
       }).unwrap();
       toast.success(message || "Status Changed Successfully");
