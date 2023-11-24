@@ -1,3 +1,11 @@
+# LOOM VIDEO LINK 1
+
+https://www.loom.com/share/fdb5f616c5e34ee3b877c0c753fa8bab?sid=1003c2bb-cc10-4e76-94f0-aeecb7cd77c4
+
+# LOOM VIDEO LINK 2
+
+https://www.loom.com/share/8d579db178a34582ba8e286d9a7524db?sid=20951586-d902-4ab1-8087-44e9547149f6
+
 # Live Preview URL (VERCEL) and Environment Variables
 
 https://frontend-turing.vercel.app/sign-in
