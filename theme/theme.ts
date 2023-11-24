@@ -19,6 +19,9 @@ declare module "@mui/material/styles" {
     xl: true;
     xxl: true;
   }
+  interface Theme {
+    paletteMode: string;
+  }
 }
 
 declare module "@mui/material/styles/createPalette" {

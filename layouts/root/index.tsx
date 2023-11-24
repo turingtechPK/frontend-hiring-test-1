@@ -31,7 +31,7 @@ interface LayoutProps {
 
 const persistor = persistStore(store);
 
-const theme: any = createTheme({
+const theme: Theme = createTheme({
   direction: "ltr",
   responsiveFontSizes: false,
   colorPreset: "indigo",
@@ -40,7 +40,7 @@ const theme: any = createTheme({
 });
 
 export function RootLayout(props: LayoutProps): JSX.Element {
-  const { children, settings } = props;
+  const { children } = props;
 
   return (
     <NextAppDirEmotionCacheProvider options={{ key: "css" }}>
@@ -48,7 +48,7 @@ export function RootLayout(props: LayoutProps): JSX.Element {
         <PersistGate loading={null} persistor={persistor}>
           <ThemeProvider theme={theme}>
             <Head>
-              <meta name="color-scheme" content={theme?.paletteMode} />
+              <meta name="color-scheme" content={theme.paletteMode} />
               <meta name="theme-color" content={theme.palette.neutral[900]} />
             </Head>
             <CssBaseline />
