@@ -81,6 +81,7 @@ export function AddNote({ apiData }: any): JSX.Element {
   return (
     <>
       <Button
+        size="small"
         onClick={() => {
           setOpenModal(true);
         }}

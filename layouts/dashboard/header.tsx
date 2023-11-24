@@ -42,11 +42,11 @@ function Header(): JSX.Element {
         <Toolbar disableGutters sx={{ p: 1 }}>
           <Box sx={{ flexGrow: 1, display: { lg: "flex" } }}>
             <Link href="/">
-              <Image src={TurningLogo} width={matches ? 220 : 430} alt="" />
+              <Image src={TurningLogo} width={matches ? 210 : 430} alt="" />
             </Link>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Button variant="contained" onClick={handleLogout}>
+            <Button size="small" variant="contained" onClick={handleLogout}>
               LogOut
             </Button>
           </Box>
