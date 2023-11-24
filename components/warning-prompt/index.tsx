@@ -41,12 +41,14 @@ export function WarningPrompt({
         isOpen={modal}
         footer
         cancelButtonsProps={{
+          size: "small",
           variant: "outlined",
           onClick: () => {
             setModal(false);
           },
         }}
         acceptButtonProps={{
+          size: "small",
           variant: "contained",
           disableElevation: true,
           disableFocusRipple: true,
