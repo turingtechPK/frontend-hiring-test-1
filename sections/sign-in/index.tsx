@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Theme } from "@mui/material";
 import { useForm } from "react-hook-form";
 import type { SignInPayloadProps } from "./types";
 import { signInInitialValue, signInFormSchema } from "./schema";
@@ -13,8 +13,10 @@ import { LoadingButton } from "@mui/lab";
 import { setLocalStorage, removeLocalStorage } from "@utils";
 import { useLoginMutation } from "@services/auth-api";
 import Image from "next/image";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export function SignInSection(): JSX.Element {
+  const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const router = useRouter();
   const searchParams = useSearchParams();
   const returnTo = searchParams.get("returnTo");
@@ -44,9 +46,9 @@ export function SignInSection(): JSX.Element {
   }
 
   return (
-    <Stack spacing={5} sx={{ p: 1, width: "100%", maxWidth: 550 }}>
+    <Stack spacing={5} sx={{ width: "100%", maxWidth: 550 }}>
       <Box sx={{ textAlign: "center" }}>
-        <Image src={TurningLogo} alt="" width={450} />
+        <Image src={TurningLogo} alt="" width={matches ? 230 : 450} />
       </Box>
       <FormProvider methods={method} onSubmit={handleSubmit(formSubmitHandler)}>
         <Stack spacing={3} direction="column">

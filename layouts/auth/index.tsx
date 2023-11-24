@@ -14,13 +14,13 @@ export function AuthLayout(props: LayoutProps): JSX.Element {
     <Grid
       container
       sx={{
-        p: "3rem",
+        p: "2rem",
       }}
     >
       <Grid item xs={12}>
         <Box
           sx={{
-            m: 4,
+            m: 3,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
