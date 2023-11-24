@@ -16,8 +16,11 @@ import { authActions } from "@slices";
 import { useDispatch } from "@store";
 import { paths } from "@root/paths";
 import { useRouter } from "next/navigation";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { Theme } from "@mui/material";
 
 function Header(): JSX.Element {
+  const matches = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
   const theme = useTheme();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -37,14 +40,13 @@ function Header(): JSX.Element {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ p: 1 }}>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", lg: "flex" } }}>
+          <Box sx={{ flexGrow: 1, display: { lg: "flex" } }}>
             <Link href="/">
-              <Image src={TurningLogo} width={350} height={40} alt="" />
+              <Image src={TurningLogo} width={matches ? 220 : 430} alt="" />
             </Link>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Button variant="contained" onClick={handleLogout}>
-              {" "}
               LogOut
             </Button>
           </Box>

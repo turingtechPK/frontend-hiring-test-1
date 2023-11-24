@@ -13,7 +13,7 @@ export function DashboardLayout({
     <AuthInitializer>
       <Stack sx={{ minHeight: "100vh" }}>
         <Header />
-        <Box sx={{ px: 8, py: 3, mt: "10rem" }} flex="1">
+        <Box sx={{ px: { xs: 1, lg: 6 }, py: 3, mt: "10rem" }} flex="1">
           {children}
         </Box>
         <Footer />
