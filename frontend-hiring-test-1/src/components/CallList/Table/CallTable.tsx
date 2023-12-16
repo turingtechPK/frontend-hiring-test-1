@@ -63,12 +63,23 @@ const CallTable: React.FC<CallTableProps> = ({
     }
   };
 
+  const filteredCalls = calls.filter((call: any) => {
+    if (selectedStatus === "All") {
+      return true; // Show all calls
+    } else if (selectedStatus === "Archived") {
+      return call.is_archived;
+    } else if (selectedStatus === "Unarchive") {
+      return !call.is_archived;
+    }
+    return false;
+  });
   useEffect(() => {}, [calls]);
 
   const handleArchiveToggle = async (call: CallLog) => {
     try {
       const accessToken = localStorage.getItem("accessToken");
 
+      // Send a PUT request to archive/unarchive the call
       await axios.put(
         `https://frontend-test-api.aircall.dev/calls/${call.id}/archive`,
         {},
@@ -99,7 +110,7 @@ const CallTable: React.FC<CallTableProps> = ({
 
       channel.trigger("client-update-call", {
         callId: call.id,
-        is_archived: !call.is_archived,
+        is_archived: !call.is_archived, 
       });
 
       pusher.unsubscribe("private-aircall");
@@ -107,12 +118,16 @@ const CallTable: React.FC<CallTableProps> = ({
       await fetchCalls();
 
       message.success(
-        `Call ${call.is_archived ? "Unarchive" : "Archived"} successfully!`
+        `Call ${
+          call.is_archived ? 'Unarchive' : 'Archived'
+        } successfully!`
       );
     } catch (error) {
       console.error("Error toggling archive status:", error);
+      message.error('Failed to toggle archive status. Please try again.');
     }
   };
+
 
   return (
     <Table>
@@ -159,7 +174,7 @@ const CallTable: React.FC<CallTableProps> = ({
                   color: callLog.is_archived ? "#36cfbf" : "#777777",
                 }}
               >
-                {callLog.is_archived ? "Archived  " : "Unarchive"}
+                {callLog.is_archived ? "Archive" : "Unarchive"}
               </button>
             </TableData>
             <TableData>
