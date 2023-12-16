@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
-import { login } from "../../services/authservice.ts"; // Assuming you have the login function in authService
+import { login } from "../../services/authservice.ts";
 
 interface FormValues {
   email: string;
@@ -16,17 +16,14 @@ const Login: React.FC = () => {
 
   const onFinish = async (values: FormValues) => {
     try {
-      // Perform the login and obtain the access token
       const authResponse = await login(email, password);
       const accessToken = authResponse.access_token;
 
-      // Store the access token securely, for example, in localStorage
       localStorage.setItem("accessToken", accessToken);
 
       navigate("/call-list");
     } catch (error) {
       console.error("Login failed:", error);
-      // Handle login error (display a message to the user, etc.)
     }
   };
 
@@ -38,7 +35,7 @@ const Login: React.FC = () => {
         alignItems: "center",
         height: "100vh",
         marginTop: "50px",
-        background: "#fff", // Set the background color
+        background: "#fff",
       }}
     >
       <div
@@ -54,8 +51,8 @@ const Login: React.FC = () => {
           className="login-form"
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          labelCol={{ span: 24 }} // Labels take the full width
-          wrapperCol={{ span: 24 }} // Inputs take the full width
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
         >
           <Form.Item
             label="Email"
@@ -64,7 +61,7 @@ const Login: React.FC = () => {
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Email  "
+              placeholder="Email"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setEmail(e.target.value)
               }
