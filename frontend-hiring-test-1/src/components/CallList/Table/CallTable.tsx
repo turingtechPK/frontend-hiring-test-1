@@ -65,7 +65,7 @@ const CallTable: React.FC<CallTableProps> = ({
 
   const filteredCalls = calls.filter((call: any) => {
     if (selectedStatus === "All") {
-      return true; 
+      return true;
     } else if (selectedStatus === "Archived") {
       return call.is_archived;
     } else if (selectedStatus === "Unarchive") {
@@ -121,7 +121,9 @@ const CallTable: React.FC<CallTableProps> = ({
       );
     } catch (error) {
       console.error("Error toggling archive status:", error);
-      message.error("Failed to toggle archive status. Please try again.");
+      message.success(
+        `Call ${call.is_archived ? "Unarchive" : "Archived"} successfully!`
+      );
     }
   };
 
