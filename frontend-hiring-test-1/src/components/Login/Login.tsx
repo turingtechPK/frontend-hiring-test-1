@@ -58,13 +58,13 @@ const Login: React.FC = () => {
           wrapperCol={{ span: 24 }} // Inputs take the full width
         >
           <Form.Item
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: "Please input your Username!" }]}
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Email" }]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Username"
+              placeholder="Email  "
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setEmail(e.target.value)
               }
@@ -73,7 +73,7 @@ const Login: React.FC = () => {
           <Form.Item
             label="Password"
             name="password"
-            rules={[{ required: true, message: "Please input your Password!" }]}
+            rules={[{ required: true, message: "Password" }]}
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}

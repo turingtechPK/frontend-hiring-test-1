@@ -121,9 +121,7 @@ const CallTable: React.FC<CallTableProps> = ({
       );
     } catch (error) {
       console.error("Error toggling archive status:", error);
-      message.success(
-        `Call ${call.is_archived ? "Unarchive" : "Archived"} successfully!`
-      );
+      message.success(`Success`);
     }
   };
 
