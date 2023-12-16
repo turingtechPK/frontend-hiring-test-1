@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 //@ts-ignore
 import TTLogo from "../../Images/TTLogo.png";
 
@@ -11,7 +11,11 @@ const Navbar = () => {
   return (
     <div style={styles.navbar}>
       <img src={TTLogo} alt="Logo" style={styles.logo} />
-      {!isHomePage && <button style={styles.button}>Log out</button>}
+      {!isHomePage && (
+        <Link to="/" style={styles.links}>
+          <button style={styles.button}>Log out</button>
+        </Link>
+      )}
     </div>
   );
 };
@@ -21,13 +25,13 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "20px", // Updated padding
-    backgroundColor: "white", // Updated background color
-    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Added box shadow
-    color: "#333", // Adjusted text color
+    padding: "20px",
+    backgroundColor: "white",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+    color: "#333",
   },
   logo: {
-    height: "35px", // Adjust the height as needed
+    height: "35px",
   },
   button: {
     padding: "10px",
@@ -37,6 +41,10 @@ const styles = {
     border: "none",
     outline: "none",
     borderRadius: "3px",
+    cursor: "poiner",
+  },
+  links: {
+    cursor: "poiner",
   },
 };
 export default Navbar;
