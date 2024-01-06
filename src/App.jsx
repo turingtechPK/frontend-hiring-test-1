@@ -7,7 +7,7 @@ import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import { useDispatch, useSelector } from "react-redux";
 import { Suspense, useEffect } from "react";
 import store from "./redux/store";
-import { refreshAccessToken, userInfo } from "./redux/actions/user";
+import { userInfo } from "./redux/actions/user";
 import Spinner from "./components/UI/Spinner/Spinner";
 const Login = lazy(() => import("./pages/Login"));
 const Home = lazy(() => import("./pages/Home"));
@@ -16,7 +16,6 @@ axios.defaults.withCredentials = false;
 
 function App() {
   const { userLoading, isAuthenticated } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
   useEffect(() => {
     store.dispatch(userInfo())
   }, [])
