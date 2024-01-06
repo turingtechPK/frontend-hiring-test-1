@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 import { Suspense, useEffect } from "react";
 import store from "./redux/store";
 import { userInfo } from "./redux/actions/user";
