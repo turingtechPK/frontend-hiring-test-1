@@ -18,7 +18,6 @@ function App() {
         const response = await axiosInstance.post('/auth/refresh-token',null,{headers:{
           Authorization:`Bearer ${token}`
         }});
-        console.log(response.data);
         refreshToken(response.data)
       } catch (error) {
         console.log(error.message);

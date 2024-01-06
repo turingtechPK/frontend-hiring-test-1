@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom"
 
 const CallsList = ()=>{
   const [callListData,setCallListData] = useState([])
-  const [filter,setFilter] =useState(null)
   const limit = 10
   const [pageNumber,setPageNumber] = useState(0)
   const {userData} = useAuth()
@@ -53,10 +52,7 @@ const CallsList = ()=>{
       }
     })
     const channel = pusherClient.subscribe('private-aircall');
-    console.log(channel)
     channel.bind('update-call', function (data) {
-      console.log(data,"oppp");
-      console.log(callListData,"clData")
       const newNodes = callListData.nodes.map((node)=>{
         if(node.id===data.id){
           return data
@@ -64,7 +60,6 @@ const CallsList = ()=>{
         return node
       })
       const newData = {...callListData,nodes:newNodes}
-      console.log(newData,"kkk")
       setCallListData(newData)
     });
     return ()=>{
@@ -84,13 +79,6 @@ const CallsList = ()=>{
     <>
     <CallsListPageWrapper>
       <h3 className="heading">Turning Technologies Frontend Test</h3>
-
-      <div>
-        Filter by:
-         <Dropdown menu={{items}} overlayClassName="dropdown-option-container">
-          <span style={{color:"#5047f8"}}> {filter??"Status"}</span>
-          </Dropdown>
-      </div>
       <TableComp data={callListData} setData={setCallListData} pageNumber={pageNumber} setPageNumber={setPageNumber}/>
     </CallsListPageWrapper>
     </>

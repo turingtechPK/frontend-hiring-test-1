@@ -26,15 +26,7 @@ const TableComp = ({data,pageNumber,setPageNumber,setData})=>{
   const handleOk = async ({note,id})=>{
     try{
       const resp = await axiosInstance.post(`/calls/${id}/note`,{content:note})
-      // console.log("resp.data",resp.data)
-      // const newNodes = data.nodes.map((node)=>{
-      //   if(node.id===id){
-      //     return resp.data
-      //   }
-      //   return node
-      // })
-      // const newData = {...data,nodes:newNodes}
-      // setData(newData)
+
     }
     catch(err){
       console.log(err)
