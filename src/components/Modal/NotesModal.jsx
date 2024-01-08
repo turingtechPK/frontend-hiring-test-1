@@ -21,7 +21,7 @@ import { convertSecondsToMinutesAndSeconds } from "../../utils/converter";
 const NotesModal = ({ open, setOpen, callId }) => {
   const [notes, setNotes] = useState("")
   const dispatch = useDispatch()
-  const { call, callIdLoading, callIdError, notesLoading,notesSuccess, notesError  } = useSelector(state => state.calls);
+  const { call, callIdLoading, callIdError, notesLoading, notesError  } = useSelector(state => state.calls);
   
 
 
@@ -42,9 +42,7 @@ const NotesModal = ({ open, setOpen, callId }) => {
       toast.error(`${notesError}`)
       return;
     }
-    if (notesSuccess) {
-      toast.success("Notes saved successfully")
-    }
+    toast.success("Notes saved successfully")
     setNotes("")
   }
 

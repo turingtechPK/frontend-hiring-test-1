@@ -45,8 +45,8 @@ const StatusModal = ({ open, setOpen, id, pageNo, pageSize }) => {
       return;
     }
     toast.success("Status updated successfully")
-    setOpen(false);
     dispatch(getCalls(pageNo, pageSize));
+    setOpen(false);
   }
 
   return (

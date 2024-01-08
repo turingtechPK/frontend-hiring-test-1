@@ -10,6 +10,7 @@ import Grid from "@mui/material/Grid";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import  Tooltip  from "@mui/material/Tooltip";
 import { FlexColumn, FlexRow } from "../components/Flex/Flex";
 import { DataGrid } from "@mui/x-data-grid";
 import { capitalizeFirstLetter, convertSecondsToMinutesAndSeconds } from "../utils/converter";
@@ -19,7 +20,6 @@ import Pagination from "../components/UI/Pagination/Pagination";
 import { toast } from "react-toastify";
 import NotesModal from "../components/Modal/NotesModal";
 import StatusModal from "../components/Modal/StatusModal";
-import { Tooltip } from "@mui/material";
 import { config } from "../config";
 
 const dataGridStyle = {
@@ -55,8 +55,8 @@ const Home = () => {
   }, [dispatch, pageNo]);
 
   useEffect(() => {
-    const pusher = new Pusher('d44e3d910d38a928e0be', {
-      cluster: 'eu',
+    const pusher = new Pusher(config.PUSHER_KEY, {
+      cluster: config.PUSHER_CLUSTER,
       authEndpoint: `${config.BACKEND_BASE_URL}/pusher/auth`
     });
 

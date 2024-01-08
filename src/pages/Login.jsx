@@ -19,14 +19,13 @@ const Login = () => {
   const [password, setPassword] = useState("")
   const [loginLoading, setLoginLoading] = useState(false)
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoginLoading(true)
     const payload = { username, password };
     try {
+      const expires_in = 2 * 60; 
       const response = await axios.post(`${BASE_URL}/auth/login`, payload);
-      console.log("Response:", response);
       const { data } = response;
       if (!(data)) {
         toast.error("Failed to login the user");
@@ -34,7 +33,7 @@ const Login = () => {
       }
       setLoginLoading(false)
       localStorage.setItem("access_token", data.access_token)
-      localStorage.setItem("exp_time", Date.now())
+      localStorage.setItem("exp_time", Date.now() + expires_in * 1000);
       toast.success(`login successfully`)
       window.location.reload()
     } catch (error) {
