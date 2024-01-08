@@ -1,0 +1,10 @@
+.MuiPagination-outlined {
+  border-radius: 0.125rem;
+  border: 1px solid var(--grey-50, #f0f0f0);
+  background: var(--grey-50, #f0f0f0);
+}
+
+.MuiPagination-outlined:active {
+  border: 1px solid var(--primary-blue-original, #23638c);
+  color: var(--primary-blue-original, #23638c);
+}
