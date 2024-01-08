@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { stylesMui } from "./styles";
 
 interface LoginButtonProps {
-  onClick: () => void;
+  onClick: (event: React.FormEvent) => void;
 }
 
 const LoginButton: React.FC<LoginButtonProps> = ({ onClick }) => {

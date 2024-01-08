@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 
-const routes = () => {
+const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
@@ -13,4 +13,4 @@ const routes = () => {
   );
 };
 
-export default routes;
+export default AppRoutes;

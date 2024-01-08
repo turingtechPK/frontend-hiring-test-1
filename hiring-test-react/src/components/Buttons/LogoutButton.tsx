@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 
 import { stylesMui } from "./styles";
 
-const HeaderButton = () => {
+const LogoutButton = () => {
   const handleLogout = () => {
     localStorage.setItem("isLoggedIn", "false");
     window.location.reload();
@@ -14,4 +14,4 @@ const HeaderButton = () => {
   );
 };
 
-export default HeaderButton;
+export default LogoutButton;

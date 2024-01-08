@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
@@ -7,15 +8,18 @@ import { LoginButton } from "../Buttons";
 import InputField from "../InputField";
 
 const LoginForm: React.FC = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
+  const handleLogin = async (event: React.FormEvent) => {
+    event.preventDefault();
     try {
       const authResponse = await authenticate(username, password);
       const { access_token } = authResponse;
       localStorage.setItem("accessToken", access_token);
       localStorage.setItem("isLoggedIn", "true");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
     }
