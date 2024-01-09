@@ -16,8 +16,9 @@ const LoginForm: React.FC = () => {
     event.preventDefault();
     try {
       const authResponse = await authenticate(username, password);
-      const { access_token } = authResponse;
+      const { access_token, refresh_token } = authResponse;
       localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refresh_token", refresh_token);
       localStorage.setItem("isLoggedIn", "true");
       navigate("/dashboard");
     } catch (error) {

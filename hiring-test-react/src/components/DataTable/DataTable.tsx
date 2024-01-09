@@ -1,64 +1,34 @@
-import React, { useState } from "react";
-import { Box } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+
+import { getCalls } from "../../services/apis/api";
 
 import PaginationComponent from "../Pagination/PaginationComponent";
 import { ActionsButton } from "../Buttons";
-import { Row } from "../../types";
+import { PaginatedCalls, Row } from "../../types";
 import AddNotesModal from "../AddNotesModal";
+import { stylesMui } from "./styles";
+import { formatDuration } from "../../utils/formatDuration";
 
 interface DataTableProps {
-  selectedFilter: string;
+  selectedFilter: boolean;
 }
-
-const rows = [
-  {
-    id: 1,
-    callType: "Voice Mail",
-    direction: "Inbound",
-    duration: "5:30",
-    from: "+345871293",
-    to: "+12378619534",
-    via: "+397864798",
-    createdAt: "2022-01-01",
-    status: "Archived",
-  },
-  {
-    id: 2,
-    callType: "Answered",
-    direction: "Outbound",
-    duration: "3:45",
-    from: "+345876123",
-    to: "+8912783132",
-    via: "+3278461238",
-    createdAt: "2022-01-02",
-    status: "Unarchived",
-  },
-  {
-    id: 3,
-    callType: "Missed",
-    direction: "Outbound",
-    duration: "3:45",
-    from: "+123123123",
-    to: "+3453412312",
-    via: "+5672432564",
-    createdAt: "2022-01-02",
-    status: "Unarchived",
-  },
-];
 
 const DataTable: React.FC<DataTableProps> = ({ selectedFilter }) => {
   const [selectedRow, setSelectedRow] = useState<Row | null>(null);
-
-  console.log("selectedFilter is...", selectedFilter);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [calls, setCalls] = useState<Row[]>([]);
 
   const handleCloseModal = () => {
     setSelectedRow(null);
   };
 
   const filteredRows = selectedFilter
-    ? rows.filter((row) => row.status === selectedFilter)
-    : rows;
+    ? calls.filter((row) => row.is_archived === selectedFilter)
+    : calls;
 
   const handleAction = (row: Row) => {
     setSelectedRow(row);
@@ -66,22 +36,26 @@ const DataTable: React.FC<DataTableProps> = ({ selectedFilter }) => {
 
   const columns: GridColDef[] = [
     {
-      field: "callType",
+      field: "call_type",
       headerName: "CALL TYPE",
       width: 150,
       editable: false,
       renderCell: (params) => {
         let textColor;
 
-        if (params.row.callType === "Answered") {
+        if (params.row.call_type === "answered") {
           textColor = "green";
-        } else if (params.row.callType === "Missed") {
+        } else if (params.row.call_type === "missed") {
           textColor = "red";
         } else {
           textColor = "blue";
         }
 
-        return <div style={{ color: textColor }}>{params.row.callType}</div>;
+        return (
+          <div style={{ color: textColor, textTransform: "capitalize" }}>
+            {params.row.call_type}
+          </div>
+        );
       },
     },
     {
@@ -90,7 +64,9 @@ const DataTable: React.FC<DataTableProps> = ({ selectedFilter }) => {
       width: 150,
       editable: false,
       renderCell: (params) => (
-        <div style={{ color: "blue" }}>{params.row.direction}</div>
+        <div style={{ color: "blue", textTransform: "capitalize" }}>
+          {params.row.direction}
+        </div>
       ),
     },
     {
@@ -98,6 +74,7 @@ const DataTable: React.FC<DataTableProps> = ({ selectedFilter }) => {
       headerName: "DURATION",
       width: 150,
       editable: false,
+      renderCell: (params) => <div>{formatDuration(params.row.duration)}</div>,
     },
     {
       field: "from",
@@ -119,22 +96,29 @@ const DataTable: React.FC<DataTableProps> = ({ selectedFilter }) => {
       editable: false,
     },
     {
-      field: "createdAt",
+      field: "created_at",
       headerName: "CREATED AT",
       width: 110,
       editable: false,
+      renderCell: (params) => (
+        <div>{dayjs(params.row.created_at).format("DD-MM-YYYY")}</div>
+      ),
     },
     {
-      field: "status",
+      field: "is_archived",
       headerName: "STATUS",
       width: 150,
       editable: false,
       renderCell: (params) => (
-        <div
-          style={{ color: params.row.status === "Archived" ? "green" : "grey" }}
+        <Button
+          sx={{
+            textTransform: "capitalize",
+            color: params.row.is_archived ? "#1DC9B7" : "#B5B5B5",
+            backgroundColor: params.row.is_archived ? "#EDFBFA" : "#EEEEEE",
+          }}
         >
-          {params.row.status}
-        </div>
+          {params.row.is_archived ? "Archived" : "Unarchive"}
+        </Button>
       ),
     },
     {
@@ -151,26 +135,44 @@ const DataTable: React.FC<DataTableProps> = ({ selectedFilter }) => {
     },
   ];
 
+  // calls from API when component mounts or selectedFilter changes or when call note updated
+  useEffect(() => {
+    fetchCalls();
+  }, [selectedFilter]);
+
+  const fetchCalls = async (page: number = 1) => {
+    try {
+      const offset = (page - 1) * 10; // keeping 10 items per page
+      const limit = 10;
+
+      const response: PaginatedCalls = await getCalls(offset, limit);
+
+      setCalls(response.nodes);
+      setTotalPages(Math.ceil(response.totalCount / limit));
+      setCurrentPage(page);
+    } catch (error) {
+      console.error("Error fetching calls:", error);
+    }
+  };
+
   return (
     <div>
       <Box sx={{ width: "100%" }}>
         <DataGrid
-          sx={{
-            ".MuiDataGrid-columnHeaders": {
-              backgroundColor: "#F4F4F9",
-              fontSize: "14px",
-              fontFamily: "Avenir-Roman",
-              fontWeight: 500,
-            },
-          }}
+          sx={stylesMui.dataGrid}
           rows={filteredRows}
+          // rows={calls}
           getRowId={(row: Row) => row.id}
           columns={columns}
           hideFooter
         />
       </Box>
       <div className="mt-20 flex flex-col gap-4 justify-center items-center">
-        <PaginationComponent currentPage={3} totalPages={3} />
+        <PaginationComponent
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={fetchCalls}
+        />
       </div>
       <AddNotesModal
         open={!!selectedRow}

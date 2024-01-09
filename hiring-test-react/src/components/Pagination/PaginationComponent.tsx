@@ -8,12 +8,20 @@ import "./styles.module.css";
 interface PaginationComponentProps {
   currentPage: number;
   totalPages: number;
+  onPageChange: (page: number) => void;
 }
 
 const PaginationComponent: React.FC<PaginationComponentProps> = ({
   currentPage,
   totalPages,
 }) => {
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    onPageChange(page);
+  };
+
   return (
     <>
       <Pagination
@@ -25,9 +33,10 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
         renderItem={(item) => (
           <PaginationItem {...item} sx={stylesMui.paginationItem} />
         )}
+        onChange={handlePageChange}
       />
       <Typography sx={stylesMui.paginationText}>
-        {currentPage}-x of {totalPages} results
+        {currentPage}-{currentPage + 10} of {totalPages} results
       </Typography>
     </>
   );

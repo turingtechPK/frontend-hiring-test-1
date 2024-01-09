@@ -1,4 +1,8 @@
 import { dataServer } from "./axios.config";
+import { Call, PaginatedCalls } from "../../types";
+import { getAccessToken } from "../../utils/getAccessToken";
+import { setAccessToken } from "../../utils/setAccessToken";
+import { setRefreshToken } from "../../utils/setRefreshToken";
 
 const authenticate = async (username: string, password: string) => {
   try {
@@ -6,6 +10,14 @@ const authenticate = async (username: string, password: string) => {
       username,
       password,
     });
+    const accessToken = response.data.access_token;
+    const refreshToken = response.data.refresh_token;
+
+    console.log(accessToken, refreshToken);
+
+    setAccessToken(accessToken);
+    setRefreshToken(refreshToken);
+
     return response.data;
   } catch (error) {
     console.log("error in api...", error);
@@ -27,8 +39,18 @@ const getCalls = async (offset: number, limit: number) => {
   try {
     const response = await dataServer.get("/calls", {
       params: { offset, limit },
+      headers: {
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
     });
-    return response.data;
+
+    const result: PaginatedCalls = {
+      nodes: response.data.nodes as Call[],
+      totalCount: response.data.totalCount,
+      hasNextPage: response.data.hasNextPage,
+    };
+
+    return result;
   } catch (error) {
     console.log("error in api...", error);
     throw error;
@@ -37,7 +59,11 @@ const getCalls = async (offset: number, limit: number) => {
 
 const getCallById = async (id: string) => {
   try {
-    const response = await dataServer.get(`/calls/${id}`);
+    const response = await dataServer.get(`/calls/${id}`, {
+      headers: {
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.log("error in api...", error);
@@ -47,7 +73,11 @@ const getCallById = async (id: string) => {
 
 const getAuthenticatedUser = async () => {
   try {
-    const response = await dataServer.get("/me");
+    const response = await dataServer.get("/me", {
+      headers: {
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.log("error in api...", error);
@@ -57,7 +87,15 @@ const getAuthenticatedUser = async () => {
 
 const createNoteForCall = async (id: string, note: string) => {
   try {
-    const response = await dataServer.post(`/calls/${id}/note`, { note });
+    const response = await dataServer.post(
+      `/calls/${id}/note`,
+      { note },
+      {
+        headers: {
+          Authorization: `Bearer ${getAccessToken()}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.log("error in api...", error);
@@ -67,7 +105,11 @@ const createNoteForCall = async (id: string, note: string) => {
 
 const archiveOrUnarchiveCall = async (id: string) => {
   try {
-    const response = await dataServer.put(`/calls/${id}/archive`);
+    const response = await dataServer.put(`/calls/${id}/archive`, {
+      headers: {
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.log("error in api...", error);
