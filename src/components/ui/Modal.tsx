@@ -36,7 +36,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
       className="fixed z-[100] inset-0 w-screen h-screen bg-gray-800/40 flex items-center justify-center p-4 lg:p-8"
       ref={containerRef}
     >
-      <div className="bg-white w-[90%] md:w-[80%] max-h-[90%] overflow-scroll">{children}</div>
+      <div className="bg-white w-[90%] md:w-[80%] lg:w-fit max-h-[90%] overflow-scroll">{children}</div>
     </div>
   );
 }
