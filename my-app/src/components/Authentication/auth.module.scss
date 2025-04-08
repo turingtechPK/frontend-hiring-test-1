@@ -1,0 +1,72 @@
+.authContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #e8e6ea, #e8e6ea); 
+  }
+  
+  .authCard {
+    width: 350px;
+    padding: 30px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2); 
+    background-color: #ffffff;
+    border-radius: 12px; 
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    
+    &:hover {
+      transform: translateY(-10px); 
+    }
+  }
+  
+  .title {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #244198; 
+  }
+  
+  .inputField {
+    margin-bottom: 15px;
+    border-radius: 8px;
+  }
+  
+  .loginButton,
+  .logoutButton {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 8px; /* Rounded button edges */
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .loginButton {
+    background-color: #2575fc; /* Vibrant blue */
+    color: #fff;
+  
+    &:hover {
+      background-color: #6a11cb; /* Darker blue on hover */
+      transform: scale(1.05);
+    }
+  }
+  
+  .logoutButton {
+    background-color: #f44336; /* Red for logout */
+    color: #fff;
+  
+    &:hover {
+      background-color: #d32f2f; /* Darker red on hover */
+      transform: scale(1.05);
+    }
+  }
+  
+  .welcomeText {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #444;
+    font-weight: 500;
+  }
+  

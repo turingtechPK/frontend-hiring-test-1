@@ -1,0 +1,43 @@
+.paginationControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  
+    button {
+      min-width: 36px;
+      padding: 6px 12px;
+      font-weight: 500;
+      font-size: 14px;
+      text-transform: none;
+      border-radius: 8px;
+      transition: all 0.2s ease-in-out;
+  
+      &.Mui-disabled {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+    }
+  
+    // Highlight active page if needed
+    .MuiButton-contained {
+      background-color: #1976d2;
+      color: #fff;
+  
+      &:hover {
+        background-color: #1565c0;
+      }
+    }
+  
+    .MuiButton-outlined {
+      border-color: #1976d2;
+      color: #1976d2;
+  
+      &:hover {
+        background-color: rgba(25, 118, 210, 0.08);
+      }
+    }
+  }
+  

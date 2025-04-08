@@ -1,0 +1,21 @@
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .closeButton {
+    color: #d32f2f !important;
+    font-size: 18px !important;
+  }
+  
+  .subHeading {
+    font-size: 14px;
+    color: #244198;
+    padding-left: 20px;
+  }
+  
+  .modalBody {
+    padding: 10px;
+  }
+  

@@ -1,0 +1,34 @@
+.navbar {
+    width: 100%;
+    background-color: #1976d2; 
+  }
+  
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .navItems {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .username {
+    font-size: 1rem;
+    color: #fff;
+  }
+  
+  .logoutButton {
+    background-color: #d32f2f;
+    &:hover {
+      background-color: #b71c1c;
+    }
+  }
+  

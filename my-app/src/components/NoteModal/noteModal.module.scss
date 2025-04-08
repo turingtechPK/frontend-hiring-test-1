@@ -1,0 +1,14 @@
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    >button{
+        width: 100%;
+    }
+  }
+  
+  .modalActions button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+  
